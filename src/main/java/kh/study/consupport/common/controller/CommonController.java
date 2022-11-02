@@ -52,7 +52,11 @@ public class CommonController {
 	
 	
 	
-	
+
+	@GetMapping("")
+	public String index() {
+		return "/content/common/test";
+	}
 	
 	
 }
