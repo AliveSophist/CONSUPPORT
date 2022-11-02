@@ -1,0 +1,23 @@
+package kh.study.consupport.common.vo;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class HallVO {
+//	TABLE HALL
+//
+//		HALL_CODE         VARCHAR2(100) CONSTRAINT HALL_PK PRIMARY KEY
+//		HALL_NAME         VARCHAR2(100) NOT NULL
+//		HALL_SEAT_CNT     NUMBER NOT NULL
+//		HALL_RENT_PRICE   NUMBER NOT NULL
+//		HALL_STATUS       VARCHAR2(20) DEFAULT 'ACT' NOT NULL        -- (ACT, DEACT)
+//		HALL_DETAIL       VARCHAR2(500)
+//		
+//		USER_ID           VARCHAR2(100) NOT NULL
+//		                  CONSTRAINT HALL_FK_REF_USER REFERENCES USERS(USER_ID)
+	
+	
+	
+}
