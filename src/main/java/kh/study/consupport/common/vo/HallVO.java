@@ -18,6 +18,12 @@ public class HallVO {
 //		USER_ID           VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT HALL_FK_REF_USER REFERENCES USERS(USER_ID)
 	
+	private String hallCode;
 	
-	
+	private String hallName;
+	private int hallSeatCnt;
+	private int hallRentPrice;
+	private String hallStatus;
+	private String hallDetail;
+	private String userId;
 }

@@ -15,6 +15,9 @@ public class ConcertPriceVO {
 //		CONCERT_PRICE_S   NUMBER
 //		CONCERT_PRICE_A   NUMBER
 	
+	private String concertCode;
 	
-	
+	private int concertPriceR;
+	private int concertPriceS;
+	private int concertPriceA;
 }

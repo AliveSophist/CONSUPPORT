@@ -20,7 +20,18 @@ public class UsersVO {
 //		
 //		USER_ROLE         VARCHAR2(20) DEFAULT 'MEMBER' NOT NULL     -- (MEMBER, ARTIST, OWNER, ADMIN)
 //		USER_STATUS       VARCHAR2(20) DEFAULT 'ACT' NOT NULL        -- (ACT, DEACT)
+
+	private String userId;
 	
+	private String userPw;
+	private String userName;
+	private String userAddr;
+	private String userAddrDetail;
+	private String userMail;
+	private String userBirth;
+	private String userTell;
+	private int userMileage;
 	
-	
+	private String userRole;
+	private String userStatus;
 }

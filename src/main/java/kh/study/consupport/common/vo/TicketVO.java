@@ -18,6 +18,10 @@ public class TicketVO {
 //		CONCERT_CODE      VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT TICKET_FK_REF_CONCERT REFERENCES CONCERT(CONCERT_CODE)
 	
+	private String ticketCode;
 	
-	
+	private String seatCode;
+	private String userId;
+	private String hallCode;
+	private String concertCode;
 }

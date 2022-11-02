@@ -16,6 +16,10 @@ public class ArtistImgVO {
 //		USER_ID           VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT ARTIST_IMG_FK_REF_USER REFERENCES USERS(USER_ID)
 	
+	private String artistImgCode;
 	
-	
+	private String artistImgNameOrigin;
+	private String artistImgNameAttached;
+	private String artistImgIsMain;
+	private String userId;
 }

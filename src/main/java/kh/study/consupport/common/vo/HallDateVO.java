@@ -14,6 +14,8 @@ public class HallDateVO {
 //		HALL_CODE         VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT HALL_DATE_FK_REF_HALL REFERENCES HALL(HALL_CODE)
 	
+	private String hallDateCode;
 	
-	
+	private String hallRentDate;
+	private String hallCode;
 }

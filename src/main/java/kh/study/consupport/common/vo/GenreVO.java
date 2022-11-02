@@ -11,6 +11,7 @@ public class GenreVO {
 //		GENRE_CODE        VARCHAR2(100) CONSTRAINT GENRE_PK PRIMARY KEY
 //		GENRE_NAME        VARCHAR2(100) NOT NULL
 	
+	private String genreCode;
 	
-	
+	private String genreName;
 }

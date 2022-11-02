@@ -16,6 +16,10 @@ public class HallImgVO {
 //		HALL_CODE         VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT HALL_IMG_FK_REF_HALL REFERENCES HALL(HALL_CODE)
 	
+	private String hallImgCode;
 	
-	
+	private String hallImgNameOrigin;
+	private String hallImgNameAttached;
+	private String hallImgIsMain;
+	private String hallCode;
 }

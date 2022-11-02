@@ -16,6 +16,10 @@ public class ConcertImgVO {
 //	    CONCERT_CODE      VARCHAR2(100) NOT NULL
 //	                      CONSTRAINT CONCERT_IMG_FK_REF_CONCERT REFERENCES CONCERT(CONCERT_CODE)
 	
+	private String concertImgCode;
 	
-	
+	private String concertImgNameOrigin;
+	private String concertImgNameAttached;
+	private String concertImgIsMain;
+	private String concertCode;
 }

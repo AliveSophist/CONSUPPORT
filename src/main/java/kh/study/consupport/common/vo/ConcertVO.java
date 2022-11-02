@@ -23,6 +23,14 @@ public class ConcertVO {
 //		USER_ID           VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT CONCERT_FK_REF_USER REFERENCES USERS(USER_ID)
 	
+	private String concertCode;
 	
-	
+	private String concertName;
+	private String concertStatus;
+	private String concertRated;
+	private String concertTicketingDate;
+	private String concertDate;
+	private String genreCode;
+	private String hallCode;
+	private String userId;
 }

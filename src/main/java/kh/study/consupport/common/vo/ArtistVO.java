@@ -14,6 +14,8 @@ public class ArtistVO {
 //		ARTIST_NAME       VARCHAR2(100) NOT NULL
 //		ARTIST_DETAIL     VARCHAR2(500) NOT NULL
 	
+	private String userId;
 	
-	
+	private String artistName;
+	private String artistDetail;
 }
