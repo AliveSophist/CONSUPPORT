@@ -3,6 +3,75 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="commonMapper">
+
+	<resultMap type="kh.study.consupport.common.vo.UsersVO" id="user">
+		<id column="USER_ID" 				property="userId"/>
+		<result column="USER_PW" 			property="userPw"/>
+		<result column="USER_NAME" 			property="userName"/>
+		<result column="USER_ADDR" 			property="userAddr"/>
+		<result column="USER_ADDR_DETAIL" 	property="userAddrDetail"/>
+		<result column="USER_EMAIL" 		property="userEmail"/>
+		<result column="USER_BIRTH" 		property="userBirth"/>
+		<result column="USER_TELL" 			property="userTell"/>
+		<result column="USER_MILEAGE" 		property="userMileage"/>
+		<result column="USER_ROLE" 			property="userRole"/>
+		<result column="USER_STATUS" 		property="userStatus"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	<!-- Login -->
+	<select id="login" resultMap="user">
+		SELECT
+			USER_ID
+			, USER_PW
+			, USER_ROLE
+		FROM USERS
+		WHERE
+			USER_ID = #{userId}
+	</select>
+	
+	
+	
+	<!-- get LoginInfo -->
+	<select id="selectLoginInfo" resultMap="user">
+		SELECT
+			USER_ID
+			, USER_NAME
+			, USER_ROLE
+		FROM USERS
+		WHERE
+			USER_ID = #{userId}
+	</select>
+
+
+	<!-- Join -->
+	<insert id="insertUser">
+		INSERT INTO USERS(
+		    USER_ID
+		    , USER_PW
+		    , USER_NAME
+		    , USER_ADDR
+		    , USER_ADDR_DETAIL
+		    , USER_EMAIL
+		    , USER_BIRTH
+		    , USER_TELL
+		) VALUES(
+		    #{userId}
+		    , #{userPw}
+		    , #{userName}
+		    , #{userAddr}
+		    , #{userAddrDetail}
+		    , #{userEmail}
+		    , #{userBirth}
+		    , #{userTell}
+		)
+	</insert>
+
+
+
 	
 	
 	
