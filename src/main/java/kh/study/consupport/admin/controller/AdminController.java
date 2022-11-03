@@ -48,7 +48,7 @@ public class AdminController {
 	
 	
 	public void test() {
-		System.out.println("test");
+		System.out.println("test123");
 	}
 	
 	
