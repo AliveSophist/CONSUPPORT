@@ -47,13 +47,6 @@ public class AdminController {
 	}
 	
 	
-	public void test() {
-		System.out.println("test456");
-	}
-	
-	
-	
-	
 	
 	
 	
