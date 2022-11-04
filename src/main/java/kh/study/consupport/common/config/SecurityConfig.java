@@ -80,12 +80,12 @@ public class SecurityConfig {
 					.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 					
 					//권한이 필요 없는 페이지
-//					.antMatchers("/"
-//								,"/join"
-//								,"/login"
-//								,"/loginResult"	
-//								,"/logout"
-//								).permitAll()
+					//.antMatchers("/"
+					//			,"/join"
+					//			,"/login"
+					//			,"/loginResult"	
+					//			,"/logout"
+					//			).permitAll()
 					
 					//MEMBER권한 페이지
 					.antMatchers("/member/**").hasAnyRole("MEMBER", "ARTIST", "OWNER", "ADMIN")
@@ -99,7 +99,7 @@ public class SecurityConfig {
 					//ADMIN권한 전용 페이지
 					.antMatchers("/admin/**").hasAnyRole("ADMIN")
 					
-					//그외.. 사실 없음..
+					// 그외는 비회원도 허용됨
 					.anyRequest().authenticated()
 					
 					.and()
