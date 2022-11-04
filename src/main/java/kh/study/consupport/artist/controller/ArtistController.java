@@ -47,7 +47,9 @@ public class ArtistController {
 	}
 	
 	
-	
+	public void test() {
+		
+	}
 	
 	
 	
