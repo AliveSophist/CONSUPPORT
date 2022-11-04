@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,10 +47,25 @@ public class ArtistController {
 		
 	}
 	
-	
-	public void test() {
+	//공연 등록 페이지
+	@GetMapping("/regConcertForm")
+	public String regConcertForm(Model model, Authentication authentication) {
 		
+		model.addAttribute("hallLIst", artistService.hallList());
+		model.addAttribute("genreList", artistService.genreList());
+		
+		
+		return "content/artist/reg_concert_from";
 	}
+	
+	//공연 등록
+	@ResponseBody
+	@PostMapping("/regConcert")
+	public String regConcert() {
+		
+		return "redirect:/artist/regConcertForm";
+	}
+	
 	
 	
 	

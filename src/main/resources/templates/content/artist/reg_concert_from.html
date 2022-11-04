@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div>콘서트 등록</div>
+
+<div>
+	
+	<form th:action="@{/artist/regConcert}" method="post">
+	
+	<!-- userId 삽입 -->
+	<input type="hidden" value="">
+	<div class="input-group">
+		<span class="input-group-text">콘서트명</span> 
+		<input type="text" aria-label="First name" class="form-control" name="concertName"> 
+	</div>
+	
+	<div class="input-group">
+		<span class="input-group-text">콘서트 장르</span> 
+		<select class="form-select" aria-label="Default select example">
+			<option selected>장르를 지정해 주세요</option>
+			<th:block th:each="gen:${genreList}">
+				<option th:value="${gen.genreCode}" >[[${gen.genreName}]]</option>
+			</th:block>
+		</select>
+	</div>
+	
+	
+	<div class="input-group">
+		<span class="input-group-text">콘서트 홀</span> 
+		<select class="form-select" aria-label="Default select example">
+			<option selected>콘서트 홀을 지정해 주세요</option>
+			<th:block th:each="ha:${hallLIst}">
+				<option th:value="${ha.hallCode}">[[${ha.hallName}]]</option>
+			</th:block>
+		</select>
+	</div>
+	
+	<div class="input-group">
+		<span class="input-group-text">콘서트 티켓팅 일</span> 
+		<div class="col-6">
+			<input class="form-control" type="date" id="concertTicketingDate" >
+		</div>
+	</div>
+	
+	<div class="col-12">
+		<span class="form-label">Main Image</span>
+		<input class="form-control" type="file" name="mainImg">
+		<!-- <input class="form-control" type="file" name="mainImg"> -->
+	</div>
+	<div class="col-12">
+		<span class="form-label">Sub Image</span>
+		<input class="form-control" type="file" multiple name="subImgs">
+		<!-- <input class="form-control" type="file" multiple name="subImgs"> -->
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-text">연령 제한</span> 
+		<select class="form-select" aria-label="Default select example">
+			<option selected>연령 제한을 지정해 주세요</option>
+			<option value="All">전연령 관람 가능</option>
+			<option value="15+">15세 이상 관람 가능</option>
+			<option value="19+">청소년 관람 불가</option>
+		</select>
+	</div>
+	
+	<div class="input-group">
+		<span class="input-group-text">콘서트 티켓가격(R석)</span> 
+		<input type="text" aria-label="First name" class="form-control" name="concertPriceR"> 
+		<span class="input-group-text">콘서트 티켓가격(S석)</span> 
+		<input type="text" aria-label="First name" class="form-control" name="concertPriceS"> 
+		<span class="input-group-text">콘서트 티켓가격(A석)</span> 
+		<input type="text" aria-label="First name" class="form-control" name="concertPriceA"> 
+	</div>
+	
+	<button type="button" th:onclick="regConcert();">등록</button>
+	
+	</form>
+	
+	<script type="text/javascript" th:src="@{/js/aritist/reg_concert.js}"></script>
+</div>
+
+
+</body>
+</html>
