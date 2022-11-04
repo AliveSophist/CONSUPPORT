@@ -1,0 +1,97 @@
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+.stacked-cards h2 {
+	text-align: center;
+	position: relative;
+	top: -20px;
+}
+
+.intro {
+	max-width: 600px;
+	margin: 20px auto;
+	text-align: center;
+}
+
+.container-fuild {
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+.container-fixed {
+	width: 100%;
+	height: 665px;
+	margin: 0 auto;
+}
+
+.divider {
+	max-width: 500px;
+	margin: 25px auto;
+	background-color: #ccc;
+	height: 2px;
+	width: 100%;
+}
+
+.stacked-cards {
+	padding-top: 40px;
+	padding-bottom: 15px;
+}
+
+.stacked-cards li {
+	height: 500px;
+	width: 400px;
+}
+
+.stacked-cards img {
+	height: 100%;
+	width: 100%;
+}
+
+@media (max-width: 767px) {
+	.stacked-cards li {
+		height: 180px;
+	}
+}
+
+.stacked-cards li {
+	background-color: #00bcd4;
+}
+
+.stacked-cards li:nth-child(n) {
+	background-color: #3599db;
+}
+
+.stacked-cards li:nth-child(2n) {
+	background-color: #e61b77;
+}
+
+.stacked-cards li:nth-child(3n) {
+	background-color: #00bcd4;
+}
+
+.stacked-cards li:nth-child(4n) {
+	background-color: #f4b251;
+}
+
+.stacked-cards li:nth-child(5n) {
+	background-color: #8e4497;
+}
+
+.source {
+	margin: 25px auto;
+}
+
+.header {
+	margin: 0px auto;
+	padding: 25px 5px;
+	background-color: #fff;
+}
+.header img {
+	display: block;
+	margin: 0 auto;
+	max-width: 300px;
+	height: auto;
+}
+

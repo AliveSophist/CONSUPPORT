@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,6 @@ import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
 
 @Controller
-@RequestMapping("/")
 public class CommonController {
 
 	@Autowired
@@ -59,9 +59,20 @@ public class CommonController {
 	
 	
 	
-	@GetMapping("")
-	public String index() {
-		return "/content/common/test";
+	@GetMapping("test")
+	public String index(HttpSession session, Authentication authentication) {
+
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("userId : "+userId);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+		return "/content/common/index";
+	}
+
+	@GetMapping("concertList")
+	public String goConcertList() {
+		return "/content/common/concert_list";
 	}
 	
 	

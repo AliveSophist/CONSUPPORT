@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	<div th:fragment="top">
+		<div class="row">
+		
+			<div class="col text-end" >
+				<span data-bs-toggle="modal" data-bs-target="#join_modal" style="cursor: pointer">JOIN</span>
+				<span data-bs-toggle="modal" data-bs-target="#login_modal" style="cursor: pointer">LOGIN</span>
+				<hr>
+			</div>
+			
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+			<!-- MEMBER 로그인 -->
+			<!-- <div class="col text-end" >
+				<span ></span> 님 반갑습니다.
+				<a th:href="@{/logout}">LOGOUT</a>
+				<hr>
+				<div>
+					<a>MY PAGE</a>　/
+					<a >CART</a>　
+				</div>
+			</div> -->
+			
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+			<!-- ADMIN 로그인 -->
+			<!-- <div class="col text-end" >
+				<span ></span> 님 반갑습니다.
+				<a >LOGOUT</a>
+				<hr>
+				<div>
+					<a >MY PAGE</a>　/
+					<a >CART</a>　/ 
+					<a >ADMIN PAGE</a> 
+					
+				</div>
+			</div> -->
+			
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+		</div>
+		<div class="row">
+			<div class="col text-center mb-4">
+				<h1><a href="/item/list">CONSUPPORT</a></h1>
+			</div>
+			<hr>
+		</div>
+		
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->		
+		
+		<!-- <div class="row">
+			<div class="col mb-3">
+				<nav class="navbar navbar-expand-lg bg-light">
+					<div class="container-fluid">
+						
+						<a class="navbar-brand" href="/item/list">
+							<svg xmlns="http://www.w3.org/2000/svg" width="55" height="30" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+							  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+							</svg>　
+						</a>
+						
+						<button class="navbar-toggler" type="button"
+							data-bs-toggle="collapse" data-bs-target="#navbarNav"
+							aria-controls="navbarNav" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						
+						<div class="collapse navbar-collapse" id="navbarNav">
+						
+							<ul class="navbar-nav">
+								<th:block >
+									<li class="nav-item">
+										<a class="nav-link" href="#" ></a>
+									</li>　　
+								</th:block>
+							</ul>
+							
+							
+							
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div> -->
+		
+		
+		
+		
+		
+		<!-- 로그인버튼 클릭시 실행되는 모달 -->
+		<!-- Modal -->
+		<div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" id="exampleModalLabel" >LOGIN</h3>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					
+					<div class="modal-body">
+
+						<form action="/member/login" method="post">
+							<div class="mb-3">
+								<label for="memberId" class="form-label">ID</label>
+								<input type="text" class="form-control" id="memberId" aria-describedby="emailHelp" placeholder="ID를 입력하세요." name="memberId">
+							</div>
+							<div class="mb-3">
+								<label for="memberPw" class="form-label">Password</label>
+								<input type="password" class="form-control" id="memberPw" placeholder="PW를 입력하세요." name="memberPw">
+								
+								<div style="margin-top: 13px;">
+									<input class="form-check-input" type="checkbox" style="margin-top: 15px" id="disabledFieldsetCheck"> 
+									<label class="form-check-label" for="disabledFieldsetCheck" style="margin-top: 13px; margin-right: 15px;">ID저장</label>
+									
+									<input class="form-check-input" type="checkbox" style="margin-top: 15px" id="disabledFieldsetCheck"> 
+									<label class="form-check-label" for="disabledFieldsetCheck" style="margin-top: 13px">자동로그인</label>
+								</div>
+								
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-dark">LOGIN</button>
+								<!-- <button type="button" class="btn btn-dark" onclick="login();">AjaxLOGIN</button> -->
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		<!-- JOIN 클릭시 실행되는 모달 -->
+		<div class="modal fade" id="join_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" id="exampleModalLabel" >JOIN</h3>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					
+					<div class="modal-body">
+					
+						<form class="row g-3" action="/member/join" method="post">
+							<div class="col-12">
+								<label for="memberId" class="form-label">ID</label> 
+								<input type="text" class="form-control" id="memberId" placeholder="ID를 입력해주세요." name="memberId">
+							</div>
+							
+							<div class="col-12">
+								<label for="memberPw" class="form-label">Password</label> 
+								<input type="password" class="form-control" id="memberPw" placeholder="PW를 입력해주세요." name="memberPw">
+							</div>
+							
+							<div class="col-12">
+								<label for="memberName" class="form-label">Name</label> 
+								<input type="text" class="form-control" id="memberName" name="memberName">
+							</div>
+							
+							<div class="col-9">
+								<label for="memberAddr" class="form-label">Address</label> 
+								<input onclick="searchAddr();" type="text" class="form-control" id="memberAddr" readonly name="memberAddr">
+							</div>
+							
+							<div class="col-3">
+								<label for="" class="form-label"></label>
+								<input onclick="searchAddr();" type="button" class="btn btn-secondary form-control" value="Search">
+							</div>
+							
+							<div class="col-12">
+								<input type="text" class="form-control" name="addrDetail" id="addrDetail">
+							</div>
+							
+							<div class="col-12" style="margin-bottom: 10px">
+								<label for="memberEmail" class="form-label">Email</label> 
+								<input type="email" class="form-control" id="memberEmail" name="memberEmail">
+							</div>
+							
+							<div class="col-12 col text-end modal-footer" >
+								<button type="submit" class="btn btn-dark">JOIN</button>
+							</div>
+						</form>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/js/layout/top.js"></script>
+		
+		
+		
+	</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
