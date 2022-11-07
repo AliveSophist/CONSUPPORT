@@ -30,6 +30,7 @@ import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,17 +55,19 @@ public class CommonController {
 	@Resource(name = "ownerService")
 	private OwnerService ownerService;
 
-	@Getter
-	@Setter
+	
+	@Data
 	class PageDefaultValues {
 		// 로그인 및 비회원이 이용하는 서비스에 필요한 변수들..
-		
 		boolean openLogin = false;
 	}
-	
-	//이 Controller의 모든 Request가 실행되기전에 무조건 거쳐가야하는 메소드!
 	@ModelAttribute
 	public void putModelAttribute( PageDefaultValues pdv, Model model) {
+		System.out.println("openLogin : " + pdv.isOpenLogin());
+		System.out.println("openLogin : " + pdv.isOpenLogin());
+		System.out.println("openLogin : " + pdv.isOpenLogin());
+		System.out.println("openLogin : " + pdv.isOpenLogin());
+		
 		model.addAttribute("openLogin", pdv.isOpenLogin());
 	}
 	

@@ -3,7 +3,6 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 	<th:block th:fragment="top">
 	
@@ -111,7 +110,8 @@
 		</th:block>
 		
 		
-		
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
 		
 		<!-- Navigation-->
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -172,7 +172,8 @@
 
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------->
-		
+
+
 		<!-- Login a태그 클릭 시 실행되는 Modal -->
 		<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -183,23 +184,28 @@
 					
 					<div class="login-page">
 						<div class="form">
+						
 							<form class="register-form">
-								<input type="text" placeholder="name" /> <input type="password"
-									placeholder="password" /> <input type="text"
-									placeholder="email address" />
-								<button>create</button>
+								<input type="text" placeholder="name" />
+								<input type="password" placeholder="password" />
+								<input type="text" placeholder="email address" />
+								
+								<button type="button" >create</button>
 								<p class="message">
 									Already registered? <a>Sign In</a>
 								</p>
 							</form>
+							
 							<form class="login-form">
 								<input type="text" placeholder="ID" name="userId"/>
 								<input type="password" placeholder="Password" name="userPw"/>
-								<button onclick="login()">login</button>
+								
+								<button type="button" onclick="login()">login</button>
 								<p class="message">
 									Not registered? <a>Create an account</a>
 								</p>
 							</form>
+							
 						</div>
 					</div>
 				
@@ -208,39 +214,19 @@
 			</div>
 		</div>
 		
+		<input type="hidden" id="openLogin" th:value="${openLogin}"/>
 		
-			
+		
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
 		<script th:inline="javascript">
-			let bootstrapModal;
-			function showModal(modalTag){
-				bootstrapModal = new bootstrap.Modal(modalTag);
-				bootstrapModal.show();
-			}
-			function hideModal(modalTag){
-				bootstrapModal = new bootstrap.Modal(modalTag);
-				bootstrapModal.hide();
-			}
-		
-		
 		
 			// login-page 클래스의 기능 활성화
 			$('.message a').click(function(){
 				$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 			});
-
 			
-			// 모달 닫을때는 내용 리셋 해줘
-			const modalLogin = document.querySelector('#modalLogin');
-			modalLogin.addEventListener('hidden.bs.modal', function(){
-				modalLogin.querySelector('.login-form').reset();
-				modalLogin.querySelector('.register-form').reset();
-			});
-			
-			
-			// 로그인 모달 켜라고하면 켜
-			let isOpenLogin = document.querySelector('#openLogin').value;
-			if(isOpenLogin.indexOf("true") > -1)
-				showModal(modalLogin);
 			
 			
 			// 로그인 펑션
@@ -259,10 +245,6 @@
 			    	
 				    success: function(result) {
 				    	
-				    	alert('반갑습니다!?\n님!?');
-				    	
-				    	
-					
 						//로그인 정보 없을 경우, 강제 탈출!
 						if(result.userId==null){
 							alert('다시 입력하세요');
@@ -270,8 +252,6 @@
 						}
 
 						alert('반갑습니다!?\n님!?');
-						
-						
 						
 // 						if(result.memberRole.indexOf('ADMIN') > -1){
 // 							alert('관리자 로그인 입니다..!');
@@ -291,26 +271,36 @@
 			
 			
 			
-			/* 
-			const bootstrapModal = new bootstrap.Modal(modalLogin);
-			bootstrapModal.show(); */
+			//bootstrap Modal 좀 더 편하게 다루기
+			let bootstrapModal;
+			function showModal(modalTag){ bootstrapModal = new bootstrap.Modal(modalTag); bootstrapModal.show(); }
+			function hideModal(modalTag){ bootstrapModal = new bootstrap.Modal(modalTag); bootstrapModal.hide(); }
+			
+			
+			
+			// 모달 닫을때는 내용 리셋 해줘
+			const modalLogin = document.querySelector('#modalLogin');
+			modalLogin.addEventListener('hidden.bs.modal', function(){
+				modalLogin.querySelector('.login-form').reset();
+				modalLogin.querySelector('.register-form').reset();
+			});
+			
+			
+			
+			// 로그인 모달 켜라고하면 켜
+			let isOpenLogin = document.querySelector('#openLogin').value;
+			if(isOpenLogin.indexOf("true") > -1)
+				showModal(modalLogin);
+			
+			
+			document.querySelector('.login-form').querySelector('input[type="password"]').addEventListener("keydown", function(){
+				e = window.event;	// e = e || window.event; // 이걸로도 됨
+				
+				// ENTER
+				if (e.keyCode == '13') { login(); }
+				// 키코드 확인 https://www.toptal.com/developers/keycode
+			});
 		</script>
 		
 	</th:block>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
