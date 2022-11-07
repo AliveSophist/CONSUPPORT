@@ -3,16 +3,16 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="ownerMapper">
-	
+
 	<select id="getNextHallCode" resultType="String">
 		SELECT
-			'HALL_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(HALL_CODE,6))  )+1, 1), 6, '0')
+			'HALL_' || LPAD( NVL( MAX( TO_NUMBER(SUBSTR(HALL_CODE,6)) )+1, 1), 6, '0')
 		FROM HALL
 	</select>
-	
+
 	<!-- 홀 등록 -->
 	<insert id="insertHall">
-		INSERT INTO HALL (
+		INSERT INTO HALL(
 			HALL_CODE
 			, HALL_NAME
 			, HALL_SEAT_CNT
@@ -31,22 +31,36 @@
 		)
 	</insert>
 	<insert id="insertHallDateList">
-		INSERT INTO 
-			
-			
-		) VALUES(
-			
-			
+		INSERT INTO HALL_DATE(
+			HALL_DATE_CODE
+			, HALL_RENT_DATE
+			, HALL_CODE
 		)
+		<foreach collection="hallDateList" item="hallDate" separator="UNION ALL" index="i">
+			SELECT
+				(SELECT 'H_DATE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HALL_DATE_CODE, 8))), 0) + 1 + #{i}, 6, 0) FROM HALL_DATE)
+				, #{hallDate.hallRentDate}
+				, #{hallCode}
+			FROM DUAL
+		</foreach>
 	</insert>
 	<insert id="insertHallImgList">
-		INSERT INTO 
-			
-			
-		) VALUES(
-			
-			
+		INSERT INTO HALL_IMG(
+			HALL_IMG_CODE
+			, HALL_IMG_NAME_ORIGIN
+			, HALL_IMG_NAME_ATTACHED
+			, HALL_IMG_IS_MAIN
+			, HALL_CODE
 		)
+		<foreach collection="hallImgList" item="hallImg" separator="UNION ALL" index="i">
+			SELECT
+				(SELECT 'H_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HALL_IMG_CODE, 7))), 0) + 1 + #{i}, 6, 0) FROM HALL_IMG)
+				, #{hallImg.hallImgNameOrigin}
+				, #{hallImg.hallImgNameAttached}
+				, #{hallImg.hallImgIsMain}
+				, #{hallCode}
+			FROM DUAL
+		</foreach>
 	</insert>
 	<insert id="insertHallSeat">
 		INSERT INTO(
@@ -55,16 +69,18 @@
 			, HALL_SEAT_S_CNT
 			, HALL_SEAT_A_CNT
 		) VALUES(
-			
-			
+			#{hallCode}
+			, #{hallSeat.hallSeatRCnt}
+			, #{hallSeat.hallSeatSCnt}
+			, #{hallSeat.hallSeatACnt}
 		)
 	</insert>
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 </mapper>

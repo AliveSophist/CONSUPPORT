@@ -13,7 +13,7 @@ import kh.study.consupport.common.vo.HallSeatVO;
 import kh.study.consupport.common.vo.HallVO;
 
 @Service("ownerService")
-public class OwnerServiceImpl implements OwnerService{
+public class OwnerServiceImpl implements OwnerService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;

@@ -53,7 +53,11 @@ public class OwnerController {
 	public void putModelAttribute(HttpServletRequest request, Model model) {
 		
 	}
-
+	
+	
+	
+	
+	
 	@GetMapping("/regHallForm")
 	public String regHallForm() {
 		
@@ -62,7 +66,10 @@ public class OwnerController {
 	
 	@ResponseBody
 	@PostMapping("/regHall")
-	public int regHall(HallVO hall, MultipartFile imgMain, List<MultipartFile> imgsSub) {
+	public int regHall(HallVO hall, HallSeatVO hallSeat, MultipartFile imgMain, List<MultipartFile> imgsSub) {
+		
+		List<HallDateVO> hallDateList;
+		hall.setHallSeat(hallSeat);
 		
 
 		// 메인이미지 없으면 NAGA.
@@ -105,23 +112,6 @@ public class OwnerController {
 		/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
 		
 		hall.setHallImgList(imgList);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-		List<HallDateVO> hallDateList;
-		HallSeatVO hallSeat;
-		
 		
 
 		return ownerService.insertHall(hall);

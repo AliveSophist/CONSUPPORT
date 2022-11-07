@@ -6,7 +6,6 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -40,27 +39,27 @@ public class SecurityConfig {
 		
 		
 		
-		// 익명 유저 허용
-		//참고 https://stackoverflow.com/questions/47347037/spring-security-guest-user
-		security.anonymous().authenticationFilter( new AnonymousAuthenticationFilter("WTF") {
-			
-			@Override
-			protected Authentication createAuthentication(HttpServletRequest request) {
-
-				System.out.println("### 익명 유저가 새로 접속 ###");
-		    	
-				UserDetails user = (User
-										.withUsername(UUID.randomUUID().toString())
-										.password("")
-										.roles("ANONYMOUS")
-										.build());
-				
-				return new UsernamePasswordAuthenticationToken (user, null, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
-				//return new AnonymousAuthenticationToken(key, user, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
-				//ㄴ 아니 뭔 매개변수 순서가 이렇게 제멋대로야 미쳤나 싑
-			}
-			
-		} );
+//		// 익명 유저 허용
+//		//참고 https://stackoverflow.com/questions/47347037/spring-security-guest-user
+//		security.anonymous().authenticationFilter( new AnonymousAuthenticationFilter("WTF") {
+//			
+//			@Override
+//			protected Authentication createAuthentication(HttpServletRequest request) {
+//
+//				System.out.println("### 익명 유저가 새로 접속 ###");
+//		    	
+//				UserDetails user = (User
+//										.withUsername(UUID.randomUUID().toString())
+//										.password("")
+//										.roles("ANONYMOUS")
+//										.build());
+//				
+//				return new UsernamePasswordAuthenticationToken (user, null, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
+//				//return new AnonymousAuthenticationToken(key, user, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
+//				//ㄴ 아니 뭔 매개변수 순서가 이렇게 제멋대로야 미쳤나 싑
+//			}
+//			
+//		} );
 		
 		
 		
@@ -80,12 +79,12 @@ public class SecurityConfig {
 					.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 					
 					//권한이 필요 없는 페이지
-					//.antMatchers("/"
-					//			,"/join"
-					//			,"/login"
-					//			,"/loginResult"	
-					//			,"/logout"
-					//			).permitAll()
+					.antMatchers("/**"
+								,"/join"
+								,"/login"
+								,"/loginResult"	
+								,"/logout"
+								).permitAll()
 					
 					//MEMBER권한 페이지
 					.antMatchers("/member/**").hasAnyRole("MEMBER", "ARTIST", "OWNER", "ADMIN")
@@ -104,43 +103,25 @@ public class SecurityConfig {
 					
 					.and()
 					
-				.formLogin()
-//					.successHandler( new SimpleUrlAuthenticationSuccessHandler() {
-//					    @Override
-//					    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//					    	response.sendRedirect("/loginResult?isSuccess=true");
-//					    }
-//					})
-//					.failureUrl			("/loginResult?isSuccess=false")
-//					.usernameParameter	("userId")
-//					.passwordParameter	("userPw")
-//					
-//					.and()
-//					
-//				.logout()
-//				.logoutSuccessUrl("")
-//				.invalidateHttpSession(true)
+				.formLogin().loginPage	("/login")
+					.successHandler( new SimpleUrlAuthenticationSuccessHandler() {
+					    @Override
+					    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+					    	response.sendRedirect("/loginResult?isSuccess=true");
+					    }
+					})
+					.failureUrl			("/loginResult?isSuccess=false")
+					.usernameParameter	("userId")
+					.passwordParameter	("userPw")
 					
-//					.and()
-//					
-//				.formLogin().loginPage	("/login")
-//					.successHandler( new SimpleUrlAuthenticationSuccessHandler() {
-//					    @Override
-//					    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//					    	response.sendRedirect("/loginResult?isSuccess=true");
-//					    }
-//					})
-//					.failureUrl			("/loginResult?isSuccess=false")
-//					.usernameParameter	("userId")
-//					.passwordParameter	("userPw")
-//					
-//					.and()
-//					
+					.and()
+					
 //				.logout()
-//				.logoutSuccessUrl("")
-//				.invalidateHttpSession(true)
+//					.logoutSuccessUrl("")
+//					.invalidateHttpSession(true)
 				
-				//.and()						나중에 추가해볼까
+				
+				//	.and()						나중에 추가해볼까
 				//.exceptionHandling().accessDeniedPage("/accessDenied"); 권한없을때
 				;
 		

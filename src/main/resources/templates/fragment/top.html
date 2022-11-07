@@ -1,203 +1,302 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-	<div th:fragment="top">
-		<div class="row">
+	<th:block th:fragment="top">
+	
+		<th:block>
+			<style>
+			@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+			
+			.modal-content {
+				background-color: rgba(0, 0, 0, 0);
+				border-color: rgba(0, 0, 0, 0);
+				height: 330px;
+				width: 360px;
+			}
+			.login-page {
+				width: 360px;
+				padding: 8% 0 0;
+				margin: 0 0;
+			}
+			
+			.form {
+				position: relative;
+				z-index: 1;
+				background: #FFFFFF;
+				max-width: 360px;
+				margin: 0 auto 100px;
+				padding: 45px;
+				text-align: center;
+				box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
+					rgba(0, 0, 0, 0.24);
+			}
+			
+			.form input {
+				font-family: "Roboto", sans-serif;
+				outline: 0;
+				background: #f2f2f2;
+				width: 100%;
+				border: 0;
+				margin: 0 0 15px;
+				padding: 15px;
+				box-sizing: border-box;
+				font-size: 14px;
+			}
+			
+			.form button {
+				font-family: "Roboto", sans-serif;
+				text-transform: uppercase;
+				outline: 0;
+				background: #4CAF50;
+				width: 100%;
+				border: 0;
+				padding: 15px;
+				color: #FFFFFF;
+				font-size: 14px;
+				-webkit-transition: all 0.3 ease;
+				transition: all 0.3 ease;
+				cursor: pointer;
+			}
+			
+			.form button:hover, .form button:active, .form button:focus {
+				background: #43A047;
+			}
+			
+			.form .message {
+				margin: 15px 0 0;
+				color: #b3b3b3;
+				font-size: 12px;
+			}
+			
+			.form .message a {
+				color: #4CAF50;
+				text-decoration: none;
+			}
+			
+			.form .register-form {
+				display: none;
+			}
+			
+			.container .info {
+				margin: 50px auto;
+				text-align: center;
+			}
+			
+			.container .info h1 {
+				margin: 0 0 15px;
+				padding: 0;
+				font-size: 36px;
+				font-weight: 300;
+				color: #1a1a1a;
+			}
+			
+			.container .info span {
+				color: #4d4d4d;
+				font-size: 12px;
+			}
+			
+			.container .info span a {
+				color: #000000;
+				text-decoration: none;
+			}
+			
+			.container .info span .fa {
+				color: #EF3B3A;
+			}
+			</style>
+		</th:block>
 		
-			<div class="col text-end" >
-				<span data-bs-toggle="modal" data-bs-target="#join_modal" style="cursor: pointer">JOIN</span>
-				<span data-bs-toggle="modal" data-bs-target="#login_modal" style="cursor: pointer">LOGIN</span>
-				<hr>
-			</div>
-			
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
-			<!-- MEMBER 로그인 -->
-			<!-- <div class="col text-end" >
-				<span ></span> 님 반갑습니다.
-				<a th:href="@{/logout}">LOGOUT</a>
-				<hr>
-				<div>
-					<a>MY PAGE</a>　/
-					<a >CART</a>　
+		
+		
+		
+		<!-- Navigation-->
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="container px-5">
+					<a class="navbar-brand" href="index.html">CONSUPPORT</a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="index.html">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="about.html">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="contact.html">Contact</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="pricing.html">Pricing</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="faq.html">FAQ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="faq.html" data-bs-toggle="modal" data-bs-target="#modalLogin" style="cursor: pointer">LOGIN</a>
+							</li>
+							
+							<!-- <li class="nav-item dropdown"><a
+								class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#"
+								role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
+								<ul class="dropdown-menu dropdown-menu-end"
+									aria-labelledby="navbarDropdownBlog">
+									<li><a class="dropdown-item" href="blog-home.html">Blog
+											Home</a></li>
+									<li><a class="dropdown-item" href="blog-post.html">Blog
+											Post</a></li>
+								</ul></li>
+							<li class="nav-item dropdown"><a
+								class="nav-link dropdown-toggle" id="navbarDropdownPortfolio"
+								href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">Portfolio</a>
+								<ul class="dropdown-menu dropdown-menu-end"
+									aria-labelledby="navbarDropdownPortfolio">
+									<li><a class="dropdown-item" href="portfolio-overview.html">Portfolio
+											Overview</a></li>
+									<li><a class="dropdown-item" href="portfolio-item.html">Portfolio
+											Item</a></li>
+								</ul></li> -->
+						</ul>
+					</div>
 				</div>
-			</div> -->
-			
+			</nav>
+
+
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------->
-			<!-- ADMIN 로그인 -->
-			<!-- <div class="col text-end" >
-				<span ></span> 님 반갑습니다.
-				<a >LOGOUT</a>
-				<hr>
-				<div>
-					<a >MY PAGE</a>　/
-					<a >CART</a>　/ 
-					<a >ADMIN PAGE</a> 
+		
+		<!-- Login a태그 클릭 시 실행되는 Modal -->
+		<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
 					
-				</div>
-			</div> -->
-			
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-		</div>
-		<div class="row">
-			<div class="col text-center mb-4">
-				<h1><a href="/item/list">CONSUPPORT</a></h1>
-			</div>
-			<hr>
-		</div>
-		
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->		
-		
-		<!-- <div class="row">
-			<div class="col mb-3">
-				<nav class="navbar navbar-expand-lg bg-light">
-					<div class="container-fluid">
-						
-						<a class="navbar-brand" href="/item/list">
-							<svg xmlns="http://www.w3.org/2000/svg" width="55" height="30" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-							  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-							  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-							</svg>　
-						</a>
-						
-						<button class="navbar-toggler" type="button"
-							data-bs-toggle="collapse" data-bs-target="#navbarNav"
-							aria-controls="navbarNav" aria-expanded="false"
-							aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-						
-						<div class="collapse navbar-collapse" id="navbarNav">
-						
-							<ul class="navbar-nav">
-								<th:block >
-									<li class="nav-item">
-										<a class="nav-link" href="#" ></a>
-									</li>　　
-								</th:block>
-							</ul>
-							
-							
-							
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+							style="position: absolute; z-index: 10; top: 2.5rem; right: 0.5rem;"></button>
+					
+					<div class="login-page">
+						<div class="form">
+							<form class="register-form">
+								<input type="text" placeholder="name" /> <input type="password"
+									placeholder="password" /> <input type="text"
+									placeholder="email address" />
+								<button>create</button>
+								<p class="message">
+									Already registered? <a>Sign In</a>
+								</p>
+							</form>
+							<form class="login-form">
+								<input type="text" placeholder="ID" name="userId"/>
+								<input type="password" placeholder="Password" name="userPw"/>
+								<button onclick="login()">login</button>
+								<p class="message">
+									Not registered? <a>Create an account</a>
+								</p>
+							</form>
 						</div>
 					</div>
-				</nav>
+				
+				
+				</div>
 			</div>
-		</div> -->
+		</div>
+		
+		
+			
+		<script th:inline="javascript">
+			let bootstrapModal;
+			function showModal(modalTag){
+				bootstrapModal = new bootstrap.Modal(modalTag);
+				bootstrapModal.show();
+			}
+			function hideModal(modalTag){
+				bootstrapModal = new bootstrap.Modal(modalTag);
+				bootstrapModal.hide();
+			}
 		
 		
 		
-		
-		
-		<!-- 로그인버튼 클릭시 실행되는 모달 -->
-		<!-- Modal -->
-		<div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3 class="modal-title" id="exampleModalLabel" >LOGIN</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					
-					<div class="modal-body">
+			// login-page 클래스의 기능 활성화
+			$('.message a').click(function(){
+				$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+			});
 
-						<form action="/member/login" method="post">
-							<div class="mb-3">
-								<label for="memberId" class="form-label">ID</label>
-								<input type="text" class="form-control" id="memberId" aria-describedby="emailHelp" placeholder="ID를 입력하세요." name="memberId">
-							</div>
-							<div class="mb-3">
-								<label for="memberPw" class="form-label">Password</label>
-								<input type="password" class="form-control" id="memberPw" placeholder="PW를 입력하세요." name="memberPw">
-								
-								<div style="margin-top: 13px;">
-									<input class="form-check-input" type="checkbox" style="margin-top: 15px" id="disabledFieldsetCheck"> 
-									<label class="form-check-label" for="disabledFieldsetCheck" style="margin-top: 13px; margin-right: 15px;">ID저장</label>
-									
-									<input class="form-check-input" type="checkbox" style="margin-top: 15px" id="disabledFieldsetCheck"> 
-									<label class="form-check-label" for="disabledFieldsetCheck" style="margin-top: 13px">자동로그인</label>
-								</div>
-								
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-dark">LOGIN</button>
-								<!-- <button type="button" class="btn btn-dark" onclick="login();">AjaxLOGIN</button> -->
-							</div>
-						</form>
+			
+			// 모달 닫을때는 내용 리셋 해줘
+			const modalLogin = document.querySelector('#modalLogin');
+			modalLogin.addEventListener('hidden.bs.modal', function(){
+				modalLogin.querySelector('.login-form').reset();
+				modalLogin.querySelector('.register-form').reset();
+			});
+			
+			
+			// 로그인 모달 켜라고하면 켜
+			let isOpenLogin = document.querySelector('#openLogin').value;
+			if(isOpenLogin.indexOf("true") > -1)
+				showModal(modalLogin);
+			
+			
+			// 로그인 펑션
+			function login(){
+				//ajax start
+				$.ajax({
+					url: '/login', //요청경로
+				    type: 'post',
+				    data: new FormData( modalLogin.querySelector('.login-form') ),
+					
+					/*============== FormData 쓰려면 필요함 ==============*/
+					processData:false,
+					contentType:false,
+			    	cache: false,
+			    	/*============== FormData 쓰려면 필요함 ==============*/
+			    	
+				    success: function(result) {
+				    	
+				    	alert('반갑습니다!?\n님!?');
+				    	
+				    	
+					
+						//로그인 정보 없을 경우, 강제 탈출!
+						if(result.userId==null){
+							alert('다시 입력하세요');
+							return;
+						}
+
+						alert('반갑습니다!?\n님!?');
 						
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		
-		
-		<!-- JOIN 클릭시 실행되는 모달 -->
-		<div class="modal fade" id="join_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3 class="modal-title" id="exampleModalLabel" >JOIN</h3>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					
-					<div class="modal-body">
-					
-						<form class="row g-3" action="/member/join" method="post">
-							<div class="col-12">
-								<label for="memberId" class="form-label">ID</label> 
-								<input type="text" class="form-control" id="memberId" placeholder="ID를 입력해주세요." name="memberId">
-							</div>
-							
-							<div class="col-12">
-								<label for="memberPw" class="form-label">Password</label> 
-								<input type="password" class="form-control" id="memberPw" placeholder="PW를 입력해주세요." name="memberPw">
-							</div>
-							
-							<div class="col-12">
-								<label for="memberName" class="form-label">Name</label> 
-								<input type="text" class="form-control" id="memberName" name="memberName">
-							</div>
-							
-							<div class="col-9">
-								<label for="memberAddr" class="form-label">Address</label> 
-								<input onclick="searchAddr();" type="text" class="form-control" id="memberAddr" readonly name="memberAddr">
-							</div>
-							
-							<div class="col-3">
-								<label for="" class="form-label"></label>
-								<input onclick="searchAddr();" type="button" class="btn btn-secondary form-control" value="Search">
-							</div>
-							
-							<div class="col-12">
-								<input type="text" class="form-control" name="addrDetail" id="addrDetail">
-							</div>
-							
-							<div class="col-12" style="margin-bottom: 10px">
-								<label for="memberEmail" class="form-label">Email</label> 
-								<input type="email" class="form-control" id="memberEmail" name="memberEmail">
-							</div>
-							
-							<div class="col-12 col text-end modal-footer" >
-								<button type="submit" class="btn btn-dark">JOIN</button>
-							</div>
-						</form>
 						
-					</div>
-					
-				</div>
-			</div>
-		</div>
+						
+// 						if(result.memberRole.indexOf('ADMIN') > -1){
+// 							alert('관리자 로그인 입니다..!');
+// 							location.href = '/admin/regItem';
+// 							return;
+// 						}
+						
+						alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
+						//location.href = result.Referer;
+				    },
+				    error: function(){
+						alert('Ajax 실패');
+				    }
+				});
+				//ajax end
+			}
+			
+			
+			
+			/* 
+			const bootstrapModal = new bootstrap.Modal(modalLogin);
+			bootstrapModal.show(); */
+		</script>
 		
-		<script type="text/javascript" src="/js/layout/top.js"></script>
-		
-		
-		
-	</div>
+	</th:block>
 
 </html>
 

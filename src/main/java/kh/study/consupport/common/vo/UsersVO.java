@@ -1,5 +1,7 @@
 package kh.study.consupport.common.vo;
 
+import java.util.HashMap;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,4 +36,22 @@ public class UsersVO {
 	private int userMileage;
 	private String userRole;
 	private String userStatus;
+	
+	public HashMap<String, String> toHash() {
+
+		HashMap<String, String> hash = new HashMap<>();
+		hash.put("userId", this.userId);
+		hash.put("userPw", this.userPw);
+		hash.put("userName", this.userName);
+		hash.put("userAddr", this.userAddr);
+		hash.put("userAddrDetail", this.userAddrDetail);
+		hash.put("userEmail", this.userEmail);
+		hash.put("userBirth", this.userBirth);
+		hash.put("userTell", this.userTell);
+		hash.put("userMileage", this.userMileage+"");
+		hash.put("userRole", this.userRole);
+		hash.put("userStatus", this.userStatus);
+		
+		return hash;
+	}
 }
