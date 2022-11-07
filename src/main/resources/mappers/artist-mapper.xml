@@ -34,6 +34,40 @@
 		FROM GENRE
 	</select>
 	
+	<insert id="regConcert">
+		<selectKey resultType="String" keyProperty="concertCode" order="BEFORE">
+			SELECT 'CONCERT_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(HALL_CODE,6))  )+1, 1), 6, '0')
+			FROM CONCERT
+		</selectKey>
+		INSERT INTO CONCERT(
+			CONCERT_CODE
+            , HALL_CODE 
+            , USER_ID 
+            , CONCERT_NAME
+            , CONCERT_TICKETING_DATE
+            , CONCERT_RATED
+		) VALUES( 
+			#{concertCode}
+			, #{hallCode}
+            , #{userId}
+            , #{concertName}
+            , #{concertTicketingDate}
+            , #{concertRated} 
+		)
+	</insert>
 	
+	<insert id="insertConcertPrice">
+		INSERT INTO CONCERT_PRICE(
+			CONCERT_CODE
+			, CONCERT_PRICE_R
+			, CONCERT_PRICE_S
+			, CONCERT_PRICE_A
+		) VALUES (
+			#{concertCode}
+			, #{concertPriceR}
+			, #{concertPriceS}
+			, #{concertPriceA}
+		)
+</insert>
 	
 </mapper>

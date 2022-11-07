@@ -63,6 +63,8 @@ public class ArtistController {
 	@PostMapping("/regConcert")
 	public String regConcert() {
 		
+		
+		
 		return "redirect:/artist/regConcertForm";
 	}
 	
