@@ -36,7 +36,7 @@
 	
 	<insert id="regConcert">
 		<selectKey resultType="String" keyProperty="concertCode" order="BEFORE">
-			SELECT 'CONCERT_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(HALL_CODE,6))  )+1, 1), 6, '0')
+			SELECT 'CONCERT_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(CONCERT_CODE,9))  )+1, 1), 6, '0')
 			FROM CONCERT
 		</selectKey>
 		INSERT INTO CONCERT(
@@ -68,6 +68,26 @@
 			, #{concertPriceS}
 			, #{concertPriceA}
 		)
-</insert>
+	</insert>
+
+	<insert id="insertConcertImg">
+		INSERT INTO CONCERT_IMG(
+			CONCERT_IMG_CODE
+			, CONCERT_IMG_NAME_ORIGIN
+			, CONCERT_IMG_NAME_ATTACHED
+			, CONCERT_IMG_IS_MAIN
+			, CONCERT_CODE
+			) 
+		<foreach collection="concertImgList" item="concertImg" separator="UNION ALL" index="i">
+			SELECT (SELECT 'C_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CONCERT_IMG_CODE,7))), 0) + 1 + #{i}, 3, 0) 
+					FROM CONCERT_IMG)
+				, #{concertImg.concertImgNameOrigin}
+				, #{concertImg.concertImgNameAttached}
+				, #{concertImg.concertImgIsMain}
+				, #{concertImg.concertCode}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
 	
 </mapper>

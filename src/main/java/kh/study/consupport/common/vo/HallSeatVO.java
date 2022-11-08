@@ -15,9 +15,9 @@ public class HallSeatVO {
 //		HALL_SEAT_S_CNT   NUMBER
 //		HALL_SEAT_A_CNT   NUMBER
 	
-	private String HALL_CODE;
+	private String hallCode;
 	
-	private int HALL_SEAT_R_CNT;
-	private int HALL_SEAT_S_CNT;
-	private int HALL_SEAT_A_CNT;
+	private int hallSeatRCnt;
+	private int hallSeatSCnt;
+	private int hallSeatACnt;
 }

@@ -1,5 +1,7 @@
 package kh.study.consupport.common.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +14,6 @@ public class HallVO {
 //		HALL_NAME         VARCHAR2(100) NOT NULL
 //		HALL_SEAT_CNT     NUMBER NOT NULL
 //		HALL_RENT_PRICE   NUMBER NOT NULL
-//		HALL_STATUS       VARCHAR2(20) DEFAULT 'ACT' NOT NULL        -- (ACT, DEACT)
 //		HALL_DETAIL       VARCHAR2(500)
 //		
 //		USER_ID           VARCHAR2(100) NOT NULL
@@ -23,7 +24,12 @@ public class HallVO {
 	private String hallName;
 	private int hallSeatCnt;
 	private int hallRentPrice;
-	private String hallStatus;
 	private String hallDetail;
 	private String userId;
+	
+	
+	
+	private List<HallImgVO> hallImgList;
+	private List<HallDateVO> hallDateList;
+	private HallSeatVO hallSeat;
 }

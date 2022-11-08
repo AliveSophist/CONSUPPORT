@@ -15,7 +15,7 @@
 	<form th:action="@{/artist/regConcert}" method="post">
 	
 	<!-- userId 삽입 -->
-	<input type="hidden" value="">
+	<input type="hidden" th:value="user.userId">
 	<div class="input-group">
 		<span class="input-group-text">콘서트명</span> 
 		<input type="text" aria-label="First name" class="form-control" name="concertName"> 
@@ -50,12 +50,12 @@
 	</div>
 	
 	<div class="col-12">
-		<span class="form-label">Main Image</span>
+		<span class="form-label" for="concertImg">Main Image</span>
 		<input class="form-control" type="file" name="mainImg">
 		<!-- <input class="form-control" type="file" name="mainImg"> -->
 	</div>
 	<div class="col-12">
-		<span class="form-label">Sub Image</span>
+		<span class="form-label" for="concertImg">Sub Image</span>
 		<input class="form-control" type="file" multiple name="subImgs">
 		<!-- <input class="form-control" type="file" multiple name="subImgs"> -->
 	</div>
