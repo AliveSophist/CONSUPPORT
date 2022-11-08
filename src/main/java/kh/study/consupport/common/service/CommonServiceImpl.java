@@ -22,7 +22,7 @@ public class CommonServiceImpl implements CommonService{
 	
 	@Override
 	public UsersVO selectLoginInfo(String username) {
-		return sqlSession.selectOne("memberMapper.selectLoginInfo", username);
+		return sqlSession.selectOne("commonMapper.selectLoginInfo", username);
 	}
 	
 //	@Override

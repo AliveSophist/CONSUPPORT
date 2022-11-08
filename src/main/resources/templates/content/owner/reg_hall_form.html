@@ -7,80 +7,36 @@
 <body>
 	<div class="row">
 
-		<div class="col-1"></div>
 
+		<form id="regHallForm">
 		
-		<!-- About 상품 -->
-		<div class="col-5">
-		
-			<div style="margin-top:30px;">
-				- 상품 관리 -
-			</div>
+			<input name="hallName" type="text" class="form-control">
 			
-			<div style="margin-top:30px;" th:object="${itemVO}">
 			
-				<!-- <label for="" class="form-label">카테고리</label>
-				<input type="sel" class="form-control" th:field="*{cateCode}"> -->
-				
-				<form id="formInsertItem" name="formInsertItem" enctype="multipart/form-data">
-				
-					<label for="" class="form-label">카테고리</label>
-					<div id="iamCategorySelect">
-						<select name="cateCode" class="form-select">
-							<option value="temp1">temp1</option>
-							<option value="temp2">temp2</option>
-						</select>
-					</div>
-					
-					
-					<label for="" class="form-label">명칭</label>
-					<input type="text" class="form-control" th:field="*{itemName}">
-					
-					
-					<div class="row">
-						<div class="col-6">
-							<label for="" class="form-label">가격</label>
-							<input type="number" class="form-control" th:field="*{itemPrice}">
-						</div>
-						<div class="col-6">
-							<label for="" class="form-label">재고</label>
-							<input type="number" class="form-control" th:field="*{itemStock}">
-						</div>
-					</div>
-					
-					<label for="" class="form-label">Main Image</label>
-					<input type="file" class="form-control" name="imgMain">
-					
-					<label for="" class="form-label">Sub Images</label>
-					<input type="file" class="form-control" name="imgsSub" multiple>
-					
-					<label for="" class="form-label">설명</label>
-					<input type="text" class="form-control" th:field="*{itemComment}">
-				
-				</form>
+		<!-- 	<select></select> -->
+			<input name="hallSeatCnt" type="text" class="form-control">
 			
-				<br>
-				
-				<div class="row justify-content-center">
-					<div class="col-4">
-						<button onclick="insertItem();" style="width:90px; height:30px; background-color:#5b9bd5; border: 2px solid #41719c;">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
-							<path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-							</svg>
-						</button>
-					</div>
-				</div>
-				
-			</div>
+			
+			<input name="hallRentPrice" type="text" class="form-control">
+			<input name="hallDetail" type="text" class="form-control">
 		
-		</div>
 		
-		<div class="col-1"></div>
+			<label for="" class="form-label">Main Image</label>
+			<input type="file" class="form-control" name="imgMain">
+			
+			<label for="" class="form-label">Sub Images</label>
+			<input type="file" class="form-control" name="imgsSub" multiple>
 		
+		
+		</form>
+		
+		
+		
+
 	</div>
 
 
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:src="@{/js/admin/reg_item.js}"></script>
+	<script type="text/javascript" th:src="@{/js/owner/reg_hall_form}"></script>
 </body>
 </html>
