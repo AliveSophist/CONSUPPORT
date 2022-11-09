@@ -191,12 +191,6 @@ public class SecurityConfig {
 					    		
 					    	}
 					    	
-//					        String username = request.getParameter(loginidname);
-//					        String password = request.getParameter(loginpwdname);
-//					        
-//					        request.setAttribute(loginidname, username);
-//					        request.setAttribute(loginpwdname, password);
-//					 
 //					        request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
 					    	response.sendRedirect("/loginResult?isSuccess=false&failureCode="+failureCode);
 					    }
@@ -285,23 +279,5 @@ public class SecurityConfig {
 	    
 	    return daoAuthenticationProvider;
 	}
-	
-	
-//	@Bean
-//	public HttpSessionListener httpSessionListener() {
-//		return new HttpSessionListener() {
-//
-//			private Logger log = LoggerFactory.getLogger(this.getClass());
-//
-//			@Override
-//			public void sessionCreated(HttpSessionEvent se) {
-//				se.getSession().setMaxInactiveInterval(60 * 60); // 세션만료60분
-//			}
-//
-//			@Override
-//			public void sessionDestroyed(HttpSessionEvent se) {
-//			}
-//		};
-//	}
 
 }

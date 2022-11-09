@@ -1,5 +1,7 @@
 package kh.study.consupport.common.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,4 +35,11 @@ public class ConcertVO {
 	private String genreCode;
 	private String hallCode;
 	private String userId;
+	//홀 선택 일단 보류
+	//private HallVO hallVO;
+	//가격 설정
+	private ConcertPriceVO concertPrice;
+	//콘서트 이미지
+	private List<ConcertImgVO> concertImgList;
+	
 }
