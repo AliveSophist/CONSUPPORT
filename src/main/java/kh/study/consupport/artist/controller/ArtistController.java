@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.ConcertImgVO;
 import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -69,30 +70,53 @@ public class ArtistController {
 	// 공연 등록
 	@ResponseBody
 	@PostMapping("/regConcert")
-	public String regConcert(ConcertVO concertVO, MultipartFile concertImg, List<MultipartFile> subconcertImgs) {
+	public int regConcert(ConcertVO concert, MultipartFile imgMain, List<MultipartFile> imgsSub) {
 
 		
 		
-		// 메인이미지가 없으면 종료
-		if(concertImg==null (concertImg!=null && (concertImg.getOriginalFilename()==null	concertImg.getOriginalFilename().equals(""))))
-			return 0;
-		// 서브이미지가 없으면 종료
-		if(subconcertImgs.size()==0 (subconcertImgs.size()>0 && (subconcertImgs.get(0).getOriginalFilename()==null	subconcertImgs.get(0).getOriginalFilename().equals(""))))
+		// 메인이미지 없으면 종료.
+		if(imgMain==null || (imgMain!=null && (imgMain.getOriginalFilename()==null || imgMain.getOriginalFilename().equals(""))))
 			return 0;
 		
+		// 서브이미지 없으면 종료.
+		if(imgsSub.size()==0 || (imgsSub.size()>0 && (imgsSub.get(0).getOriginalFilename()==null || imgsSub.get(0).getOriginalFilename().equals(""))))
+			return 0;
 		
-		// 단일 이미지 파일 첨부 - 메인이미지
-		String mainIngAttachedName = uploadFile(concertImg);
-
-		// 다중 이미지 파일 첨부 - 서브이미지
-		List<String> subImgsAttachedNameList = uploadFiles(subconcertImgs);
-
 	    // 메인&서브이미지 모두 폴더에 저장 후 UUID 파일명 받아오기
-	    String mainImgAttachedName = uploadFile(concertImg);
-	    List<String> subImgsAttachedNameList = uploadFiles(subconcertImgs);
+	    String mainImgAttachedName = uploadFile(imgMain);
+	    List<String> subImgsAttachedNameList = uploadFiles(imgsSub);
 		
+	    /************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
+		List<ConcertImgVO> imgList = new ArrayList<>();
 		
-		return "redirect:/artist/regConcertForm";
+		{
+			// 메인이미지 imgList에 넣는다
+			ConcertImgVO concertImg = new ConcertImgVO();
+			concertImg.setConcertImgNameOrigin(imgMain.getOriginalFilename());
+			concertImg.setConcertImgNameAttached(mainImgAttachedName);
+			concertImg.setConcertImgIsMain("Y");
+			
+			imgList.add(concertImg);
+		}
+		
+		// 상세이미지'들' imgList에 넣는다
+		for( int i=0; i<subImgsAttachedNameList.size(); i++ )
+		{
+			ConcertImgVO concertImg = new ConcertImgVO();
+			concertImg.setConcertImgNameOrigin(imgsSub.get(i).getOriginalFilename());
+			concertImg.setConcertImgNameAttached(subImgsAttachedNameList.get(i));
+			concertImg.setConcertImgIsMain("N");
+			
+			imgList.add(concertImg);
+		}
+		/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
+		
+		concert.setConcertImgList(imgList);
+		
+		//공연정보 삽입
+		artistService.regConcert(concert);
+		
+		return 0;
 	}
 
 	// 파일첨부

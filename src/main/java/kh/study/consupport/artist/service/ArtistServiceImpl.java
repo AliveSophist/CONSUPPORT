@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.GenreVO;
 import kh.study.consupport.common.vo.HallVO;
 
@@ -25,6 +26,11 @@ public class ArtistServiceImpl implements ArtistService{
 	public List<GenreVO> genreList() {
 		
 		return sqlSession.selectList("artistMapper.genreList");
+	}
+
+	@Override
+	public void regConcert(ConcertVO concertVO) {
+		sqlSession.insert("artistMapper.regConcert", concertVO);
 	}
 
 	

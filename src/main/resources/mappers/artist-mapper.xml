@@ -23,7 +23,6 @@
 		    , HALL_NAME
 		    , HALL_SEAT_CNT
 		    , HALL_RENT_PRICE
-		    , HALL_STATUS
 		    , USER_ID
 		FROM HALL
 	</select>
