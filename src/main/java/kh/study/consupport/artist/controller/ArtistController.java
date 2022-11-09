@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,8 +62,8 @@ public class ArtistController {
 		model.addAttribute("hallLIst", artistService.hallList());
 		model.addAttribute("genreList", artistService.genreList());
 
-		User user = (User) authentication.getPrincipal();
-		// model.addAttribute("", user)
+		String user = ((UserDetails)authentication.getPrincipal()).getUsername();
+		model.addAttribute("user", user);
 
 		return "content/artist/reg_concert_from";
 	}
@@ -70,9 +71,12 @@ public class ArtistController {
 	// 공연 등록
 	@ResponseBody
 	@PostMapping("/regConcert")
-	public int regConcert(ConcertVO concert, MultipartFile imgMain, List<MultipartFile> imgsSub) {
+	public int regConcert(ConcertVO concert
+						, MultipartFile imgMain
+						, List<MultipartFile> imgsSub
+						, Authentication authentication) {
 
-		
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
 		
 		// 메인이미지 없으면 종료.
 		if(imgMain==null || (imgMain!=null && (imgMain.getOriginalFilename()==null || imgMain.getOriginalFilename().equals(""))))
@@ -116,7 +120,7 @@ public class ArtistController {
 		//공연정보 삽입
 		artistService.regConcert(concert);
 		
-		return 0;
+		return 1;
 	}
 
 	// 파일첨부
@@ -140,7 +144,7 @@ public class ArtistController {
 
 			try {
 				// artist, concert, hall 서로 다른 폴더로 지정 필요
-				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\concert";
+				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\concert\\";
 
 				mpFile.transferTo(new File(UPLOAD_PATH + fileName));
 			} catch (Exception e) {

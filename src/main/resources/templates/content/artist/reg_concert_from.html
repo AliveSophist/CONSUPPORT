@@ -51,12 +51,12 @@
 	
 	<div class="col-12">
 		<span class="form-label" for="concertImg">Main Image</span>
-		<input class="form-control" type="file" name="mainImg">
+		<input class="form-control" type="file" name="imgMain">
 		<!-- <input class="form-control" type="file" name="mainImg"> -->
 	</div>
 	<div class="col-12">
 		<span class="form-label" for="concertImg">Sub Image</span>
-		<input class="form-control" type="file" multiple name="subImgs">
+		<input class="form-control" type="file" multiple name="imgsSub">
 		<!-- <input class="form-control" type="file" multiple name="subImgs"> -->
 	</div>
 
@@ -79,11 +79,13 @@
 		<input type="text" aria-label="First name" class="form-control" name="concertPriceA"> 
 	</div>
 	
-	<button type="button" th:onclick="regConcert();">등록</button>
 	
 	</form>
 	
-	<script type="text/javascript" th:src="@{/js/aritist/reg_concert.js}"></script>
+	<button th:onclick="regConcert();">등록</button>
+	
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/artist/reg_concert.js}"></script>
 </div>
 
 

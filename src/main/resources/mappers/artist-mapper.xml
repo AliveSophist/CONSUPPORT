@@ -33,11 +33,12 @@
 		FROM GENRE
 	</select>
 	
+	<select resultType="String" id="concertCode">
+		SELECT 'CONCERT_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(CONCERT_CODE,9))  )+1, 1), 6, '0')
+		FROM CONCERT
+	</select>
+	
 	<insert id="regConcert">
-		<selectKey resultType="String" keyProperty="concertCode" order="BEFORE">
-			SELECT 'CONCERT_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(CONCERT_CODE,9))  )+1, 1), 6, '0')
-			FROM CONCERT
-		</selectKey>
 		INSERT INTO CONCERT(
 			CONCERT_CODE
             , HALL_CODE 
