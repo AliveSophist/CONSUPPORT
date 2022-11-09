@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -38,6 +39,10 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import kh.study.consupport.common.vo.UsersVO;
 
 @Configuration
@@ -151,9 +156,21 @@ public class SecurityConfig {
 					.successHandler( new SimpleUrlAuthenticationSuccessHandler() {
 					    @Override
 					    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+					    	//스프링 시큐리티 기본적으로는 로그인 만료시간이 1800초. 30분.
+					    	request.getSession().setMaxInactiveInterval(60*60*24); //일케하면 하루.
+					    	
+//					    	{
+//						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
+//						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
+//						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
+//						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
+//					    	}
+					    	
 					    	response.sendRedirect("/loginResult?isSuccess=true");
 					    }
 					})
+					
 					.failureHandler( new SimpleUrlAuthenticationFailureHandler() {
 					    @Override
 					    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
@@ -246,7 +263,6 @@ public class SecurityConfig {
 				System.out.println( username + " 님 로그인");
 				System.out.println("### 접속 인원 갱신중.. : " + sessionRegistry().getAllPrincipals().size());
 				
-				
 				return ( User
 						.withUsername(loginInfo.getUserId())
 						.password(loginInfo.getUserPw())
@@ -269,4 +285,23 @@ public class SecurityConfig {
 	    
 	    return daoAuthenticationProvider;
 	}
+	
+	
+//	@Bean
+//	public HttpSessionListener httpSessionListener() {
+//		return new HttpSessionListener() {
+//
+//			private Logger log = LoggerFactory.getLogger(this.getClass());
+//
+//			@Override
+//			public void sessionCreated(HttpSessionEvent se) {
+//				se.getSession().setMaxInactiveInterval(60 * 60); // 세션만료60분
+//			}
+//
+//			@Override
+//			public void sessionDestroyed(HttpSessionEvent se) {
+//			}
+//		};
+//	}
+
 }

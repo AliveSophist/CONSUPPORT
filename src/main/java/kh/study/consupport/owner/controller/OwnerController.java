@@ -193,7 +193,7 @@ public class OwnerController {
 
 			try {
 				// artist, concert, hall 서로 다른 폴더로 지정 필요
-				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\hall";
+				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\hall\\";
 				
 				mpFile.transferTo(new File(UPLOAD_PATH + fileName));
 			} catch (Exception e) {
