@@ -71,12 +71,27 @@ public class ArtistController {
 	@PostMapping("/regConcert")
 	public String regConcert(ConcertVO concertVO, MultipartFile concertImg, List<MultipartFile> subconcertImgs) {
 
+		
+		
+		// 메인이미지가 없으면 종료
+		if(concertImg==null (concertImg!=null && (concertImg.getOriginalFilename()==null	concertImg.getOriginalFilename().equals(""))))
+			return 0;
+		// 서브이미지가 없으면 종료
+		if(subconcertImgs.size()==0 (subconcertImgs.size()>0 && (subconcertImgs.get(0).getOriginalFilename()==null	subconcertImgs.get(0).getOriginalFilename().equals(""))))
+			return 0;
+		
+		
 		// 단일 이미지 파일 첨부 - 메인이미지
 		String mainIngAttachedName = uploadFile(concertImg);
 
 		// 다중 이미지 파일 첨부 - 서브이미지
 		List<String> subImgsAttachedNameList = uploadFiles(subconcertImgs);
 
+	    // 메인&서브이미지 모두 폴더에 저장 후 UUID 파일명 받아오기
+	    String mainImgAttachedName = uploadFile(concertImg);
+	    List<String> subImgsAttachedNameList = uploadFiles(subconcertImgs);
+		
+		
 		return "redirect:/artist/regConcertForm";
 	}
 
@@ -101,7 +116,7 @@ public class ArtistController {
 
 			try {
 				// artist, concert, hall 서로 다른 폴더로 지정 필요
-				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\hall";
+				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\concert";
 
 				mpFile.transferTo(new File(UPLOAD_PATH + fileName));
 			} catch (Exception e) {
