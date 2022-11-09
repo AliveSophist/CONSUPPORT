@@ -30,6 +30,6 @@ public class HallVO {
 	
 	
 	private List<HallImgVO> hallImgList;
-	private List<HallDateVO> hallDateList;
+	private List<String> hallRentDateList;
 	private HallSeatVO hallSeat;
 }

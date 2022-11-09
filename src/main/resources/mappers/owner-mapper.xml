@@ -17,7 +17,6 @@
 			, HALL_NAME
 			, HALL_SEAT_CNT
 			, HALL_RENT_PRICE
-			, HALL_STATUS
 			, HALL_DETAIL
 			, USER_ID
 		) VALUES(
@@ -25,7 +24,6 @@
 			, #{hallName}
 			, #{hallSeatCnt}
 			, #{hallRentPrice}
-			, #{hallStatus}
 			, #{hallDetail}
 			, #{userId}
 		)
@@ -36,10 +34,10 @@
 			, HALL_RENT_DATE
 			, HALL_CODE
 		)
-		<foreach collection="hallDateList" item="hallDate" separator="UNION ALL" index="i">
+		<foreach collection="hallRentDateList" item="hallRentDate" separator="UNION ALL" index="i">
 			SELECT
 				(SELECT 'H_DATE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(HALL_DATE_CODE, 8))), 0) + 1 + #{i}, 6, 0) FROM HALL_DATE)
-				, #{hallDate.hallRentDate}
+				, TO_DATE(#{hallRentDate}, 'YYYY-MM-DD HH24:MI:SS')
 				, #{hallCode}
 			FROM DUAL
 		</foreach>
@@ -63,7 +61,7 @@
 		</foreach>
 	</insert>
 	<insert id="insertHallSeat">
-		INSERT INTO(
+		INSERT INTO HALL_SEAT(
 			HALL_CODE
 			, HALL_SEAT_R_CNT
 			, HALL_SEAT_S_CNT

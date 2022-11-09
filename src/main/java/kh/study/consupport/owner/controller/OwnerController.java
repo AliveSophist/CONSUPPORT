@@ -1,6 +1,8 @@
 package kh.study.consupport.owner.controller;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,8 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,12 +70,43 @@ public class OwnerController {
 	
 	@ResponseBody
 	@PostMapping("/regHall")
-	public int regHall(HallVO hall, HallSeatVO hallSeat, MultipartFile imgMain, List<MultipartFile> imgsSub) {
+	public int regHall(	HallVO hall
+						, HallSeatVO hallSeat
+						, String rentDateStart
+						, String rentDateEnd
+						, MultipartFile imgMain
+						, List<MultipartFile> imgsSub
+						, Authentication authentication) {
 		
-		List<HallDateVO> hallDateList;
+		
+		// HALL TABLE's USER_ID
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		hall.setUserId(userId);
+		
+		
+		// HALL_SEAT TABLE 값들
 		hall.setHallSeat(hallSeat);
 		
-
+		
+		// HALL_DATE TABLE 값들
+		List<String> hallRentDateList = new ArrayList<>();
+		LocalDate startDate		= LocalDate.parse(rentDateStart, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate endNextDate	= LocalDate.parse(rentDateEnd, DateTimeFormatter.ofPattern("yyyy-MM-dd")).plusDays(+1);
+		
+		while(!startDate.equals(endNextDate)) {
+			// 오전
+			hallRentDateList.add( startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 00:00:00" );
+			// 오후
+			hallRentDateList.add( startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 12:00:00" );
+			
+			startDate = startDate.plusDays(+1);
+		}
+		hall.setHallRentDateList(hallRentDateList);
+		
+		
+		
+		
+		
 		// 메인이미지 없으면 NAGA.
 		if(imgMain==null || (imgMain!=null && (imgMain.getOriginalFilename()==null || imgMain.getOriginalFilename().equals(""))))
 			return 0;
@@ -83,7 +118,6 @@ public class OwnerController {
 		// 메인&서브이미지 모두 폴더에 저장 후 UUID 파일명 받아오기
 		String mainImgAttachedName = uploadFile(imgMain);
 		List<String> subImgsAttachedNameList = uploadFiles(imgsSub);
-		
 		
 		
 		/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
@@ -111,10 +145,11 @@ public class OwnerController {
 		}
 		/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
 		
+		
 		hall.setHallImgList(imgList);
 		
-
-		return ownerService.insertHall(hall);
+		ownerService.insertHall(hall);
+		return 1;
 	}
 	
 	

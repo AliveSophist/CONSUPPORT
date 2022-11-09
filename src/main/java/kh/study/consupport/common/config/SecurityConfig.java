@@ -47,13 +47,13 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
 		
+		
 		// csrf 무시
 		security.csrf().disable();
 		
 		
-		
 		// 익명유저 허용
-		//참고 https://stackoverflow.com/questions/47347037/spring-security-guest-user
+		// 참고 https://stackoverflow.com/questions/47347037/spring-security-guest-user
 		security.anonymous().authenticationFilter( new AnonymousAuthenticationFilter("WTF") {
 			
 			@Override
@@ -98,8 +98,8 @@ public class SecurityConfig {
 										.build());
 				
 				return new UsernamePasswordAuthenticationToken (user, null, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
-				//return new AnonymousAuthenticationToken(key, user, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
-				//ㄴ 아니 뭔 매개변수 순서가 이렇게 제멋대로야 미쳤나 싑
+				// return new AnonymousAuthenticationToken(key, user, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
+				// ㄴ 아니 뭔 매개변수 순서가 이렇게 제멋대로야 미쳤나 싑
 			}
 			
 		} );
@@ -122,23 +122,24 @@ public class SecurityConfig {
 					.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 					
 					//권한이 필요 없는 페이지
-					.antMatchers("/**"
+					.antMatchers(
+//								"/**"
 //								,"/join"
 //								,"/login"
 //								,"/loginResult"	
 //								,"/logout"
 								).permitAll()
 					
-					//MEMBER권한 페이지
+					// MEMBER권한 페이지
 					.antMatchers("/member/**").hasAnyRole("MEMBER", "ARTIST", "OWNER", "ADMIN")
 
-					//ARTIST권한 전용 페이지
+					// ARTIST권한 전용 페이지
 					.antMatchers("/artist/**").hasAnyRole("ARTIST")
 
-					//OWNER권한 전용 페이지
+					// OWNER권한 전용 페이지
 					.antMatchers("/owner/**").hasAnyRole("OWNER")
 
-					//ADMIN권한 전용 페이지
+					// ADMIN권한 전용 페이지
 					.antMatchers("/admin/**").hasAnyRole("ADMIN")
 					
 					// 그외는 비회원도 허용됨
@@ -261,14 +262,10 @@ public class SecurityConfig {
 	public AuthenticationProvider daoAuthenticationProvider() {
 	    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 	    daoAuthenticationProvider.setUserDetailsService( userDetailsService() );
-	    daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-	    
-	    
+	    daoAuthenticationProvider.setPasswordEncoder( passwordEncoder() );
 	    
 	    // ★ 아이디 틀렸을때 BadCredentialsException 아니라 UsernameNotFoundException 뱉게하는 마법의 문장 ★
 	    daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-	    
-	    
 	    
 	    return daoAuthenticationProvider;
 	}

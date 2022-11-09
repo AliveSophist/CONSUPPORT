@@ -3,40 +3,384 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+
+
+
+<!-- 캘린더 디자인 -->
+<link	rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+<link	rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+<link	rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+
+
+
+<style>
+
+.container {
+	padding-top: 120px;
+	padding-bottom: 120px;
+}
+
+
+
+input {
+	margin-bottom: 30px;
+}
+
+input:focus {
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	border: 1px solid #512DA8;
+	outline-width: 0;
+}
+
+::placeholder {
+	color: #BDBDBD;
+	opacity: 1;
+}
+
+:-ms-input-placeholder {
+	color: #BDBDBD;
+}
+
+::-ms-input-placeholder {
+	color: #BDBDBD;
+}
+
+button:focus {
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	outline-width: 0;
+}
+
+.datepicker {
+	background-color: #fff;
+	border: 1px solid black;
+	border-radius: 0 !important;
+}
+
+.datepicker-dropdown {
+	top: 0;
+	left: 0;
+}
+
+.datepicker table tr td.today, span.focused {
+	border-radius: 50% !important;
+	background-image: linear-gradient(#FFF3E0, #FFE0B2);
+}
+
+.datepicker table tr td.today.range {
+	background-image: linear-gradient(#eeeeee, #eeeeee) !important;
+	border-radius: 0 !important;
+}
+
+thead tr:nth-child(3) th {
+	font-weight: bold !important;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.dow, .old-day, .day, .new-day {
+	width: 40px !important;
+	height: 40px !important;
+	border-radius: 0px !important;
+}
+
+.old-day:hover, .day:hover, .new-day:hover, .month:hover, .year:hover,
+	.decade:hover, .century:hover {
+	border-radius: 50% !important;
+	background-color: #eee;
+}
+
+.active {
+	border-radius: 50% !important;
+	background-image: linear-gradient(#90CAF9, #64B5F6) !important;
+	color: #fff !important;
+}
+
+.range-start, .range-end {
+	border-radius: 50% !important;
+	background-image: linear-gradient(#FFA726, #FFA726) !important;
+}
+
+.prev, .next, .datepicker-switch {
+	border-radius: 0 !important;
+	padding: 10px 10px 10px 10px !important;
+	text-transform: uppercase;
+	font-size: 14px;
+	opacity: 0.8;
+}
+
+.prev:hover, .next:hover, .datepicker-switch:hover {
+	background-color: inherit !important;
+	opacity: 1;
+}
+
+.btn-black {
+	background-color: #37474F !important;
+	color: #fff !important;
+	width: 100%;
+}
+
+.btn-black:hover {
+	color: #fff !important;
+	background-color: #000 !important;
+}
+
+/* 
+#daterangepicker body {
+	color: #000;
+	overflow-x: hidden;
+	height: 100%;
+	background-color: #F9A825 !important;
+	background-repeat: no-repeat;
+}
+#daterangepicker .container {
+	padding-top: 120px;
+	padding-bottom: 120px;
+}
+#daterangepicker input {
+	padding: 10px 15px !important;
+	border: 1px solid lightgrey !important;
+	border-radius: 10px;
+	box-sizing: border-box;
+	background-color: #fff !important;
+	color: #2C3E50;
+	font-size: 14px;
+	letter-spacing: 1px;
+	position: relative;
+}
+#daterangepicker input:focus {
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	border: 1px solid #512DA8;
+	outline-width: 0;
+}
+#daterangepicker ::placeholder {
+	color: #BDBDBD;
+	opacity: 1;
+}
+#daterangepicker :-ms-input-placeholder {
+	color: #BDBDBD;
+}
+#daterangepicker ::-ms-input-placeholder {
+	color: #BDBDBD;
+}
+#daterangepicker button:focus {
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	outline-width: 0;
+}
+#daterangepicker .datepicker {
+	background-color: #fff;
+	border: none;
+	border-radius: 0 !important;
+}
+#daterangepicker .datepicker-dropdown {
+	top: 0;
+	left: 0;
+}
+#daterangepicker .datepicker table tr td.today
+, #daterangepicker span.focused {
+	border-radius: 50% !important;
+	background-image: linear-gradient(#FFF3E0, #FFE0B2);
+}
+#daterangepicker .datepicker table tr td.today.range {
+	background-image: linear-gradient(#eeeeee, #eeeeee) !important;
+	border-radius: 0 !important;
+}
+
+#daterangepicker thead tr:nth-child(3) th {
+	font-weight: bold !important;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#daterangepicker .dow
+, #daterangepicker .old-day
+, #daterangepicker .day
+, #daterangepicker .new-day {
+	width: 40px !important;
+	height: 40px !important;
+	border-radius: 0px !important;
+}
+#daterangepicker .old-day:hover
+, #daterangepicker .day:hover
+, #daterangepicker .new-day:hover
+, #daterangepicker .month:hover
+, #daterangepicker .year:hover
+, #daterangepicker .decade:hover
+, #daterangepicker .century:hover {
+	border-radius: 50% !important;
+	background-color: #eee;
+}
+#daterangepicker .active {
+	border-radius: 50% !important;
+	background-image: linear-gradient(#90CAF9, #64B5F6) !important;
+	color: #fff !important;
+}
+#daterangepicker .range-start
+, #daterangepicker .range-end {
+	border-radius: 50% !important;
+	background-image: linear-gradient(#FFA726, #FFA726) !important;
+}
+#daterangepicker .prev
+, #daterangepicker .next
+, #daterangepicker .datepicker-switch {
+	border-radius: 0 !important;
+	padding: 10px 10px 10px 10px !important;
+	text-transform: uppercase;
+	font-size: 14px;
+	opacity: 0.8;
+}
+#daterangepicker .prev:hover
+, #daterangepicker .next:hover
+, #daterangepicker .datepicker-switch:hover {
+	background-color: inherit !important;
+	opacity: 1;
+}
+#daterangepicker .btn-black {
+	background-color: #37474F !important;
+	color: #fff !important;
+	width: 100%;
+}
+#daterangepicker .btn-black:hover {
+	color: #fff !important;
+	background-color: #000 !important;
+} */
+
+</style>
+
+
+
+
 </head>
 <body>
-	<div class="row">
 
-
-		<form id="regHallForm">
+	
+	
+	<div class="container">
 		
-			<input name="hallName" type="text" class="form-control">
+		
+		<div class="row" style="width:400px;">
+		
+		
+			<form id="regHallForm">
+				
+				
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">hallName</label>
+						<input name="hallName" type="text" class="form-control">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">hallSeatCnt</label>
+						<select name="hallSeatCnt" class="form-select">
+							<option value="50">50</option>
+							<option value="80">80</option>
+							<option value="120">120</option>
+						</select>
+					</div>
+				</div>
+				<div class="row groupHallSeatCnt">
+					<label for="" class="form-label">hallSeatRSACnt</label>
+					<div class="col-4">
+						<input name="hallSeatRCnt" type="number" class="form-control">
+					</div><div class="col-4">
+						<input name="hallSeatSCnt" type="number" class="form-control">
+					</div><div class="col-4">
+						<input name="hallSeatACnt" type="number" class="form-control">
+					</div>
+				</div>
+				
+				
+				<div id="daterangepicker" class="row">
+					<div class="col">
+						<label for="" class="form-label">hallRentDate</label>
+						<div class="input-group input-daterange">
+							<input	name="rentDateStart"
+									type="text"
+									class="form-control"
+									placeholder="Rent Start Date"
+									readonly>
+							<input	name="rentDateEnd"
+									type="text"
+									class="form-control"
+									placeholder="Rent End Date"
+									readonly>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">hallRentPrice</label>
+						<input name="hallRentPrice" type="number" class="form-control">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">hallDetail</label>
+						<textarea name="hallDetail" class="form-control" placeholder="여기에 상세정보 입력" style="height: 100px"></textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">Main Image</label>
+						<input name="imgMain" type="file" class="form-control">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">Sub Images</label>
+						<input name="imgsSub" type="file" class="form-control" multiple>
+					</div>
+				</div>
 			
 			
-		<!-- 	<select></select> -->
-			<input name="hallSeatCnt" type="text" class="form-control">
+			</form>
 			
 			
-			<input name="hallRentPrice" type="text" class="form-control">
-			<input name="hallDetail" type="text" class="form-control">
-		
-		
-			<label for="" class="form-label">Main Image</label>
-			<input type="file" class="form-control" name="imgMain">
+			<button class="btn btn-primary" onclick="regHall();">등록!?</button>
 			
-			<label for="" class="form-label">Sub Images</label>
-			<input type="file" class="form-control" name="imgsSub" multiple>
+			
+		</div>
 		
 		
-		</form>
-		
-		
-		
-
 	</div>
 
 
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:src="@{/js/owner/reg_hall_form}"></script>
+	<script type="text/javascript" src="/js/owner/reg_hall_form.js"></script>
+
 </body>
 </html>
