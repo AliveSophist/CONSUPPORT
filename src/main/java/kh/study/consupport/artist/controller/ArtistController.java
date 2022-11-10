@@ -123,6 +123,26 @@ public class ArtistController {
 		return 1;
 	}
 
+	//홀 상세정보 표시
+	@ResponseBody
+	@PostMapping("/hallSelectAjax")
+	public String selectHallInfo(String hallCode) {
+		
+		
+		return "";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 파일첨부
 	public static String uploadFile(MultipartFile mpFile) {
 
