@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz./thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  layout:decorate="~{layout/base_layout}"
+	  >
+	  
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	<div layout:fragment="content" class="col text-start">
+	<hr>
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-12">
+						<h3>아티스트 or 아티스트대기자</h3>
+						<hr>
+					</div>
+					
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+					<!-- <div class="col-12 mb-3">
+						<div class="col-9">
+							<input type="text" class="form-control" placeholder="-- Input CategoryName --">
+						</div>
+						<div class="col-3">
+							<button type="submit" class="btn btn-dark">
+							몰라
+							</button>
+						</div>
+					</div> -->
+					
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+					<div class="col-12">
+					
+						<table class="table text-center table-hover align-middle">
+						
+							<thead>
+								<tr>
+									<th class="col-2" scope="col">No.</th>
+									<th class="col-2 text-start" scope="col">이미지</th>
+									<th class="col-2" scope="col">아티스트명</th>
+									<th class="col-2" scope="col">유저이름</th>
+									<th class="col-2 text-start" scope="col">아티스트?</th>
+								</tr>
+							</thead>
+							
+							
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+							<tbody>
+								<tr th:each="artist, iterState : ${artistList}">
+									<th scope="row" th:text="${iterState.count}"></th>
+									<td><img th:src="|@{/img/artist/}${artist.artistImgList[0].artistImgNameAttached}|" style="height: 120px; width: 100px"></td>
+									<td>[[${artist.artistName}]]</td>
+									<td>[[${artist.userId}]]</td>
+									<td>
+									
+									
+									
+									
+									
+										<div class="form-check form-check-inline">
+					                    	<input class="form-check-input" type="radio" 
+					                    		   th:name="|role_radio_${iterState.count}|"
+					                    	   	   th:checked="${artist.users.userRole eq 'ARTIST'}"
+					                    	   	   th:onclick="userRoleSet([[${artist.userId}]], 'A');">
+					                    	<label class="form-check-label">A</label>
+					                    </div>
+					                    
+					                    
+					                    
+					                    
+										<div class="form-check form-check-inline">
+					                    	<input class="form-check-input" type="radio" 
+					                    		   th:name="|role_radio_${iterState.count}|" 
+					                    	   	   th:checked="${artist.users.userRole eq 'MEMBER'}"
+					                    	   	   th:onclick="userRoleSet([[${artist.userId}]], 'M');">
+					                    	<label class="form-check-label">M</label>
+					                    </div>
+										
+										
+										
+										
+										
+										
+									</td>
+									
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							
+						</div>
+						
+					</div>
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->					                    		   
+				</div>
+			</div>
+			
+			
+			
+			
+			
+
+			
+		</div>
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="/js/admin/artist_manager.js"></script>
+
+	</div>
+	
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+	
+</html>

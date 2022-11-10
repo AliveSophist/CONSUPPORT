@@ -1,5 +1,7 @@
 package kh.study.consupport.common.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +20,7 @@ public class ArtistVO {
 	
 	private String artistName;
 	private String artistDetail;
+	
+	private List<ArtistImgVO> artistImgList;
+	private UsersVO users;
 }

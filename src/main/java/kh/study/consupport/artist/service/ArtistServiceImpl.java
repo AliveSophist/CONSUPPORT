@@ -14,6 +14,9 @@ import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.GenreVO;
 import kh.study.consupport.common.vo.HallVO;
 
+import kh.study.consupport.common.vo.ArtistVO;
+
+
 @Service("artistService")
 public class ArtistServiceImpl implements ArtistService{
 	
@@ -47,6 +50,37 @@ public class ArtistServiceImpl implements ArtistService{
 
 
 
+//==================================================================================================================
+	
+	// 아티스트 정보 수정 
+	@Override
+	public void updateArtist(ArtistVO artistVO) {
+		sqlSession.update("artistMapper.updateArtist", artistVO);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

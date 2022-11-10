@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ConcertImgVO;
 import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
 
@@ -144,7 +146,7 @@ public class ArtistController {
 
 			try {
 				// artist, concert, hall 서로 다른 폴더로 지정 필요
-				String UPLOAD_PATH = "C:\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\concert\\";
+				String UPLOAD_PATH = "C:\\dev\\workspaceSTS_CONSUPPORT\\CONSUPPORT\\src\\main\\resources\\static\\img\\concert\\";
 
 				mpFile.transferTo(new File(UPLOAD_PATH + fileName));
 			} catch (Exception e) {
@@ -165,4 +167,63 @@ public class ArtistController {
 		return fileNameList;
 	}
 
+	
+//===========================================================================================================================================================================================================================
+	
+	// 아티스트 정보 수정 페이지
+	@GetMapping("/editInfoForm")
+	public String editInfoForm() {
+		return "content/artist/edit_artist_info_form";
+	}
+	
+//===========================================================================================================================================================================================================================
+	
+	// 아티스트 정보 수정 (이미지는 천천히)
+	@PostMapping("/editInfo")
+	public String editInfo(ArtistVO artist, Authentication authentication) {
+		
+		// 로그인한 멤버의 정보 추출
+		User user = (User)authentication.getPrincipal();
+		artist.setUserId(user.getUsername());
+
+		artistService.updateArtist(artist);
+		return "content/artist/edit_artist_info_form";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
