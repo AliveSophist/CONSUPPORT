@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.ArtistVO;
+import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
 
@@ -45,6 +49,58 @@ public class AdminController {
 	public void putModelAttribute(HttpServletRequest request, Model model) {
 		
 	}
+	
+//==================================================================================================================
+	
+	// 아티스트 목록 조회
+	@GetMapping("/artistManager")
+	public String artistManager(Model model) {
+		model.addAttribute("artistList", adminService.selectArtistList());
+		return "content/admin/artist_manager";
+	}
+	
+//==================================================================================================================
+	
+	// 아티스트 승격
+	@ResponseBody
+	@PostMapping("/updateUserRoleToArtist")
+	public void updateUserRoleToArtist(UsersVO usersVO) {
+		adminService.updateUserRoleToArtist(usersVO);
+	}
+	
+//==================================================================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
