@@ -33,6 +33,41 @@ function regConcert(){
 }
 
 
+//////////////////////////////////////////////////////////////////
 
+function loadHallDateList(){
+	
+	var hallCode = document.querySelector('#selectHallCode').value;
+	
+	//ajax start
+	$.ajax({
+		url: '/artist/regConcert', //요청경로
+		type: 'post',
+		enctype: 'multipart/form-data',
+		
+		//이런것도 가능하네
+		data: { 'hallCode':hallCode },
+		
+		/*============== FormData 쓰려면 필요함 ==============*/
+		processData:false,
+		contentType:false,
+    	cache: false,
+    	/*============== FormData 쓰려면 필요함 ==============*/
+    	
+		success: function(hallInfo) {
+			
+			if(result>0)
+				alert('성공.');
+			else
+				alert('오류.');
+			
+			//href
+		},
+		error: function() { alert('실패'); }
+	});
+	//ajax end	
+	
+	
+}
 
 
