@@ -28,6 +28,8 @@ import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ConcertImgVO;
 import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.HallDateVO;
+import kh.study.consupport.common.vo.HallVO;
 import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -70,6 +72,26 @@ public class ArtistController {
 		return "content/artist/reg_concert_from";
 	}
 
+	//홀 정보 불러오기
+	@ResponseBody
+	@PostMapping("/hallInfoAjax")
+	public HallVO hallInfoAjax(String hallCode) {
+		HallVO hallInfo = artistService.hallInfo(hallCode);
+		for(HallDateVO hallDate : hallInfo.getHallDateList()) {
+			
+			hallDate.setHallRentDate( hallDate.getHallRentDate().replace("00:00:00", "오전") );
+			hallDate.setHallRentDate( hallDate.getHallRentDate().replace("12:00:00", "오후") );
+			
+		}
+		
+		
+		System.out.println(hallInfo);
+		
+		return hallInfo;
+	}
+	
+	
+	
 	// 공연 등록
 	@ResponseBody
 	@PostMapping("/regConcert")

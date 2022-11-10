@@ -15,12 +15,14 @@ public interface ArtistService {
 	
 	//홀 리스트
 	List<HallVO> hallList();
+
+	//홀 정보 검색
+	HallVO hallInfo(String hallCode);
 	
 //========================================================================================================================================================================================
 	
 	// 아티스트 정보 수정
 	void updateArtist(ArtistVO artistVO);
-	
 	
 
 	

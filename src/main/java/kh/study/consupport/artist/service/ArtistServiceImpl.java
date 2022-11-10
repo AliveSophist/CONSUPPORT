@@ -35,6 +35,13 @@ public class ArtistServiceImpl implements ArtistService{
 		return sqlSession.selectList("artistMapper.genreList");
 	}
 	
+	//홀정보 불러오기
+	@Override
+	public HallVO hallInfo(String hallCode) {
+		return sqlSession.selectOne("artistMapper.hallInfo", hallCode);
+	}
+
+	//공연 등록
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = Exception.class) //트랜잭션처리
 	@Override
 	public void regConcert(ConcertVO concert) {
@@ -46,8 +53,7 @@ public class ArtistServiceImpl implements ArtistService{
 		sqlSession.insert("artistMapper.insertConcertImg", concert);
 		
 	}
-
-
+	
 
 
 //==================================================================================================================
@@ -57,6 +63,8 @@ public class ArtistServiceImpl implements ArtistService{
 	public void updateArtist(ArtistVO artistVO) {
 		sqlSession.update("artistMapper.updateArtist", artistVO);
 	}
+
+
 
 	
 	

@@ -35,31 +35,52 @@ function regConcert(){
 
 //////////////////////////////////////////////////////////////////
 
-function loadHallDateList(){
+document.querySelector('#loadHallInfoByAjax').replaceChildren();
+
+
+
+
+function loadHallInfo(){
 	
 	var hallCode = document.querySelector('#selectHallCode').value;
+	alert(hallCode)
 	
 	//ajax start
 	$.ajax({
-		url: '/artist/regConcert', //요청경로
+		url: '/artist/hallInfoAjax', //요청경로
 		type: 'post',
-		enctype: 'multipart/form-data',
 		
-		//이런것도 가능하네
 		data: { 'hallCode':hallCode },
 		
-		/*============== FormData 쓰려면 필요함 ==============*/
-		processData:false,
-		contentType:false,
-    	cache: false,
-    	/*============== FormData 쓰려면 필요함 ==============*/
-    	
 		success: function(hallInfo) {
 			
-			if(result>0)
-				alert('성공.');
-			else
-				alert('오류.');
+			//테이블을 다시 그려주자
+			
+			const loadHallInfoByAjax = document.querySelector('#loadHallInfoByAjax');
+			loadHallInfoByAjax.removeChild(  loadHallInfoByAjax.querySelector('#hallDetail')  );
+			loadHallInfoByAjax.removeChild(  loadHallInfoByAjax.querySelector('#selectHallRentDate')  );
+			
+			//추가할 태그 생성
+			let str = '';
+			
+			//상세정보 태그들.
+			str += `	`;
+			
+			
+			//DateList.
+			str += `	<select class="form-select" id="selectHallRentDate">`;
+			str += `		<option selected>콘서트 시간을 지정해 주세요</option>`;
+			
+			for(const hallDate of  hallInfo.hallDateList) {
+				str += `	<option value="${hallDate.hallDateCode}">${hallDate.hallRentDate}</option>`
+			}
+			str += `	</select>`;
+			
+			
+			loadHallInfoByAjax.insertAdjacentHTML('beforeend', str);
+			
+			
+			
 			
 			//href
 		},

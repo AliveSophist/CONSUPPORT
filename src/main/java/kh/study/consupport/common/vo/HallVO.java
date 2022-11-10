@@ -29,7 +29,8 @@ public class HallVO {
 	
 	
 	
-	private List<HallImgVO> hallImgList;
 	private List<String> hallRentDateList;
+	private List<HallImgVO> hallImgList;
 	private HallSeatVO hallSeat;
+	private List<HallDateVO> hallDateList;
 }
