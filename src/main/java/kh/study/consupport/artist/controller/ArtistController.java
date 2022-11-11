@@ -61,14 +61,14 @@ public class ArtistController {
 
 	// 공연 등록 페이지
 	@GetMapping("/regConcertForm")
-	public String regConcertForm(Model model, Authentication authentication) {
+	public String regConcertForm(HallVO hall ,Model model, Authentication authentication) {
 
-		model.addAttribute("hallLIst", artistService.hallList());
+		model.addAttribute("hallList", artistService.hallList());
 		model.addAttribute("genreList", artistService.genreList());
 
-		String user = ((UserDetails)authentication.getPrincipal()).getUsername();
-		model.addAttribute("user", user);
-
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		hall.setUserId(userId);
+		model.addAttribute("hall", hall);
 		return "content/artist/reg_concert_from";
 	}
 
@@ -84,8 +84,6 @@ public class ArtistController {
 			
 		}
 		
-		
-		System.out.println(hallInfo);
 		
 		return hallInfo;
 	}

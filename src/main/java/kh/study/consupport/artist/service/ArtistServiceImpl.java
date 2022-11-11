@@ -45,7 +45,7 @@ public class ArtistServiceImpl implements ArtistService{
 	@org.springframework.transaction.annotation.Transactional(rollbackFor = Exception.class) //트랜잭션처리
 	@Override
 	public void regConcert(ConcertVO concert) {
-		
+		System.out.println(concert);
 		concert.setConcertCode(sqlSession.selectOne("artistMapper.concertCode", concert));
 		
 		sqlSession.insert("artistMapper.regConcert", concert);

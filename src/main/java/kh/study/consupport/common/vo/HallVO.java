@@ -15,7 +15,7 @@ public class HallVO {
 //		HALL_SEAT_CNT     NUMBER NOT NULL
 //		HALL_RENT_PRICE   NUMBER NOT NULL
 //		HALL_DETAIL       VARCHAR2(500)
-//		
+//	
 //		USER_ID           VARCHAR2(100) NOT NULL
 //		                  CONSTRAINT HALL_FK_REF_USER REFERENCES USERS(USER_ID)
 	
@@ -26,7 +26,6 @@ public class HallVO {
 	private int hallRentPrice;
 	private String hallDetail;
 	private String userId;
-	
 	
 	
 	private List<String> hallRentDateList;

@@ -101,6 +101,8 @@
             , CONCERT_NAME
             , CONCERT_TICKETING_DATE
             , CONCERT_RATED
+            , GENRE_CODE
+            , HALL_DATE_CODE
 		) VALUES( 
 			#{concertCode}
 			, #{hallCode}
@@ -108,6 +110,8 @@
             , #{concertName}
             , #{concertTicketingDate}
             , #{concertRated} 
+            , #{genreCode}
+            , #{hallDateCode}
 		)
 	</insert>
 	
