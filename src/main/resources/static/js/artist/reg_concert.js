@@ -65,6 +65,7 @@ function loadHallInfo(){
 			let str = '';
 			
 			//상세정보 태그들.
+			str += `  <div id="hallDetail">`
 			str += `	<div class="row mb-3">`;
 			str += `		<div class="col-6">`;
 			for(const hallImg of hallInfo.hallImgList) {
@@ -108,6 +109,7 @@ function loadHallInfo(){
 			}
 			str += `			<div class="col-12">`;
 			str += `		</div>`;
+			str += `	</div>`;
 			str += `	</div>`;
 			str += `	<hr>`
 			

@@ -86,14 +86,13 @@
 
 				<div class="input-group">
 					<span class="input-group-text">콘서트 티켓가격(R석)</span> 
-					<input
-						type="text" aria-label="First name" class="form-control" name="concertPriceR"> 
-						<span class="input-group-text">콘서트 티켓가격(S석)</span> 
-						<input type="text" aria-label="First name"
-						class="form-control" name="concertPriceS"> 
-						<span class="input-group-text">콘서트 티켓가격(A석)</span> 
-						<input type="text"
-						aria-label="First name" class="form-control" name="concertPriceA">
+					<input type="text" name="concertPrice.concertPriceR" aria-label="First name" class="form-control"> 
+					
+					<span class="input-group-text">콘서트 티켓가격(S석)</span> 
+					<input type="text" name="concertPrice.concertPriceS" aria-label="First name" class="form-control"> 
+					
+					<span class="input-group-text">콘서트 티켓가격(A석)</span> 
+					<input type="text" name="concertPrice.concertPriceA" aria-label="First name" class="form-control">
 				</div>
 				
 				
@@ -127,7 +126,6 @@
 								
 							</div>
 
-							<hr>
 
 							<select name="hallDateCode" class="form-select" id="selectHallRentDate"> <!-- RentDate 목록을 표시할 틀. -->
 								<option selected>콘서트 시간을 지정해 주세요</option>

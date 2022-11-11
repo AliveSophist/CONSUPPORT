@@ -124,9 +124,9 @@
 			, CONCERT_PRICE_A
 		) VALUES (
 			#{concertCode}
-			, #{concertPriceR}
-			, #{concertPriceS}
-			, #{concertPriceA}
+			, #{concertPrice.concertPriceR}
+			, #{concertPrice.concertPriceS}
+			, #{concertPrice.concertPriceA}
 		)
 	</insert>
 	
@@ -140,12 +140,13 @@
 			, CONCERT_CODE
 			) 
 		<foreach collection="concertImgList" item="concertImg" separator="UNION ALL" index="i">
-			SELECT (SELECT 'C_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CONCERT_IMG_CODE,7))), 0) + 1 + #{i}, 3, 0) 
+			SELECT 
+				(SELECT 'C_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CONCERT_IMG_CODE,7))), 0) + 1 + #{i}, 6, 0) 
 					FROM CONCERT_IMG)
 				, #{concertImg.concertImgNameOrigin}
 				, #{concertImg.concertImgNameAttached}
 				, #{concertImg.concertImgIsMain}
-				, #{concertImg.concertCode}
+				, #{concertCode}
 			FROM DUAL
 		</foreach>
 	</insert>

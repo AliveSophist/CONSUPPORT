@@ -27,6 +27,7 @@ import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ConcertImgVO;
+import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.HallDateVO;
 import kh.study.consupport.common.vo.HallVO;
@@ -138,6 +139,7 @@ public class ArtistController {
 		/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
 		
 		concert.setConcertImgList(imgList);
+		
 		
 		//공연정보 삽입
 		artistService.regConcert(concert);
