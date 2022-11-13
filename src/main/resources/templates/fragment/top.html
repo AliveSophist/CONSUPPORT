@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 	<th:block th:fragment="top">
 
 		<th:block>
 			<style>
+			#modalAlert {
+				top: 12%;
+				margin-top: -50px;
+			}
+			
+			
 			@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 			
 			.login-page {
@@ -112,7 +117,7 @@
 		<!-- Navigation-->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container px-5">
-				<a class="navbar-brand" href="index.html">CONSUPPORT</a>
+				<a class="navbar-brand" href="/">CONSUPPORT</a>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -122,7 +127,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link" href="index.html">Home</a>
+							<a class="nav-link" href="/">Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="about.html">About</a>
@@ -145,7 +150,7 @@
 						
 						<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
 						<li class="nav-item">
-							<a class="nav-link" href="goLogout">LOGOUT</a>
+							<a class="nav-link" href="/logout">LOGOUT</a>
 						</li>
 						</th:block>
 
@@ -199,26 +204,24 @@
 									<input name="username_dummy" type="text" style="display:none" aria-hidden="true">
 									<input name="password_dummy" type="password" style="display:none" aria-hidden="true">
 									
-									<input name="userId"			type="text" placeholder="ID" autocomplete="off"/>
-									<input name="userPw"			type="password" placeholder="Password" autocomplete="off"/>
-									<input name="userName"			type="text" placeholder="userName"/>
+									<input name="userId"			type="email" placeholder="ID (email)" autocomplete="off" required/>
+									<input name="userPw"			type="password" placeholder="Password" autocomplete="off" required/>
+									<input name="userName"			type="text" placeholder="userName" required/>
 									
-									<input name="userAddr"			type="text" placeholder="userAddr"/>
+									<input name="userAddr"			type="text" placeholder="userAddr" required/>
 									<input name="userAddrDetail"	type="text" placeholder="userAddrDetail"/>
 									
-									<input name="userEmail"			type="text" placeholder="userEmail"/>
+									<input name="userBirth"			type="text" placeholder="userBirth" required/>
+									<input name="userTell"			type="text" placeholder="userTell" required/>
 									
-									<input name="userBirth"			type="text" placeholder="userBirth"/>
-									<input name="userTell"			type="text" placeholder="userTell"/>
-									
-									<button type="button" >create</button>
+									<button type="button" onclick="join()">create</button>
 									<p class="message">
 										Already registered? <a>Sign In</a>
 									</p>
 								</form>
 								
 								<form class="login-form" name="loginForm">
-									<input name="userId"	type="text" placeholder="ID"/>
+									<input name="userId"	type="text" placeholder="ID (email)"/>
 									<input name="userPw"	type="password" placeholder="Password"/>
 									
 									<button type="button" onclick="login()">login</button>
@@ -243,7 +246,7 @@
 
 		<!-- Alert! -->
 		<div id="modalAlert" class="modal" tabindex="-1" style="z-index: 1070;">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 				
 					<div class="modal-body">
@@ -282,14 +285,63 @@
 			
 			
 			
-			// login-page 클래스의 기능 활성화
+			// login-page 클래스의 애니메이션 기능 활성화
 			$('.message a').click(function() {
 				$('form').animate({
 					height : "toggle",
 					opacity : "toggle"
 				}, "slow");
 			});
+			
+			// 가입 펑션
+			function join() {
+				//ajax start
+				$.ajax({
+					url : '/join', //요청경로
+					type : 'post',
+					
+					data: $("form[name=registerForm]").serialize(),
+					
+					success : function(result) {
 	
+						//가입 실패할 경우 에러 메세지 띄우기..!
+						if (result.userId == null) {
+							
+							if(result.errors != null){
+								let str = '';
+								for(error of result.errors)
+									str += (error + '\n\n');
+								
+								modalAlert.querySelector('.modalAlert_InnerContent').innerText = str;
+								showModal(modalAlert);
+							}
+							if(result.duplicated != null){
+								modalAlert.querySelector('.modalAlert_InnerContent').innerText = result.duplicated;
+								showModal(modalAlert);
+							}
+								
+							return;
+						}
+						
+						//가입 성공한 경우 자동으로 로그인 완료!
+						alert('반갑습니다! ' + result.userName + ' 님');
+	
+						// 						if(result.memberRole.indexOf('ADMIN') > -1){
+						// 							alert('관리자 로그인 입니다..!');
+						// 							location.href = '/admin/regItem';
+						// 							return;
+						// 						}
+	
+						alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
+						location.href = result.Referer;
+					},
+					error : function() {
+						alert('Ajax 실패');
+					}
+				});
+				//ajax end
+			}
+			
 			// 로그인 펑션
 			function login() {
 				//ajax start
@@ -304,13 +356,13 @@
 						//로그인 정보 없을 경우, 강제 탈출!
 						if (result.userId == null) {
 							
-							modalAlert.querySelector('.modalAlert_InnerContent').innerHTML = result.alertMsg;
+							modalAlert.querySelector('.modalAlert_InnerContent').innerText = result.alertMsg;
 							showModal(modalAlert);
 							
 							return;
 						}
-	
-						alert('반갑습니다!? ' + result.userName + '님!?');
+
+						alert('반갑습니다! ' + result.userName + ' 님');
 	
 						// 						if(result.memberRole.indexOf('ADMIN') > -1){
 						// 							alert('관리자 로그인 입니다..!');
@@ -352,6 +404,6 @@
 			if (isOpenLogin.indexOf("true") > -1)
 				showModal(modalLogin);
 		</script>
-	
+		
 	</th:block>
 </html>

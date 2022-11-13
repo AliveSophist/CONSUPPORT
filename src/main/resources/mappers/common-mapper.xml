@@ -22,6 +22,29 @@
 	
 	
 	
+	<!-- Join -->
+	<insert id="insertUser">
+		INSERT INTO USERS(
+		    USER_ID
+		    , USER_PW
+		    , USER_NAME
+		    , USER_ADDR
+		    , USER_ADDR_DETAIL
+		    , USER_BIRTH
+		    , USER_TELL
+		) VALUES(
+		    #{userId}
+		    , #{userPw}
+		    , #{userName}
+		    , #{userAddr}
+		    , #{userAddrDetail}
+		    , #{userBirth}
+		    , #{userTell}
+		)
+	</insert>
+	
+	
+	
 	<!-- Login -->
 	<select id="login" resultMap="user">
 		SELECT
@@ -32,8 +55,6 @@
 		WHERE
 			USER_ID = #{userId}
 	</select>
-	
-	
 	
 	<!-- get LoginInfo -->
 	<select id="selectLoginInfo" resultMap="user">
@@ -47,28 +68,6 @@
 	</select>
 
 
-	<!-- Join -->
-	<insert id="insertUser">
-		INSERT INTO USERS(
-		    USER_ID
-		    , USER_PW
-		    , USER_NAME
-		    , USER_ADDR
-		    , USER_ADDR_DETAIL
-		    , USER_EMAIL
-		    , USER_BIRTH
-		    , USER_TELL
-		) VALUES(
-		    #{userId}
-		    , #{userPw}
-		    , #{userName}
-		    , #{userAddr}
-		    , #{userAddrDetail}
-		    , #{userEmail}
-		    , #{userBirth}
-		    , #{userTell}
-		)
-	</insert>
 
 
 

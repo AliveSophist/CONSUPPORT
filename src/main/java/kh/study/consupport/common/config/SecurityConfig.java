@@ -1,16 +1,12 @@
 package kh.study.consupport.common.config;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -37,12 +33,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
 import kh.study.consupport.common.vo.UsersVO;
 
 @Configuration
@@ -72,23 +65,26 @@ public class SecurityConfig {
 				
 				String username = null;
 				
-				// 익명계정 접속기록이 쿠키에 남아 있다면 해당 아이디를 불러온다.
-				{
-					List<Cookie> cookies = Arrays.asList(request.getCookies());
-					if(cookies.size()>0) {
-						for(Cookie ck : cookies)
-							if(ck.getName().equals("ANONYMOUS_UUID")) {
-								username = ck.getValue();
-								
-								System.out.println("### 쿠키 있음. 해당 쿠키로 로그인.");
-							}
-					}
-				}
+//				// 익명계정 접속기록이 쿠키에 남아 있다면 해당 아이디를 불러온다.
+//				{
+//					List<Cookie> cookies = Arrays.asList(request.getCookies());
+//					if(cookies.size()>0) {
+//						for(Cookie ck : cookies)
+//							if(ck.getName().equals("ANONYMOUS_UUID")) {
+//								username = ck.getValue();
+//								
+//								System.out.println("### 쿠키 있음. 해당 쿠키로 로그인.");
+//							}
+//					}
+//				}
 				
 				// 쿠키에 없다면 신규 UUID를 발급한다.
 				if(username == null) {
 					System.out.println("### 쿠키 없음. 신규 익명 아이디 발급필요.");
 					username = UUID.randomUUID().toString();
+					
+					// ------------------ 쿠키에 username 담기 ------------------
+					
 				}
 				
 				
@@ -126,13 +122,9 @@ public class SecurityConfig {
 				
 					.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 					
-					//권한이 필요 없는 페이지
+					//권한이 필요 없는 페이지 : 비회원 접속시 ANONYMOUS 계정으로 인증이 자동으로 되어버리므로 무의미 ㅋㅋ
 					.antMatchers(
 //								"/**"
-//								,"/join"
-//								,"/login"
-//								,"/loginResult"	
-//								,"/logout"
 								).permitAll()
 					
 					// MEMBER권한 페이지
@@ -163,51 +155,57 @@ public class SecurityConfig {
 //					    	{
 //						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
 //						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
-//						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
-//						    	System.out.println("몇분남았니??" + request.getSession().getMaxInactiveInterval());
 //					    	}
 					    	
 					    	response.sendRedirect("/loginResult?isSuccess=true");
 					    }
-					})
-					
+					} )
 					.failureHandler( new SimpleUrlAuthenticationFailureHandler() {
-					    @Override
-					    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-					        
-					    	String failureCode = exception.getClass().getSimpleName();
-					    	
-					    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					    	System.out.println(exception.getMessage());
-					    	System.out.println(exception.getClass().getSimpleName());
-					    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					    	
-					    	if(exception.getMessage().equals("!USERNAME_NOT_FOUND!")) {
-					    		System.out.println("쇼신쇼메이노 아이디 에러이다...!");
-					    		System.out.println("쇼신쇼메이노 아이디 에러이다...!");
-					    		System.out.println("쇼신쇼메이노 아이디 에러이다...!");
-					    		System.out.println("쇼신쇼메이노 아이디 에러이다...!");
-					    		System.out.println("쇼신쇼메이노 아이디 에러이다...!");
-					    		
-					    	}
-					    	
-//					        request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
-					    	response.sendRedirect("/loginResult?isSuccess=false&failureCode="+failureCode);
-					    }
-					})
-					//.failureUrl			("/loginResult?isSuccess=false")
+						@Override
+						public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+								
+							String failureCode = exception.getClass().getSimpleName();
+							
+							System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+							System.out.println(exception.getMessage());
+							System.out.println(exception.getClass().getSimpleName());
+							System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+							
+							if(exception.getMessage().equals("!USERNAME_NOT_FOUND!")) {
+								System.out.println("쇼신쇼메이노 아이디 에러이다...!");
+								System.out.println("쇼신쇼메이노 아이디 에러이다...!");
+							}
+							
+							response.sendRedirect("/loginResult?isSuccess=false&failureCode="+failureCode);
+						}
+					} )
 					.usernameParameter	("userId")
 					.passwordParameter	("userPw")
 					
 					.and()
 					
 				.logout()
+				.addLogoutHandler( new LogoutHandler() {
+					
+					@Override
+					public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+						
+						System.out.println("### 삭제 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
+						System.out.println("### 접속 총인원 : " + sessionRegistry().getAllPrincipals().size());
+						
+						// 접속중이던 해당 계정을 로그아웃.
+						sessionRegistry().removeSessionInformation(  RequestContextHolder.currentRequestAttributes().getSessionId()  );
+						
+
+						request.getSession().invalidate();
+					}
+				} )
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true)
 				
-				
-				//	.and()						나중에 추가해볼까
-				//.exceptionHandling().accessDeniedPage("/accessDenied"); 권한없을때
+					.and()
+					
+				.exceptionHandling().accessDeniedPage("/accessDenied")
 				;
 		
 		return security.build();
@@ -249,10 +247,8 @@ public class SecurityConfig {
 			    	throw new UsernameNotFoundException("!USERNAME_NOT_FOUND!");
 				}
 				
-				// sessionRegistry 에서 제거해주어야 접속 인원이 줄어들게됨
-				System.out.println("### 접속 중이었던 인원 : " + sessionRegistry().getAllPrincipals().size());
+				// 접속중이던 익명유저 계정을 로그아웃.
 				sessionRegistry().removeSessionInformation(  RequestContextHolder.currentRequestAttributes().getSessionId()  );
-				// ㄴ시큐리티 세션에서 해당 익명유저 계정을 로그아웃.
 				
 				System.out.println( username + " 님 로그인");
 				System.out.println("### 접속 인원 갱신중.. : " + sessionRegistry().getAllPrincipals().size());

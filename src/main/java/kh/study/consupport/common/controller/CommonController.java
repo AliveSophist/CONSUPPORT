@@ -3,12 +3,14 @@ package kh.study.consupport.common.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.config.SecurityConfig;
+import kh.study.consupport.common.constant.UserRole;
+import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
@@ -57,6 +65,7 @@ public class CommonController {
 	private OwnerService ownerService;
 
 	
+	
 	@Data
 	class PageDefaultValues {
 		// 로그인 및 비회원이 이용하는 서비스에 필요한 변수들..
@@ -69,25 +78,32 @@ public class CommonController {
 	
 	
 	
-
+	
+	
 	@GetMapping("")
 	public String index() {
-		return "redirect:/concertList";
+		return "redirect:/test";
 	}
 	
+	// 현재 접속 아이디가 모임?
 	@GetMapping("test")
 	public String authenticationTest(HttpSession session, Authentication authentication) {
 		
-		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!");
-		System.out.println("userId : "+userId);
+		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
+		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!");
 		
-		return "/content/common/index";
+		return "redirect:/concertList";
 	}
 
+	@GetMapping("accessDenied")
+	public String accessDenied() {
+		return "/content/common/accessDenied";
+	}
 	
 	
+
 	@GetMapping("concertList")
 	public String goConcertList() {
 		return "/content/common/concert_list";
@@ -96,30 +112,95 @@ public class CommonController {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//== 가입 및 로그인 관련 ===================================================================================================================================================================================================================
 
 	
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-
-//	@PostMapping("/join")
-//	public String join(UsersVO user, Model model, String[] memberEmail) {
-//		
-//		if(memberService.insertMember(member) != 0) {
-//			System.out.println("회원명 : [" +member.getMemberName()+ "]님 등록완료!!");
-//			System.out.println("회원명 : [" +member.getMemberName()+ "]님 등록완료!!");
-//			System.out.println("회원명 : [" +member.getMemberName()+ "]님 등록완료!!");
-//		}
-//		
-//		return "redirect:/item/list";
-//	}
+	@ResponseBody
+	@PostMapping("/join")
+	public Object join(@Validated UsersVO user, BindingResult bindingResult, HttpServletRequest request) {
+		if(bindingResult.hasErrors()){
+			
+			//람다 개어렵네 무슨뜻인지 모름 ㅅㄱ
+			List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
+			
+			Map<String, Object> hashErrorInfo = new HashMap<>();
+			hashErrorInfo.put("errors", errors);
+			
+			return hashErrorInfo;
+		}
+		
+		
+		// 가입 쿼리 실행 전 password 인코딩, userStatus userRole 셋팅
+		user.setUserPw		( securityConfig.passwordEncoder().encode(user.getUserPw()) );
+		user.setUserStatus	( UserStatus.ACT.toString() );
+		user.setUserRole	( UserRole.MEMBER.toString() );
+		
+		
+		// 가입 중복! 오류뱉자!
+		try {
+			commonService.insertUser(user);
+		} catch (Exception e2) {
+			Map<String, Object> hashErrorInfo = new HashMap<>();
+			hashErrorInfo.put("duplicated", "해당 아이디는 이미 가입한 계정입니다.");
+			
+			return hashErrorInfo;
+		}
+		
+		
+		// 가입 오류 없으면 로그인까지 슥삭! 먼저 ID PW 셋팅해주시고~
+		request.setAttribute("userId", user.getUserId());
+	    request.setAttribute("userPw", user.getUserPw());
+	    
+	    // PostMapping 방식으로 redirect 하는 방법! Spring Security의 login은 PostMapping이므로.....
+		request.setAttribute( View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.TEMPORARY_REDIRECT );
+		return new ModelAndView("redirect:/login");
+	}
 	
 	@GetMapping("/login")
 	public String loadLoginFormOnYourPage(HttpServletRequest request) {
@@ -158,22 +239,12 @@ public class CommonController {
 											, String failureCode
 											, HttpSession session
 											, Authentication authentication) {
-											//, AuthenticationException exception) {
 		
 		Map<String, String> hashLoginInfo = new HashMap<>();
 		
 		//로그인 정보 없을 경우, 오류코드 들고 강제 탈출!
 		if(!isSuccess) {
-//			if(exception!=null) {
-//				System.out.println("오류코드 감지해?");
-//				System.out.println("오류코드 감지해?");
-//				System.out.println("오류코드 감지해?");
-//				System.out.println("오류코드 감지해?");
-//			}
-			
 			hashLoginInfo.put("alertMsg", failureCode);
-			System.out.println("뀨앙 팅김");
-			System.out.println("뀨앙 팅김");
 			System.out.println("뀨앙 팅김");
 			System.out.println("뀨앙 팅김");
 			
@@ -181,51 +252,25 @@ public class CommonController {
 		}
 		
 		
-		
-		System.out.println("로그인후 여기오나??");
-		System.out.println("로그인후 여기오나??");
-		System.out.println("로그인후 여기오나??");
-		System.out.println("로그인후 여기오나??");
-		System.out.println("로그인후 여기오나??");
-		
-		
-		
 		UserDetails userDetails = (User)authentication.getPrincipal();
-		UsersVO loginInfo = commonService.selectLoginInfo( userDetails.getUsername() );
 		
-		// 세션에 ID로 정보를 저장한다..! 
-		// 이 경우 session.getAttribute( user.getPassword() ); 이걸로 불러올 수 있다!
-		session.setAttribute( userDetails.getUsername(), loginInfo);
-							//user.getPassword()하기엔 너무 긴듯 저장안됨.
+		UsersVO loginInfo = commonService.selectLoginInfo( userDetails.getUsername() );
+		session.setAttribute( "loginInfo", loginInfo);
 
 		hashLoginInfo.put("userId", loginInfo.getUserId());
 		hashLoginInfo.put("userName", loginInfo.getUserName());
 		hashLoginInfo.put("userRole", loginInfo.getUserRole());
 		
 		
-		
+		// 이전 페이지 주소 가져오기! Referer!!
 		String referer = request.getHeader("Referer");
 		
-		// &openLogin= 가 있었다면 빼준다..! 중복제거!
+		// &openLogin= 가 있었다면 빼줘라
 		if(referer.contains("openLogin"))
-			referer = referer.substring(0, referer.indexOf("openLogin")-1); // 한글자 앞까지 지워서 ? & 도 지워줘!
+			referer = referer.substring(0, referer.indexOf("openLogin")-1 /** 한글자 앞까지 지워서 ? & 도 지워줘! **/ );
 		
 		hashLoginInfo.put("Referer", referer); // 이전 페이지(로그인을 수행한 페이지) 주소를 가져간다...
 		
 		return hashLoginInfo;
-	}
-	
-	@RequestMapping("/goLogout")
-	public String logout(Authentication authentication, HttpSession session) {
-		
-		// sessionRegistry 에서 제거해주어야 접속 인원이 줄어들게됨
-		System.out.println("### 접속 중이었던 인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());
-		securityConfig.sessionRegistry().removeSessionInformation(  RequestContextHolder.currentRequestAttributes().getSessionId()  );
-		// ㄴ시큐리티 세션에서 해당 계정을 로그아웃. 하지만 /logout이후에는 익명유저로 로그인하게됨.
-		
-		System.out.println(((UserDetails)authentication.getPrincipal()).getUsername() + " 님이 로그아웃 합니다.");
-		System.out.println("### 접속 인원 갱신중.. : " + securityConfig.sessionRegistry().getAllPrincipals().size());
-		
-		return "redirect:/logout";
 	}
 }
