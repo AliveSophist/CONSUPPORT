@@ -17,8 +17,10 @@ public interface AdminService {
 	// 아티스트 승격
 	void updateUserRoleToArtist(UsersVO usersVO);
 	
+//==================================================================================================================
 	
-	
+	// 아티스트 상세 조회
+	ArtistVO selectArtistDetail(ArtistVO artistVO); 
 	
 	
 	

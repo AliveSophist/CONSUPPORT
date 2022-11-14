@@ -31,6 +31,14 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.update("adminMapper.updateUserRoleToArtist", usersVO);
 	}
 
+//==================================================================================================================
+	
+	// 아티스트 상세 조회
+	@Override
+	public ArtistVO selectArtistDetail(ArtistVO artistVO) {
+		return sqlSession.selectOne("adminMapper.selectArtistDetail", artistVO);
+	}
+
 	
 	
 }

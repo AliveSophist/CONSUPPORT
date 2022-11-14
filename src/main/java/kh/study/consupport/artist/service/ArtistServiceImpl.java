@@ -2,14 +2,11 @@ package kh.study.consupport.artist.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import kh.study.consupport.common.vo.ConcertImgVO;
-import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.GenreVO;
 import kh.study.consupport.common.vo.HallVO;
@@ -42,7 +39,7 @@ public class ArtistServiceImpl implements ArtistService{
 	}
 
 	//공연 등록
-	@org.springframework.transaction.annotation.Transactional(rollbackFor = Exception.class) //트랜잭션처리
+	@Transactional(rollbackFor = Exception.class) //트랜잭션처리
 	@Override
 	public void regConcert(ConcertVO concert) {
 		concert.setConcertCode(sqlSession.selectOne("artistMapper.concertCode", concert));

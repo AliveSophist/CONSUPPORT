@@ -66,8 +66,19 @@
 
 <!--========================================================================================================================================================================================-->
 
-
-
+	<!-- 아티스트 상세 조회 -->
+	<select id="selectArtistDetail" resultMap="artist">
+		SELECT ART.USER_ID
+            , ARTIST_NAME
+            , ARTIST_DETAIL
+            , ARTIST_IMG_NAME_ATTACHED
+            , ARTIST_IMG_IS_MAIN
+        FROM ARTIST ART, ARTIST_IMG ARTI
+        WHERE ART.USER_ID = ARTI.USER_ID
+        AND ART.USER_ID = #{userId}
+	</select>
+	
+	
 
 
 
