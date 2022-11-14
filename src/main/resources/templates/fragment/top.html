@@ -8,7 +8,7 @@
 		<th:block>
 			<style>
 			#modalAlert {
-				top: 12%;
+				top: 80px;
 				margin-top: -50px;
 			}
 			
@@ -206,6 +206,7 @@
 									
 									<input name="userId"			type="email" placeholder="ID (email)" autocomplete="off" required/>
 									<input name="userPw"			type="password" placeholder="Password" autocomplete="off" required/>
+									<input name="userPwChecker"		type="password" placeholder="Password" autocomplete="off" required/>
 									<input name="userName"			type="text" placeholder="userName" required/>
 									
 									<input name="userAddr"			type="text" placeholder="userAddr" required/>
@@ -295,12 +296,23 @@
 			
 			// 가입 펑션
 			function join() {
+				
+				const registerForm = $("form[name=registerForm]");
+				
+				//비밀번호 체크
+				if(registerForm.find("input[name=userPw]").val() != registerForm.find("input[name=userPwChecker]").val()){
+					modalAlert.querySelector('.modalAlert_InnerContent').innerText = "비밀번호가 일치하지 않습니다!";
+					showModal(modalAlert);
+					
+					return;
+				}
+				
 				//ajax start
 				$.ajax({
 					url : '/join', //요청경로
 					type : 'post',
 					
-					data: $("form[name=registerForm]").serialize(),
+					data: registerForm.serialize(),
 					
 					success : function(result) {
 	
@@ -396,7 +408,9 @@
 			// 모달 닫을때는 내용 리셋 해줘
 			modalLogin.addEventListener('hidden.bs.modal', function() {
 				modalLogin.querySelector('.login-form').reset();
-				modalLogin.querySelector('.register-form').reset();
+				
+				//가입하던거 다 지우는건 에바지
+				//modalLogin.querySelector('.register-form').reset();
 			});
 	
 			// 로그인 모달 켜라고하면 켜

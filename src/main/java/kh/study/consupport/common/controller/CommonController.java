@@ -164,6 +164,8 @@ public class CommonController {
 	@ResponseBody
 	@PostMapping("/join")
 	public Object join(@Validated UsersVO user, BindingResult bindingResult, HttpServletRequest request) {
+		// ㄴ 이걸 Object 로 할 수도 있네!?
+		
 		if(bindingResult.hasErrors()){
 			
 			//람다 개어렵네 무슨뜻인지 모름 ㅅㄱ

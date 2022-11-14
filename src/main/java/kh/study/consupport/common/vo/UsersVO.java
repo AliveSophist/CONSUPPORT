@@ -26,7 +26,7 @@ public class UsersVO {
 //		USER_ROLE         VARCHAR2(20) DEFAULT 'MEMBER' NOT NULL     -- (MEMBER, ARTIST, OWNER, ADMIN)
 //		USER_STATUS       VARCHAR2(20) DEFAULT 'ACT' NOT NULL        -- (ACT, DEACT)
 	
-	@NotBlank(message = "아이디의 이메일 형식이 올바르지 않습니다.")
+	@NotBlank(message = "아이디는 필수 입력 사항입니다.")
 	@Email(message = "아이디의 이메일 형식이 올바르지 않습니다.")
 	private String userId;
 	
