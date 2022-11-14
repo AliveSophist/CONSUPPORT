@@ -70,7 +70,12 @@ public class AdminController {
 	
 //==================================================================================================================
 	
-	
+	// 아티스트 상세 조회
+	@ResponseBody
+	@PostMapping("/selectArtistDetail")
+	public ArtistVO selectArtistDetail(ArtistVO artistVO) {
+		return adminService.selectArtistDetail(artistVO);
+	}
 	
 	
 	

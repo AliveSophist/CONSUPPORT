@@ -37,11 +37,10 @@
 						
 							<thead>
 								<tr>
-									<th class="col-2" scope="col">No.</th>
-									<th class="col-2 text-start" scope="col">이미지</th>
-									<th class="col-2" scope="col">아티스트명</th>
-									<th class="col-2" scope="col">유저이름</th>
-									<th class="col-2 text-start" scope="col">아티스트?</th>
+									<th class="col-1" scope="col">No.</th>
+									<th class="col-6" colspan="2" scope="col">아티스트 정보</th>
+									<th class="col-3" scope="col">유저이름</th>
+									<th class="col-2" scope="col">아티스트?</th>
 								</tr>
 							</thead>
 							
@@ -52,7 +51,13 @@
 							<tbody>
 								<tr th:each="artist, iterState : ${artistList}">
 									<th scope="row" th:text="${iterState.count}"></th>
-									<td><img th:src="|@{/img/artist/}${artist.artistImgList[0].artistImgNameAttached}|" style="height: 120px; width: 100px"></td>
+									<td>
+										<a data-bs-toggle="modal" data-bs-target="#artistDetailModal" style="cursor: pointer">
+											<img th:src="|@{/img/artist/}${artist.artistImgList[0].artistImgNameAttached}|" 
+												 th:onclick="artistDetailModal([[${artist.userId}]])"
+												 style="height: 120px; width: 100px">
+										</a>
+									</td>
 									<td>[[${artist.artistName}]]</td>
 									<td>[[${artist.userId}]]</td>
 									<td>
@@ -65,7 +70,8 @@
 					                    	<input class="form-check-input" type="radio" 
 					                    		   th:name="|role_radio_${iterState.count}|"
 					                    	   	   th:checked="${artist.users.userRole eq 'ARTIST'}"
-					                    	   	   th:onclick="userRoleSet([[${artist.userId}]], 'A');">
+					                    	   	   th:onclick="userRoleSet([[${artist.userId}]], 'A');"
+					                    	   	   style="cursor: pointer;">
 					                    	<label class="form-check-label">A</label>
 					                    </div>
 					                    
@@ -76,7 +82,8 @@
 					                    	<input class="form-check-input" type="radio" 
 					                    		   th:name="|role_radio_${iterState.count}|" 
 					                    	   	   th:checked="${artist.users.userRole eq 'MEMBER'}"
-					                    	   	   th:onclick="userRoleSet([[${artist.userId}]], 'M');">
+					                    	   	   th:onclick="userRoleSet([[${artist.userId}]], 'M');"
+					                    	   	   style="cursor: pointer;">
 					                    	<label class="form-check-label">M</label>
 					                    </div>
 										
@@ -98,29 +105,52 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->					                    		   
 				</div>
 			</div>
-			
-			
-			
-			
-			
-
-			
 		</div>
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+	<!-- 아티스트 상세 보기 모달 -->
+	<div class="modal fade" id="artistDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">ARTIST</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+				
+				
+				<div id="artistDetailAjax" class="modal-body">
+					<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%; max-height: 100%">
+				
+				
+						<!-- 아티스트 상세 보기 영역 -->
+				
+				
+					</div>
+				</div>
+				
+				
+				
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
