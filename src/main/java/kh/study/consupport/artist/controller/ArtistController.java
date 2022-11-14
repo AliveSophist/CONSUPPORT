@@ -27,7 +27,10 @@ import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ConcertImgVO;
+import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.HallDateVO;
+import kh.study.consupport.common.vo.HallVO;
 import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -59,17 +62,35 @@ public class ArtistController {
 
 	// 공연 등록 페이지
 	@GetMapping("/regConcertForm")
-	public String regConcertForm(Model model, Authentication authentication) {
+	public String regConcertForm(HallVO hall ,Model model, Authentication authentication) {
 
-		model.addAttribute("hallLIst", artistService.hallList());
+		model.addAttribute("hallList", artistService.hallList());
 		model.addAttribute("genreList", artistService.genreList());
 
-		String user = ((UserDetails)authentication.getPrincipal()).getUsername();
-		model.addAttribute("user", user);
-
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		hall.setUserId(userId);
+		model.addAttribute("hall", hall);
 		return "content/artist/reg_concert_from";
 	}
 
+	//홀 정보 불러오기
+	@ResponseBody
+	@PostMapping("/hallInfoAjax")
+	public HallVO hallInfoAjax(String hallCode) {
+		HallVO hallInfo = artistService.hallInfo(hallCode);
+		for(HallDateVO hallDate : hallInfo.getHallDateList()) {
+			
+			hallDate.setHallRentDate( hallDate.getHallRentDate().replace("00:00:00", "오전") );
+			hallDate.setHallRentDate( hallDate.getHallRentDate().replace("12:00:00", "오후") );
+			
+		}
+		
+		
+		return hallInfo;
+	}
+	
+	
+	
 	// 공연 등록
 	@ResponseBody
 	@PostMapping("/regConcert")
@@ -118,6 +139,7 @@ public class ArtistController {
 		/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
 		
 		concert.setConcertImgList(imgList);
+		
 		
 		//공연정보 삽입
 		artistService.regConcert(concert);

@@ -8,15 +8,68 @@
 		<result column="HALL_NAME" 			property="hallName"/>
 		<result column="HALL_SEAT_CNT" 			property="hallSeatCnt"/>
 		<result column="HALL_RENT_PRICE" 			property="hallRentPrice"/>
-		<result column="HALL_STATUS" 			property="hallStatus"/>
 		<result column="HALL_DETAIL" 			property="hallDetail"/>
 		<result column="USER_ID" 			property="userId"/>
+		<collection property="hallDateList" resultMap="hallDate"></collection>
+		<collection property="hallImgList" resultMap="hallImg"></collection>
+		<collection property="hallSeat" resultMap="hallSeat"></collection>
 	</resultMap>
 
+	<resultMap type="kh.study.consupport.common.vo.HallDateVO" id="hallDate">
+		<id column="HALL_DATE_CODE" property="hallDateCode"/>
+		<result column="HALL_RENT_DATE" property="hallRentDate"/>
+		<result column="HALL_STATUS" property="hallStatus"/>
+		<result column="HALL_CODE" property="hallCode"/>
+	</resultMap>
+	
+	<resultMap type="kh.study.consupport.common.vo.HallImgVO" id="hallImg">
+		<id column="HALL_IMG_CODE" property="hallImgCode"/>
+		<result column="HALL_IMG_NAME_ORIGIN" property="hallImgNameOrigin"/>	
+		<result column="HALL_IMG_NAME_ATTACHED" property="hallImgNameAttached"/>	
+		<result column="HALL_IMG_IS_MAIN" property="hallImgIsMain"/>	
+		<result column="HALL_CODE" property="hallCode"/>	
+	</resultMap>
+	
+	<resultMap type="kh.study.consupport.common.vo.HallSeatVO" id="hallSeat">
+		<result column="HALL_CODE" property="hallCode"/>
+		<result column="HALL_SEAT_R_CNT" property="hallSeatRCnt"/>	
+		<result column="HALL_SEAT_S_CNT" property="hallSeatSCnt"/>	
+		<result column="HALL_SEAT_A_CNT" property="hallSeatACnt"/>	
+	</resultMap>
+	
 	<resultMap type="kh.study.consupport.common.vo.GenreVO" id="genre">
 		<id column="GENRE_CODE" 			property="genreCode"/>
 		<result column="GENRE_NAME" 			property="genreName"/>
 	</resultMap>
+
+	<!-- 홀 정보 불러오기 -->
+	<select id="hallInfo" resultMap="hall">
+		SELECT HALL.HALL_CODE
+		, HALL_NAME
+		, HALL_RENT_PRICE
+		, HALL_DETAIL
+		, USER_ID
+
+		, HALL_DATE_CODE
+		, TO_CHAR(HALL_RENT_DATE, 'yyyy-MM-dd hh24:mi:ss') AS HALL_RENT_DATE
+
+		, HALL_SEAT_R_CNT
+		, HALL_SEAT_S_CNT
+		, HALL_SEAT_A_CNT
+
+		, HALL_IMG_CODE
+		, HALL_IMG_NAME_ATTACHED
+		, HALL_IMG_IS_MAIN
+		FROM HALL
+		, HALL_SEAT SEAT
+		, HALL_IMG IMG
+		, HALL_DATE DAT
+		WHERE HALL.HALL_CODE = #{hallCode}
+		AND HALL.HALL_CODE = SEAT.HALL_CODE
+		AND HALL.HALL_CODE = IMG.HALL_CODE
+		AND HALL.HALL_CODE = DAT.HALL_CODE
+		AND HALL_STATUS = 'EMPTY'
+	</select>
 	
 	<select id="hallList" resultMap="hall">
 		SELECT HALL_CODE
@@ -33,11 +86,13 @@
 		FROM GENRE
 	</select>
 	
+	<!-- 콘서트 코드 생성 -->
 	<select resultType="String" id="concertCode">
 		SELECT 'CONCERT_' || LPAD( NVL( MAX(  TO_NUMBER(SUBSTR(CONCERT_CODE,9))  )+1, 1), 6, '0')
 		FROM CONCERT
 	</select>
 	
+	<!-- 콘서트 등록 -->
 	<insert id="regConcert">
 		INSERT INTO CONCERT(
 			CONCERT_CODE
@@ -46,6 +101,8 @@
             , CONCERT_NAME
             , CONCERT_TICKETING_DATE
             , CONCERT_RATED
+            , GENRE_CODE
+            , HALL_DATE_CODE
 		) VALUES( 
 			#{concertCode}
 			, #{hallCode}
@@ -53,9 +110,12 @@
             , #{concertName}
             , #{concertTicketingDate}
             , #{concertRated} 
+            , #{genreCode}
+            , #{hallDateCode}
 		)
 	</insert>
 	
+	<!-- 가격 등록 -->
 	<insert id="insertConcertPrice">
 		INSERT INTO CONCERT_PRICE(
 			CONCERT_CODE
@@ -64,12 +124,13 @@
 			, CONCERT_PRICE_A
 		) VALUES (
 			#{concertCode}
-			, #{concertPriceR}
-			, #{concertPriceS}
-			, #{concertPriceA}
+			, #{concertPrice.concertPriceR}
+			, #{concertPrice.concertPriceS}
+			, #{concertPrice.concertPriceA}
 		)
 	</insert>
-
+	
+	<!-- 이미지 등록 -->
 	<insert id="insertConcertImg">
 		INSERT INTO CONCERT_IMG(
 			CONCERT_IMG_CODE
@@ -79,12 +140,13 @@
 			, CONCERT_CODE
 			) 
 		<foreach collection="concertImgList" item="concertImg" separator="UNION ALL" index="i">
-			SELECT (SELECT 'C_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CONCERT_IMG_CODE,7))), 0) + 1 + #{i}, 3, 0) 
+			SELECT 
+				(SELECT 'C_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CONCERT_IMG_CODE,7))), 0) + 1 + #{i}, 6, 0) 
 					FROM CONCERT_IMG)
 				, #{concertImg.concertImgNameOrigin}
 				, #{concertImg.concertImgNameAttached}
 				, #{concertImg.concertImgIsMain}
-				, #{concertImg.concertCode}
+				, #{concertCode}
 			FROM DUAL
 		</foreach>
 	</insert>

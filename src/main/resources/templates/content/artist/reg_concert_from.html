@@ -1,93 +1,165 @@
 <!DOCTYPE html>
-<html	xmlns:th="http://www.thymeleaf.org"
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous">
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
 </head>
 <body>
 
+	<div class="container">
 
-<div>콘서트 등록</div>
 
-<div>
-	
-	<form id="regConcert">
-	
-	<!-- userId 삽입 -->
-	<input type="hidden" th:value="user.userId">
-	<div class="input-group">
-		<span class="input-group-text">콘서트명</span> 
-		<input type="text" aria-label="First name" class="form-control" name="concertName"> 
-	</div>
-	
-	<div class="input-group">
-		<span class="input-group-text">콘서트 장르</span> 
-		<select class="form-select" aria-label="Default select example">
-			<option selected>장르를 지정해 주세요</option>
-			<th:block th:each="gen:${genreList}">
-				<option th:value="${gen.genreCode}" >[[${gen.genreName}]]</option>
-			</th:block>
-		</select>
-	</div>
-	
-	
-	<div class="input-group">
-		<span class="input-group-text">콘서트 홀</span> 
-		<select class="form-select" aria-label="Default select example">
-			<option selected>콘서트 홀을 지정해 주세요</option>
-			<th:block th:each="ha:${hallLIst}">
-				<option th:value="${ha.hallCode}">[[${ha.hallName}]]</option>
-			</th:block>
-		</select>
-	</div>
-	
-	<div class="input-group">
-		<span class="input-group-text">콘서트 티켓팅 일</span> 
-		<div class="col-6">
-			<input class="form-control" type="date" id="concertTicketingDate" >
+		<div>콘서트 등록</div>
+
+		<div>
+
+			<form id="regConcert">
+
+				<!-- userId 삽입 -->
+				<input type="hidden" th:value="${hall.userId}" name="userId">
+				<div class="input-group">
+					<span class="input-group-text">콘서트명</span> <input type="text"
+						aria-label="First name" class="form-control" name="concertName">
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">콘서트 장르</span> 
+					<select name="genreCode" aria-label="Default select example">
+						<option selected>장르를 지정해 주세요</option>
+						<th:block th:each="gen:${genreList}">
+							<option th:value="${gen.genreCode}">[[${gen.genreName}]]</option>
+						</th:block>
+					</select>
+				</div>
+
+
+				<div class="input-group">
+					<span class="input-group-text">콘서트 홀</span>
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary"
+						data-bs-toggle="modal" data-bs-target="#exampleModal">
+						콘서트홀 목록</button>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">콘서트 티켓팅 일</span>
+					<div class="col-6">
+						<input class="form-control" type="date" name="concertTicketingDate" id="concertTicketingDate">
+					</div>
+				</div>
+
+				<div class="col-12">
+					<span class="form-label" for="concertImg">Main Image</span> <input
+						class="form-control" type="file" name="imgMain">
+					<!-- <input class="form-control" type="file" name="mainImg"> -->
+				</div>
+				<div class="col-12">
+					<span class="form-label" for="concertImg">Sub Image</span> <input
+						class="form-control" type="file" multiple name="imgsSub">
+					<!-- <input class="form-control" type="file" multiple name="subImgs"> -->
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">연령 제한</span> 
+					<select name="concertRated"
+						class="form-select" aria-label="Default select example">
+						<option selected>연령 제한을 지정해 주세요</option>
+						<option value="All">전연령 관람 가능</option>
+						<option value="15+">15세 이상 관람 가능</option>
+						<option value="19+">청소년 관람 불가</option>
+					</select>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">콘서트 티켓가격(R석)</span> 
+					<input type="text" name="concertPrice.concertPriceR" aria-label="First name" class="form-control"> 
+					
+					<span class="input-group-text">콘서트 티켓가격(S석)</span> 
+					<input type="text" name="concertPrice.concertPriceS" aria-label="First name" class="form-control"> 
+					
+					<span class="input-group-text">콘서트 티켓가격(A석)</span> 
+					<input type="text" name="concertPrice.concertPriceA" aria-label="First name" class="form-control">
+				</div>
+				
+<!-------------------------------------------------------------------------------  -->				
+				
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">공연장을
+							골라주세요.</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<select name="hallCode" class="form-select" onchange="loadHallInfo();"
+							aria-label="Default select example" id="selectHallCode">
+							<option selected>콘서트 홀을 지정해 주세요</option>
+							<th:block th:each="ha:${hallList}">
+								<option th:value="${ha.hallCode}">[[${ha.hallName}]],
+									[[${ha.hallSeatCnt}]]석</option>
+							</th:block>
+						</select>
+						<hr>
+						<div id="loadHallInfoByAjax">
+
+							<div id="hallDetail"> <!-- 상세정보 표시할 틀. -->
+								<!-- Ajax로 내용 갱신해주기 -->
+								
+							</div>
+
+
+							<select name="hallDateCode" class="form-select" id="selectHallRentDate"> <!-- RentDate 목록을 표시할 틀. -->
+								<option selected>콘서트 시간을 지정해 주세요</option>
+								<!-- Ajax로 내용 갱신해주기 -->
+							</select>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-	
-	<div class="col-12">
-		<span class="form-label" for="concertImg">Main Image</span>
-		<input class="form-control" type="file" name="imgMain">
-		<!-- <input class="form-control" type="file" name="mainImg"> -->
-	</div>
-	<div class="col-12">
-		<span class="form-label" for="concertImg">Sub Image</span>
-		<input class="form-control" type="file" multiple name="imgsSub">
-		<!-- <input class="form-control" type="file" multiple name="subImgs"> -->
-	</div>
 
-	<div class="input-group">
-		<span class="input-group-text">연령 제한</span> 
-		<select class="form-select" aria-label="Default select example">
-			<option selected>연령 제한을 지정해 주세요</option>
-			<option value="All">전연령 관람 가능</option>
-			<option value="15+">15세 이상 관람 가능</option>
-			<option value="19+">청소년 관람 불가</option>
-		</select>
-	</div>
-	
-	<div class="input-group">
-		<span class="input-group-text">콘서트 티켓가격(R석)</span> 
-		<input type="text" aria-label="First name" class="form-control" name="concertPriceR"> 
-		<span class="input-group-text">콘서트 티켓가격(S석)</span> 
-		<input type="text" aria-label="First name" class="form-control" name="concertPriceS"> 
-		<span class="input-group-text">콘서트 티켓가격(A석)</span> 
-		<input type="text" aria-label="First name" class="form-control" name="concertPriceA"> 
-	</div>
-	
-	
-	</form>
-	
-	<button th:onclick="regConcert();">등록</button>
-	
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" th:src="@{/js/artist/reg_concert.js}"></script>
-</div>
+<!----------------------------------------------------------------->
+				
+
+			</form>
+
+			<button th:onclick="regConcert();">등록</button>
+
+			<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+			<script type="text/javascript" th:src="@{/js/artist/reg_concert.js}"></script>
+		</div>
 
 
+
+
+	</div>
+	
+	
 </body>
+
+
+
 </html>
