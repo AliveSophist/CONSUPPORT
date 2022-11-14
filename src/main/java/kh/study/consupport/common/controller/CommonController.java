@@ -83,7 +83,7 @@ public class CommonController {
 		System.out.println("userId : "+userId);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!");
 		
-		return "/content/common/index";
+		return "/content/common/test";
 	}
 
 	

@@ -4,10 +4,19 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  layout:decorate="~{layout/base_layout}"
 	  >
-	  
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<!----------------------------------------------------------- ---------------------------------------------------------------------------------------------->
 
 	<div layout:fragment="content" class="col text-start">
+	
+	
+	<th:block>
+		<link href="/css/artist/artist_manager.css" rel="stylesheet"/>
+	</th:block>
+	  
+
+	
 	<hr>
 		<div class="row">
 			<div class="col-12">
@@ -118,15 +127,29 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				
-				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 				
 				<div id="artistDetailAjax" class="modal-body">
 					<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%; max-height: 100%">
-				
-				
-						<!-- 아티스트 상세 보기 영역 -->
-				
-				
+
+						<!-- Zoom -->
+						<!-- <ul class="gallery zoom">
+						
+						  <li>
+						     <a href="#">
+						      <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="">
+						    </a>
+						  </li>
+						  
+						  <li>
+						     <a href="#">
+						      <img src="https://images.unsplash.com/photo-1480241352829-e1573ff2414e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="">
+						    </a>
+						  </li>
+						  
+						</ul> -->
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
 					</div>
 				</div>
 				

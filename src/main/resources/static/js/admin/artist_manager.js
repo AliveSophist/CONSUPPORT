@@ -50,7 +50,7 @@ function artistDetailModal(userId){
 		
 			for(const artistImg of artist.artistImgList){
 				if(artistImg.artistImgIsMain == 'Y'){
-		str +=				`<img src="/img/artist/${artistImg.artistImgNameAttached}" class="img-fluid rounded-start">`;			
+		str +=			`<img src="/img/artist/${artistImg.artistImgNameAttached}" class="img-fluid rounded-start">`;			
 				}
 			}		
 		
@@ -66,7 +66,25 @@ function artistDetailModal(userId){
 		str +=				`</div>`;
 		str +=			`</div>`;
 		str +=		`</div>`;
-		str +=	`</div>`;
+		str +=		`<hr>`;
+		
+		str +=`<ul class="gallery zoom">`
+		str +=	`<li>`
+		
+		str +=		`<a href="#">`
+		
+			for(const artistImg of artist.artistImgList){
+				if(artistImg.artistImgIsMain == 'N'){
+		str +=			`<img src="/img/artist/${artistImg.artistImgNameAttached}">`
+				}
+			}
+		
+		str +=		`</a>`
+		str +=	`</li>`
+		str +=`</ul>`
+		
+		str +=`</div>`;
+		
 
 		artistDetailAjax.insertAdjacentHTML('beforeend', str)
 
