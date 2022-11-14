@@ -35,16 +35,15 @@ function regConcert(){
 }
 
 
+
 //////////////////////////////////////////////////////////////////
-
-//document.querySelector('#loadHallInfoByAjax').replaceChildren();
-
 
 
 
 function loadHallInfo(){
 	
 	var hallCode = document.querySelector('#selectHallCode').value;
+	
 	
 	//ajax start
 	$.ajax({
@@ -58,19 +57,19 @@ function loadHallInfo(){
 			//테이블을 다시 그려주자
 			
 			const loadHallInfoByAjax = document.querySelector('#loadHallInfoByAjax');
-			loadHallInfoByAjax.removeChild(  loadHallInfoByAjax.querySelector('#hallDetail')  );
-			loadHallInfoByAjax.removeChild(  loadHallInfoByAjax.querySelector('#selectHallRentDate')  );
+			loadHallInfoByAjax.replaceChildren();
+			
 			
 			//추가할 태그 생성
 			let str = '';
 			
 			//상세정보 태그들.
-			str += `  <div id="hallDetail">`
+			str += `<div id="hallDetail">`
 			str += `	<div class="row mb-3">`;
 			str += `		<div class="col-6">`;
 			for(const hallImg of hallInfo.hallImgList) {
 				if(hallImg.hallImgIsMain == "Y"){
-					str += `		<img src="img/hall${hallImg.hallImgNameAttached}"			`;
+					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}"			`;
 				}
 			}
 			str += `		</div>`;
@@ -101,30 +100,33 @@ function loadHallInfo(){
 			str += `	<div class="row mb-3">	`;
 			str += `		<div class="col-12">`;
 			str += `			<div class="col-3">이미지 영역</div>`;
-			str += `			<div class="col-12">`;
+			str += `				<div class="col-12">`;
 			for(const hallImg of hallInfo.hallImgList) {
-				if(hallImg.hallImgIsMain = "N"){
-					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}"			`;
+				if(hallImg.hallImgIsMain == "N"){
+					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}">			`;
 				}
 			}
-			str += `			<div class="col-12">`;
+			str += `				</div>`;
+			str += `			<div class="col-12"></div>`;
 			str += `		</div>`;
 			str += `	</div>`;
-			str += `	</div>`;
+			str += `</div>`;
 			str += `	<hr>`
 			
 			
 			//DateList.
-			str += `	<select name="hallDateCode" class="form-select" id="selectHallRentDate">`;
-			str += `		<option selected>콘서트 시간을 지정해 주세요</option>`;
 			
-			for(const hallDate of  hallInfo.hallDateList) {
-				
+			str += `<div id="selectHallRentDate">`;
+			str += `	<select name="hallDateCode" class="form-select">`;
+			str += `		<option selected>콘서트 시간을 지정해 주세요</option>`;
+			for(const hallDate of hallInfo.hallDateList) {
 				str += `	<option value="${hallDate.hallDateCode}">${hallDate.hallRentDate}</option>`
-		
 			}
 			str += `	</select>`;
 			
+			str += `</div>`;
+	 
+	
 			
 			loadHallInfoByAjax.insertAdjacentHTML('beforeend', str);
 			
