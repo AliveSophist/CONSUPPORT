@@ -69,7 +69,7 @@ function loadHallInfo(){
 			str += `	<div class="row mb-3">`;
 			str += `		<div class="col-6">`;
 			for(const hallImg of hallInfo.hallImgList) {
-				if(hallImg.hallImgIsMain = "Y"){
+				if(hallImg.hallImgIsMain == "Y"){
 					str += `		<img src="img/hall${hallImg.hallImgNameAttached}"			`;
 				}
 			}
