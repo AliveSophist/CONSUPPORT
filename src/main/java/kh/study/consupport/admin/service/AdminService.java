@@ -3,6 +3,7 @@ package kh.study.consupport.admin.service;
 import java.util.List;
 
 import kh.study.consupport.common.vo.ArtistVO;
+import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.UsersVO;
 
 public interface AdminService {
@@ -22,13 +23,18 @@ public interface AdminService {
 	// 아티스트 상세 조회
 	ArtistVO selectArtistDetail(ArtistVO artistVO); 
 	
+//==================================================================================================================
 	
+	// 허가되지 않은 콘서트 목록 조회
+	List<ConcertVO> selectConcertListDEACT();
 	
+	// 허가된 콘서트 목록 조회
+	List<ConcertVO> selectConcertListACT();
 	
+//==================================================================================================================
 	
-	
-	
-	
+	// 콘서트 허가
+	void updateConcertStatus(ConcertVO concertVO);
 	
 	
 	

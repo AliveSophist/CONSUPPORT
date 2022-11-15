@@ -21,6 +21,7 @@ import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ArtistVO;
+import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -77,11 +78,24 @@ public class AdminController {
 		return adminService.selectArtistDetail(artistVO);
 	}
 	
+//==================================================================================================================
 	
+	// 콘서트 목록 조회
+	@GetMapping("/concertManager")
+	public String concertManager(Model model) {
+		model.addAttribute("concertListDEACT", adminService.selectConcertListDEACT());
+		model.addAttribute("concertListACT", adminService.selectConcertListACT());
+		return "content/admin/concert_manager";
+	}
 	
+//==================================================================================================================
 	
-	
-	
+	// 콘서트 허가 or 불허가
+	@PostMapping("/updateConcertStatus")
+	public String updateConcertStatus(ConcertVO concertVO) {
+		adminService.updateConcertStatus(concertVO);
+		return "redirect:/admin/concertManager";
+	}
 	
 	
 	

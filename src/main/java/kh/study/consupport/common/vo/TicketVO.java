@@ -1,5 +1,7 @@
 package kh.study.consupport.common.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +26,6 @@ public class TicketVO {
 	private String userId;
 	private String hallCode;
 	private String concertCode;
+	
+	private List<String> seatCodeList;
 }

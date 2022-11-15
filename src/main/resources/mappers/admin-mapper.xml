@@ -38,6 +38,76 @@
 		<result column="USER_ROLE" 				property="userRole"/>
 		<result column="USER_STATUS" 			property="userStatus"/>
 	</resultMap>
+	
+	<!-- 콘서트 -->
+	<resultMap type="kh.study.consupport.common.vo.ConcertVO" id="concert">
+		<id column="CONCERT_CODE"					property="concertCode"/>
+		<result column="CONCERT_NAME" 			 	property="concertName"/>
+		<result column="CONCERT_STATUS" 		 	property="concertStatus"/>
+		<result column="CONCERT_RATED" 			 	property="concertRated"/>
+		<result column="CONCERT_TICKETING_DATE" 	property="concertTicketingDate"/>
+		<result column="CONCERT_DATE" 				property="concertDate"/>
+		<result column="HALL_DATE_CODE" 			property="hallDateCode"/>
+		<result column="GENRE_CODE"					property="genreCode"/>
+		<result column="HALL_CODE" 					property="hallCode"/>
+		<result column="USER_ID" 					property="userId"/>
+		<result column="HALL_DATE_CODDE" 			property="userId"/>
+		
+		<association property="artist" 				resultMap="artist"/>
+		<collection property="concertImgList" 		resultMap="concertImg"/>
+	</resultMap>
+	
+	<!-- 콘서트 이미지 -->
+	<resultMap type="kh.study.consupport.common.vo.ConcertImgVO" id="concertImg">
+		<id column="CONCERT_IMG_CODE" 				property="concertImgCode"/>
+		<result column="CONCERT_IMG_NAME_ORIGIN" 	property="concertImgNameOrigin"/>
+		<result column="CONCERT_IMG_NAME_ATTACHED" 	property="concertImgNameAttached"/>
+		<result column="CONCERT_IMG_IS_MAIN"		property="concertImgIsMain"/>
+		<result column="CONCERT_CODE" 				property="concertCode"/>
+	</resultMap>
+	
+	<!-- 콘서트 가격 -->
+	<resultMap type="kh.study.consupport.common.vo.ConcertPriceVO" id="concertPrice">
+		<id column="CONCERT_CODE" 					property="concertCode"/>
+		<result column="CONCERT_PRICE_R"			property="concertPriceR"/>
+		<result column="CONCERT_PRICE_S" 			property="concertPriceS"/>
+		<result column="CONCERT_PRICE_A" 			property="concertPriceA"/>
+	</resultMap>
+	
+	<resultMap type="kh.study.consupport.common.vo.HallVO" id="hall">
+		<id property="hallCode" column="HALL_CODE"/>
+		<result property="hallName" column="HALL_NAME"/>
+		<result property="hallSeatCnt" column="HALL_SEAT_CNT"/>
+		<result property="hallRentPrice" column="HALL_RENT_PRICE"/>
+		<result property="hallDetail" column="HALL_DETAIL"/>
+		<result property="userId" column="USER_ID"/>
+		
+		<collection property="hallDateList" resultMap="hallDate"/>
+		<collection property="hallImgList" resultMap="hallImg"/>
+		<collection property="hallSeat" resultMap="hallSeat"/>
+	</resultMap>
+
+	<resultMap type="kh.study.consupport.common.vo.HallDateVO" id="hallDate">
+		<id column="HALL_DATE_CODE" property="hallDateCode" />
+		<result column="HALL_RENT_DATE" property="hallRentDate" />
+		<result column="HALL_STATUS" property="hallStatus" />
+		<result column="HALL_CODE" property="hallCode" />
+	</resultMap>
+
+	<resultMap type="kh.study.consupport.common.vo.HallImgVO" id="hallImg">
+		<id column="HALL_IMG_CODE" property="hallImgCode" />
+		<result column="HALL_IMG_NAME_ORIGIN" property="hallImgNameOrigin" />
+		<result column="HALL_IMG_NAME_ATTACHED" property="hallImgNameAttached" />
+		<result column="HALL_IMG_IS_MAIN" property="hallImgIsMain" />
+		<result column="HALL_CODE" property="hallCode" />
+	</resultMap>
+
+	<resultMap id="hallSeat" type="kh.study.consupport.common.vo.HallSeatVO">
+		<result property="hallCode" column="HALL_CODE"/>
+		<result property="hallSeatRCnt" column="HALL_SEAT_R_CNT"/>
+		<result property="hallSeatSCnt" column="HALL_SEAT_S_CNT"/>
+		<result property="hallSeatACnt" column="HALL_SEAT_A_CNT"/>
+	</resultMap>
 <!--========================================================================================================================================================================================-->
 
 	<!-- 아티스트 목록 조회 -->
@@ -78,16 +148,99 @@
         AND ART.USER_ID = #{userId}
 	</select>
 	
+<!--========================================================================================================================================================================================-->
+
+	<!-- 허가되지 않은 콘서트 목록 조회 -->
+	<select id="selectConcertListDEACT" resultMap="concert">
+		SELECT CON.CONCERT_CODE
+			, CONCERT_NAME
+			, CONCERT_IMG_NAME_ATTACHED
+            , CONCERT_IMG_IS_MAIN
+			, CONCERT_RATED
+			, CONCERT_STATUS
+            , CON.USER_ID
+            , ART.ARTIST_NAME
+		FROM CONCERT CON, CONCERT_IMG CONI, ARTIST ART
+        WHERE CON.CONCERT_CODE = CONI.CONCERT_CODE
+        AND CON.USER_ID = ART.USER_ID
+        AND CONCERT_STATUS = 'DEACT'
+	</select>
 	
+	<!-- 허가된 콘서트 목록 조회 -->
+	<select id="selectConcertListACT" resultMap="concert">
+		SELECT CON.CONCERT_CODE
+			, CONCERT_NAME
+			, CONCERT_IMG_NAME_ATTACHED
+            , CONCERT_IMG_IS_MAIN
+			, CONCERT_RATED
+			, CONCERT_STATUS
+            , CON.USER_ID
+            , ART.ARTIST_NAME
+		FROM CONCERT CON, CONCERT_IMG CONI, ARTIST ART
+        WHERE CON.CONCERT_CODE = CONI.CONCERT_CODE
+        AND CON.USER_ID = ART.USER_ID
+        AND CONCERT_STATUS = 'ACT'
+	</select>
+	
+<!--========================================================================================================================================================================================-->
 
+	<!-- 콘서트 허가 -->
+	<update id="updateConcertStatus">
+		UPDATE CONCERT
+		SET CONCERT_STATUS = 'ACT'
+		WHERE CONCERT_CODE = #{concertCode}
+	</update>
 
+<!--========================================================================================================================================================================================-->
 
+	<!-- 콘서트 허가 후 티켓들 생성 -->
+	<insert id="insertTickets">
+		INSERT INTO TICKET(
+			TICKET_CODE
+			, SEAT_CODE
+			, HALL_CODE
+			, CONCERT_CODE
+		)
+		<foreach collection="seatCodeList" item="sCode" separator="UNION ALL" index="i">
+			SELECT
+				(SELECT 'TICKET_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(TICKET_CODE, 8))), 0) + 1 + #{i}, 6, 0) FROM TICKET)
+				, #{sCode}
+				, #{hallCode}
+				, #{concertCode}
+			FROM DUAL
+		</foreach>
+	</insert>
 
+<!--========================================================================================================================================================================================-->
 
+	
+	<!-- 홀 정보 불러오기 -->
+	<select id="selectHall" resultMap="hall">
+		SELECT HALL.HALL_CODE
+		, HALL_SEAT_CNT
+		
+		<!-- , HALL_NAME
+		, HALL_RENT_PRICE
+		, HALL_DETAIL
+		, USER_ID
 
+		, HALL_DATE_CODE
+		, TO_CHAR(HALL_RENT_DATE, 'yyyy-MM-dd hh24:mi:ss') AS HALL_RENT_DATE
 
-
-
+		, HALL_IMG_CODE
+		, HALL_IMG_NAME_ATTACHED
+		, HALL_IMG_IS_MAIN -->
+		FROM HALL
+		<!-- , HALL_SEAT SEAT
+		, HALL_IMG IMG
+		, HALL_DATE DAT -->
+		WHERE HALL.HALL_CODE = (SELECT HALL_CODE FROM CONCERT WHERE CONCERT_CODE = #{concertCode})
+		
+		<!-- AND HALL.HALL_CODE = SEAT.HALL_CODE
+		AND HALL.HALL_CODE = IMG.HALL_CODE
+		AND HALL.HALL_CODE = DAT.HALL_CODE
+		AND HALL_STATUS = 'EMPTY' -->
+	</select>
 
 
 

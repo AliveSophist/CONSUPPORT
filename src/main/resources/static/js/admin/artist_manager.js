@@ -44,9 +44,9 @@ function artistDetailModal(userId){
 		
 		let str = '';
 		
-		str +=	`<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%;">`;
+		str +=	`<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%; ">`;
 		str +=		`<div class="row g-0">`	;
-		str +=			`<div class="col-md-4">`;
+		str +=			`<div class="col-md-4" style="margin-top:15px">`;
 		
 			for(const artistImg of artist.artistImgList){
 				if(artistImg.artistImgIsMain == 'Y'){
