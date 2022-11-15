@@ -89,6 +89,13 @@ public class ArtistController {
 		return hallInfo;
 	}
 	
+	//모달창 닫힐 때 실행되는 홀목록 조회
+	@ResponseBody
+	@PostMapping("/hallListAjax")
+	public List<HallVO> selectHallListAjax(){
+		return artistService.hallList();
+	}
+	
 	
 	
 	// 공연 등록

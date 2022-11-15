@@ -45,6 +45,7 @@ function loadHallInfo(){
 	var hallCode = document.querySelector('#selectHallCode').value;
 	
 	
+	
 	//ajax start
 	$.ajax({
 		url: '/artist/hallInfoAjax', //요청경로
@@ -69,7 +70,7 @@ function loadHallInfo(){
 			str += `		<div class="col-6">`;
 			for(const hallImg of hallInfo.hallImgList) {
 				if(hallImg.hallImgIsMain == "Y"){
-					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}"			`;
+					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}">			`;
 				}
 			}
 			str += `		</div>`;
@@ -118,7 +119,7 @@ function loadHallInfo(){
 			
 			str += `<div id="selectHallRentDate">`;
 			str += `	<select name="hallDateCode" class="form-select">`;
-			str += `		<option selected>콘서트 시간을 지정해 주세요</option>`;
+			str += `		<option value="1" selected>콘서트 시간을 지정해 주세요</option>`;
 			for(const hallDate of hallInfo.hallDateList) {
 				str += `	<option value="${hallDate.hallDateCode}">${hallDate.hallRentDate}</option>`
 			}
@@ -139,7 +140,61 @@ function loadHallInfo(){
 	});
 	//ajax end	
 	
-	
 }
+
+//모달창 닫힐 떄
+exampleModal.addEventListener('hidden.bs.modal', function(event){
+	//모달창 닫힐 때 실행되는 홀목록 조회
+	//ajax start
+	$.ajax({
+		url: '/artist/hallListAjax', //요청경로
+		type: 'post',
+		data: {},
+		success: function(hallList) {
+			//모달이 닫힐 때 모달 내용을 다 지원준다.,
+			$('#exampleModal .modal-body').empty();
+			
+			str = '';
+			str += `<select name="hallCode" class="form-select" onchange="loadHallInfo();"          `;
+			str += `	aria-label="Default select example" id="selectHallCode">                    `;
+			str += `	<option selected>콘서트 홀을 지정해 주세요</option>                         `;
+			
+			for(const hallInfo of hallList){
+				str += `<option value="${hallInfo.hallCode}">${hallInfo.hallName}, ${hallInfo.hallSeatCnt}</option>`;
+			}
+			
+			str += `</select>                                                                       `;
+			str += `<hr>                                                                            `;
+			str += `<div id="loadHallInfoByAjax">                                                   `;
+			str += `	<div id="hallDetail">                                                       `;
+			str += `	</div>                                                                      `;
+			str += `	<select name="hallDateCode" class="form-select" id="selectHallRentDate">    `;
+			str += `		<option selected>콘서트 시간을 지정해 주세요</option>                   `;
+			str += `	</select>                                                                   `;
+			str += `</div>`;
+			
+			$('#exampleModal .modal-body').append(str);	
+
+		},
+		error: function() { alert('실패'); }
+	});
+	//ajax end	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
