@@ -8,16 +8,67 @@
 
 <div layout:fragment="content">
 	<div class="col-12">
-		<h3>내 정보 수정</h3>
+		<h4>내 정보 수정</h4>
 		<hr>
 		<div class="col-12 mb-3">
+		
+			<form action="/member/editMemInfo" method="post" enctype="multipart/form-data">
+		
 <!-- ----------------------------------------------------------------------- -->
-		
-		
-		
-		
-		
-		
+
+			<div class="input-form col-md-12 mx-auto">
+					<div class="col-6">
+						UserId<div>[[${user.UserId}]]</div>
+					</div>
+
+<!-- ----------------------------------------------------------------------- -->
+
+				<!-- <div class="col-6">
+					USER_PW<input type="text" class="form-control" 
+					name="artistName" th:value="${user.userPw}">
+				</div> -->
+				
+<!-- ----------------------------------------------------------------------- -->
+
+				<div class="col-6">
+					USER_NAME<input type="text" class="form-control" 
+					name="artistName" th:value="${user.userName}">
+				</div>
+					
+<!-- ----------------------------------------------------------------------- -->
+					
+				<div class="col-6">
+					USER_ADDR<input type="text" class="form-control" 
+					name="userAddr" th:value="${user.userAddr}">
+					USER_ADDR_DETAIL<input type="text" class="form-control" 
+					name="userAddrDetail" th:value="${user.userAddrDetail}">
+				</div>
+					
+<!-- ----------------------------------------------------------------------- -->
+			
+				<div class="col-6">
+					USER_TELL<input type="text" class="form-control" 
+					name="userTell" th:value="${user.userTell}">
+				</div>
+				
+<!-- ----------------------------------------------------------------------- -->
+					
+				<div class="col-6">
+					USER_MILEAGE<div> [[${user.userMileage}]]</div>
+				</div>
+			</div>	
+<!-- ----------------------------------------------------------------------- -->
+
+			<button class="btn btn-primary btn-lg btn-block" type="button">
+			수정</button>
+
+
+<!-- ----------------------------------------------------------------------- -->
+
+
+
+		</form>
+
 <!-- ----------------------------------------------------------------------- -->
 		</div>
 	</div>

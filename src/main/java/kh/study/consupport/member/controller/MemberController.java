@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ArtistImgVO;
 import kh.study.consupport.common.vo.ArtistVO;
+import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
 
@@ -113,12 +115,36 @@ public class MemberController {
 		}
 	
 //===========================================================================================================================================================================================================================
+	// 내 정보 수정
+	@GetMapping("/enterEditInfoForm")
+	public String
 	
 	
 	
 	
+//===========================================================================================================================================================================================================================
 	
 	
+	
+	//내 정보 상세보기(일반회원)
+	@GetMapping("/editInfoForm")
+	public String editInfoForm(Model model, Authentication authentication, UsersVO users) {
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		model.addAttribute("user", memberService.editInfoForm(userId));
+		
+		
+		return "content/member/edit_info_form";
+	}
+	
+	
+//===========================================================================================================================================================================================================================
+	// 내 정보 수정
+	@PostMapping("/editInfo")
+	public String editInfo(UsersVO users) {
+		
+		
+		return "content/concertList";
+	}
 	
 	
 	

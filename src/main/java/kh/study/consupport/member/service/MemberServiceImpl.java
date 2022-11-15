@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.consupport.common.vo.ArtistVO;
+import kh.study.consupport.common.vo.UsersVO;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService{
@@ -23,6 +24,12 @@ public class MemberServiceImpl implements MemberService{
 	public void insertArtist(ArtistVO artistVO) {
 		sqlSession.insert("memberMapper.insertArtist", artistVO);
 		sqlSession.insert("memberMapper.insertArtistImgs", artistVO);
+	}
+	
+	// 재 정보 수정 화면 이동
+	@Override
+	public UsersVO editInfoForm(String userId) {
+		return sqlSession.selectOne("memberMapper.editInfoForm", userId);
 	}
 
 	
