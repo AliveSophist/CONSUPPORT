@@ -2,13 +2,14 @@
 <html	xmlns:th="http://www.thymeleaf.org"
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{layout/base_layout}">
+		layout:decorate="~{layout/member_layout}">
 
 
 
 <div layout:fragment="content">
-콘텐츠
-
+	<div>
+		<span th:text="${#authentication.name}"></span> 님의 페이지 입니다.
+	</div>
 
 
 
