@@ -111,11 +111,11 @@ public class AdminServiceImpl implements AdminService{
 					else if	(24 <= seatNum && seatNum <= 27)
 						seatCodeList.add(String.format("R_%03d", seatNum));
 					
-					else if	(seatNum <= 30)
+					else if	(seatNum <= 20)
 						seatCodeList.add(String.format("S_%03d", seatNum));
-					else if	(32 <= seatNum && seatNum <= 39)
+					else if	(22 <= seatNum && seatNum <= 29)
 						seatCodeList.add(String.format("S_%03d", seatNum));
-					else if	(43 <= seatNum && seatNum <= 48)
+					else if	(33 <= seatNum && seatNum <= 38)
 						seatCodeList.add(String.format("S_%03d", seatNum));
 					
 					else

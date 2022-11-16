@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
+import kh.study.consupport.common.vo.TicketVO;
 import kh.study.consupport.common.vo.UsersVO;
 
 @Service("commonService")
@@ -27,6 +28,11 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public UsersVO selectLoginInfo(String username) {
 		return sqlSession.selectOne("commonMapper.selectLoginInfo", username);
+	}
+
+	@Override
+	public List<TicketVO> selectTicketList() {
+		return sqlSession.selectList("commonMapper.selectTicketList");
 	}
 
 }

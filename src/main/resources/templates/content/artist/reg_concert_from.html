@@ -37,8 +37,8 @@
 				</div>
 
 				<div class="input-group">
-					<span class="input-group-text">콘서트 장르</span> 
-					<select name="genreCode" aria-label="Default select example">
+					<span class="input-group-text">콘서트 장르</span> <select
+						name="genreCode" aria-label="Default select example">
 						<option selected>장르를 지정해 주세요</option>
 						<th:block th:each="gen:${genreList}">
 							<option th:value="${gen.genreCode}">[[${gen.genreName}]]</option>
@@ -58,7 +58,8 @@
 				<div class="input-group">
 					<span class="input-group-text">콘서트 티켓팅 일</span>
 					<div class="col-6">
-						<input class="form-control" type="date" name="concertTicketingDate" id="concertTicketingDate">
+						<input class="form-control" type="date"
+							name="concertTicketingDate" id="concertTicketingDate">
 					</div>
 				</div>
 
@@ -74,9 +75,9 @@
 				</div>
 
 				<div class="input-group">
-					<span class="input-group-text">연령 제한</span> 
-					<select name="concertRated"
-						class="form-select" aria-label="Default select example">
+					<span class="input-group-text">연령 제한</span> <select
+						name="concertRated" class="form-select"
+						aria-label="Default select example">
 						<option selected>연령 제한을 지정해 주세요</option>
 						<option value="All">전연령 관람 가능</option>
 						<option value="15+">15세 이상 관람 가능</option>
@@ -85,64 +86,68 @@
 				</div>
 
 				<div class="input-group">
-					<span class="input-group-text">콘서트 티켓가격(R석)</span> 
-					<input type="text" name="concertPrice.concertPriceR" aria-label="First name" class="form-control"> 
-					
-					<span class="input-group-text">콘서트 티켓가격(S석)</span> 
-					<input type="text" name="concertPrice.concertPriceS" aria-label="First name" class="form-control"> 
-					
-					<span class="input-group-text">콘서트 티켓가격(A석)</span> 
-					<input type="text" name="concertPrice.concertPriceA" aria-label="First name" class="form-control">
+					<span class="input-group-text">콘서트 티켓가격(R석)</span> <input
+						type="text" name="concertPrice.concertPriceR"
+						aria-label="First name" class="form-control"> <span
+						class="input-group-text">콘서트 티켓가격(S석)</span> <input type="text"
+						name="concertPrice.concertPriceS" aria-label="First name"
+						class="form-control"> <span class="input-group-text">콘서트
+						티켓가격(A석)</span> <input type="text" name="concertPrice.concertPriceA"
+						aria-label="First name" class="form-control">
 				</div>
-				
-<!-------------------------------------------------------------------------------  -->				
-				
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">공연장을
-							골라주세요.</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<select name="hallCode" class="form-select" onchange="loadHallInfo();"
-							aria-label="Default select example" id="selectHallCode">
-							<option selected>콘서트 홀을 지정해 주세요</option>
-							<th:block th:each="ha:${hallList}">
-								<option th:value="${ha.hallCode}">[[${ha.hallName}]],
-									[[${ha.hallSeatCnt}]]석</option>
-							</th:block>
-						</select>
-						<hr>
-						<div id="loadHallInfoByAjax">
 
-							<div id="hallDetail"> <!-- 상세정보 표시할 틀. -->
-								<!-- Ajax로 내용 갱신해주기 -->
-								
+				<!-------------------------------------------------------------------------------  -->
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">공연장을
+									골라주세요.</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
 							</div>
+							<div class="modal-body">
+								<select name="hallCode" class="form-select"
+									onchange="loadHallInfo();" aria-label="Default select example"
+									id="selectHallCode">
+									<option selected>콘서트 홀을 지정해 주세요</option>
+									<th:block th:each="ha:${hallList}">
+										<option th:value="${ha.hallCode}">[[${ha.hallName}]],
+											[[${ha.hallSeatCnt}]]석</option>
+									</th:block>
+								</select>
+								<hr>
+								<div id="loadHallInfoByAjax">
+
+									<div id="hallDetail">
+										<!-- 상세정보 표시할 틀. -->
+										<!-- Ajax로 내용 갱신해주기 -->
+
+									</div>
 
 
-							<select name="hallDateCode" class="form-select" id="selectHallRentDate"> <!-- RentDate 목록을 표시할 틀. -->
-								<option selected>콘서트 시간을 지정해 주세요</option>
-								<!-- Ajax로 내용 갱신해주기 -->
-							</select>
+									<select name="hallDateCode" class="form-select"
+										id="selectHallRentDate">
+										<!-- RentDate 목록을 표시할 틀. -->
+										<option selected>콘서트 시간을 지정해 주세요</option>
+										<!-- Ajax로 내용 갱신해주기 -->
+									</select>
 
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									data-bs-dismiss="modal">확인</button>
+							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"
-							data-bs-dismiss="modal">확인</button>
-					</div>
 				</div>
-			</div>
-		</div>
 
-<!----------------------------------------------------------------->
-				
+				<!----------------------------------------------------------------->
+
 
 			</form>
 
@@ -156,8 +161,8 @@
 
 
 	</div>
-	
-	
+
+
 </body>
 
 

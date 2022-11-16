@@ -63,14 +63,28 @@
 	<insert id="insertHallSeat">
 		INSERT INTO HALL_SEAT(
 			HALL_CODE
+			
 			, HALL_SEAT_R_CNT
 			, HALL_SEAT_S_CNT
 			, HALL_SEAT_A_CNT
 		) VALUES(
 			#{hallCode}
-			, #{hallSeat.hallSeatRCnt}
-			, #{hallSeat.hallSeatSCnt}
-			, #{hallSeat.hallSeatACnt}
+			
+			<if test="hallSeatCnt == 40">
+			,  8
+			,  8
+			, 24
+			</if>
+			<if test="hallSeatCnt == 70">
+			, 16
+			, 22
+			, 32
+			</if>
+			<if test="hallSeatCnt == 100">
+			, 24
+			, 24
+			, 52
+			</if>
 		)
 	</insert>
 

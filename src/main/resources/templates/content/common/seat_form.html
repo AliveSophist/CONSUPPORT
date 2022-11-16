@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -30,29 +30,21 @@
 	</ul>
 
 
+	
 
 	<div class="container">
 		<div class="screen"></div>
 
+		<th:block th:if="${hallSeatCnt == 40}">
 		<div class="row">
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-			<div class="seat seat40 seatR"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
-			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
 		</div>
 		<div class="row">
 			<div class="seat seat40"></div>
@@ -84,120 +76,111 @@
 			<div class="seat seat40"></div>
 			<div class="seat seat40"></div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+		</div>
+		</th:block>
+		
+		
+		
+		
+		
+		<th:block th:if="${hallSeatCnt == 70}">
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		</th:block>
 
-
-
-
-
-<!-- 
-
-	<div class="container">
-		<div class="screen"></div>
-
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-		<div class="row">
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-			<div class="seat seat70"></div>
-		</div>
-	</div>
 	
- -->
-	
-
-	<!-- 
-	
-	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	
-	
-	
-	<div class="container">
-		<div class="screen"></div>
-
+		<th:block th:if="${hallSeatCnt == 100}">
 		<div class="row">
 			<div class="seat seat100"></div>
 			<div class="seat seat100"></div>
@@ -316,9 +299,11 @@
 			<div class="seat"></div>
 			<div class="seat"></div>
 		</div>
+		</th:block>
+		
 	</div>
 	
-	 -->
+	
 
 	<!-- <input type="hidden" id="seatList" th:value="${seatList}"/> -->
 

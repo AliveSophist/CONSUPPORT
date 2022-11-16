@@ -36,6 +36,8 @@ import kh.study.consupport.common.config.SecurityConfig;
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.HallVO;
+import kh.study.consupport.common.vo.TicketVO;
 import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -87,16 +89,21 @@ public class CommonController {
 	
 	// 현재 접속 아이디가 모임?
 	@GetMapping("test")
-	public String authenticationTest(HttpSession session, Authentication authentication) {
+	public String authenticationTest(HttpSession session, Authentication authentication, Model model) {
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
 		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
 		//return "redirect:/concertList";
 		
 		
+		
+		model.addAttribute("hallSeatCnt", 40);
+		
+		List<TicketVO> ticketList = commonService.selectTicketList();
+		model.addAttribute("ticketList", ticketList);
 		
 		return "/content/common/seat_form";
 	}
