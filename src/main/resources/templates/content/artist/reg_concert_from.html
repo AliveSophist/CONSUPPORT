@@ -11,10 +11,10 @@
 
 		<div>콘서트 등록</div>
 
-		<div>
+		<div class="col-12">
 
 			<form id="regConcert">
-
+				
 				<!-- userId 삽입 -->
 				<input type="hidden" th:value="${hall.userId}" name="userId">
 				<div class="input-group">
@@ -87,7 +87,7 @@
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" tabindex="-1"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h1 class="modal-title fs-5" id="exampleModalLabel">공연장을
