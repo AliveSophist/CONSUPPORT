@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body th:fragment="side">
+	<div sec:authorize="hasRole('ADMIN')">
+		<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
+		<input type="radio" class="btn-check" th:classappend="${menu} eq '1' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/admin/reg(menu=1)}'|"> 
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio1">상품등록</label>
+		<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '2' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/admin/itemManager(menu=2)}'|">
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio2">상품관리</label>
+		<input type="radio" class="btn-check" th:classappend="${menu} eq '3' ? 'active' : ''" id="vbtn-radio3" name="vbtn-radio" autocomplete="off" th:onclick="|location.href='@{/admin/memberRoleManager(menu=3)}'|"> 
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio3">회원권한설정</label>
+		<input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off" > 
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio4">메뉴관리</label>
+		<input type="radio" class="btn-check" th:classappend="${menu} eq '5' ? 'active' : ''" id="vbtn-radio5" name="vbtn-radio" autocomplete="off" th:onclick="|location.href='@{/admin/salesManage(menu=5)}'|"> 
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio5">매출관리</label>
+		</div>
+	</div>
+	<div sec:authorize="hasRole('MEMBER')">
+		<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
+		<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '1' ? 'active' : ''" id="vbtn-radio1" name="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/member/member_manage(menu=1)}'|"> 
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio1">내 정보 수정</label>
+		<input type="radio" class="btn-check" th:classappend="${menu} eq '2' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/cart/cartList(menu=2)}'|"> 
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio2">내 장바구니</label>
+		<input type="radio" class="btn-check" th:classappend="${menu} eq '3' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio3" autocomplete="off" th:onclick="|location.href='@{/member/buyRecord(menu=3)}'|">
+			<label class="btn btn-outline-secondary text-start" for="vbtn-radio3">구매내역</label>
+	</div>
+	</div>
+	
+</body>
+</html>
+
+<!-- 클릭시 변동사항 입력은 많이 쓰이는 기능 
+		th:classappend=""-->
+

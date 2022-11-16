@@ -48,6 +48,7 @@ public class ArtistServiceImpl implements ArtistService{
 		sqlSession.insert("artistMapper.regConcert", concert);
 		sqlSession.insert("artistMapper.insertConcertPrice", concert);
 		sqlSession.insert("artistMapper.insertConcertImg", concert);
+		sqlSession.update("artistMapper.hallStatusUpdate", concert);
 		
 	}
 	

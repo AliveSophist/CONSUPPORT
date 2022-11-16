@@ -190,5 +190,12 @@
 		AND HALL_STATUS = 'EMPTY'
 	</select>
 	
+	<update id="hallStatusUpdate">
+		UPDATE HALL_DATE
+		SET
+		HALL_STATUS = 'BOOKED'
+		WHERE HALL_DATE_CODE = #{hallDateCode}
+	</update>
+	
 
 </mapper>
