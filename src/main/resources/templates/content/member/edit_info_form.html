@@ -19,6 +19,7 @@
 			<div class="input-form col-md-12 mx-auto">
 					<div class="col-6">
 						UserId<div>[[${user.UserId}]]</div>
+						<input type="hidden" th:value="${user.UserId}" name="userId">
 					</div>
 
 <!-- ----------------------------------------------------------------------- -->
@@ -32,7 +33,7 @@
 
 				<div class="col-6">
 					USER_NAME<input type="text" class="form-control" 
-					name="artistName" th:value="${user.userName}">
+					name="userName" th:value="${user.userName}">
 				</div>
 					
 <!-- ----------------------------------------------------------------------- -->
@@ -59,7 +60,7 @@
 			</div>	
 <!-- ----------------------------------------------------------------------- -->
 
-			<button class="btn btn-primary btn-lg btn-block" type="button">
+			<button class="btn btn-primary btn-lg btn-block" type="submit">
 			수정</button>
 
 

@@ -91,7 +91,7 @@
 
 <!-- ============================= -->
 	
-	<!-- <update id="editInfo">
+	<update id="editInfo">
 		UPDATE USERS
 			SET
 			USER_NAME = #{userName}
@@ -99,7 +99,7 @@
 			, USER_ADDR_DETAIL = #{userAddrDetail}
 			, USER_TELL = #{userTell}
 		WHERE USER_ID = #{userId}
-	</update> -->
+	</update>
 	
 	
 	

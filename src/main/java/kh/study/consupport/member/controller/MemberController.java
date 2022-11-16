@@ -116,8 +116,9 @@ public class MemberController {
 	
 //===========================================================================================================================================================================================================================
 	// 내 정보 수정
-	@GetMapping("/enterEditInfoForm")
-	public String
+	/*
+	 * @GetMapping("/enterEditInfoForm") public String
+	 */
 	
 	
 	
@@ -141,9 +142,9 @@ public class MemberController {
 	// 내 정보 수정
 	@PostMapping("/editInfo")
 	public String editInfo(UsersVO users) {
+		memberService.editInfo(users);
 		
-		
-		return "content/concertList";
+		return "content/member/edit_info_form";
 	}
 	
 	

@@ -32,6 +32,11 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.editInfoForm", userId);
 	}
 
+	@Override
+	public void editInfo(UsersVO user) {
+		sqlSession.update("memberMapper.editInfo", user);
+	}
+
 	
 	
 }
