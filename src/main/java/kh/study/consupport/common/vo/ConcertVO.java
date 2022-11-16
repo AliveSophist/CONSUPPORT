@@ -39,9 +39,14 @@ public class ConcertVO {
 	private String hallDateCode;
 	//홀 선택 일단 보류
 	//private HallVO hallVO;
+	
 	//가격 설정
 	private ConcertPriceVO concertPrice;
+	
 	//콘서트 이미지
 	private List<ConcertImgVO> concertImgList;
+	
+	//아티스트
+	private ArtistVO artist;
 	
 }

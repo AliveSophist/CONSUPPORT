@@ -28,9 +28,7 @@ public class TicketVO {
 	private String concertCode;
 	
 	private List<String> seatCodeList;
-	
-	
-	
+
 	// userId null 일경우 'EMPTY'
 	// userId null 아닐경우 'BOOKED'
 	private String seatStatus;

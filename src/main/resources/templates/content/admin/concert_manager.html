@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz./thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  layout:decorate="~{layout/base_layout}"
+	  >
+
+
+<!----------------------------------------------------------- ---------------------------------------------------------------------------------------------->
+
+	<div layout:fragment="content" class="col text-start">
+	
+	
+	<th:block>
+		<link href="/css/artist/artist_manager.css" rel="stylesheet"/>
+	</th:block>
+	  
+
+	
+	<hr>
+		<div class="row mb-5">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-12">
+						<h3>콘서트 허가 대기중</h3>
+						<hr>
+					</div>
+					
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+					<!-- <div class="col-12 mb-3">
+						<div class="col-9">
+							<input type="text" class="form-control" placeholder="-- Input CategoryName --">
+						</div>
+						<div class="col-3">
+							<button type="submit" class="btn btn-dark">
+							몰라
+							</button>
+						</div>
+					</div> -->
+					
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+					<div class="col-12">
+					
+						<table class="table text-center table-hover align-middle">
+						
+							<thead>
+								<tr>
+									<th class="col-1" scope="col">No.</th>
+									<th class="col-2" scope="col">콘서트 이미지</th>
+									<th class="col-2" scope="col">콘서트 이름</th>
+									<th class="col-2" scope="col">아티스트 이름</th>
+									<th class="col-2" scope="col">연령등급</th>
+									<th class="col-2" scope="col">콘서트 허가?</th>
+								</tr>
+							</thead>
+							
+							
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+							<tbody>
+								<tr th:each="concert, iterState : ${concertListDEACT}">
+									<th scope="row" th:text="${iterState.count}"></th>
+									<td>
+										<a data-bs-toggle="modal" data-bs-target="#concertDetailModal" style="cursor: pointer">
+											<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
+												 
+												 style="height: 120px; width: 100px">
+										</a>
+									</td>
+									<td>[[${concert.concertName}]]</td>
+									<td>[[${concert.artist.artistName}]]</td>
+									<td>[[${concert.concertRated}]]</td>
+									
+									
+									
+									
+									<td>
+										<form action="/admin/updateConcertStatus" method="post">
+											<div class="form-check form-check-inline">
+												<input type="hidden" th:value="${concert.concertCode}" name="concertCode"> 
+						                    	<button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+												콘서트하세요~
+												</button>
+						                    </div>
+										</form>
+									</td>
+									
+									
+									
+									
+									
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							
+						</div>
+						
+						
+						
+						
+						
+						
+					</div>
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->					                    		   
+				</div>
+			</div>
+		</div>
+
+
+
+	<!-- 아티스트 상세 보기 모달 -->
+	<div class="modal fade" id="concertDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="concertDetailAjax" class="modal-body">
+					<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%;">
+
+						<!-- 아티스트 상세 보기 영역 -->
+
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+
+<hr>
+	<div class="row">
+		<div class="col-12">
+			<div class="row">
+				<div class="col-12">
+					<h3>콘서트 허가 목록</h3>
+					<hr>
+				</div>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+				<!-- <div class="col-12 mb-3">
+						<div class="col-9">
+							<input type="text" class="form-control" placeholder="-- Input CategoryName --">
+						</div>
+						<div class="col-3">
+							<button type="submit" class="btn btn-dark">
+							몰라
+							</button>
+						</div>
+					</div> -->
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				<div class="col-12">
+
+					<table class="table text-center table-hover align-middle">
+
+						<thead>
+							<tr>
+								<th class="col-1" scope="col">No.</th>
+								<th class="col-2" scope="col">콘서트 이미지</th>
+								<th class="col-2" scope="col">콘서트 이름</th>
+								<th class="col-2" scope="col">아티스트 이름</th>
+								<th class="col-2" scope="col">연령등급</th>
+							</tr>
+						</thead>
+
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+						<tbody>
+							<tr th:each="concert, iterState : ${concertListACT}">
+								<th scope="row" th:text="${iterState.count}"></th>
+								<td><a data-bs-toggle="modal"
+									data-bs-target="#concertDetailModal" style="cursor: pointer">
+										<img
+										th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
+										style="height: 120px; width: 100px">
+								</a></td>
+								<td>[[${concert.concertName}]]</td>
+								<td>[[${concert.artist.artistName}]]</td>
+								<td>[[${concert.concertRated}]]</td>
+
+
+
+
+
+
+
+
+
+
+							</tr>
+						</tbody>
+					</table>
+					<div></div>
+
+
+
+
+
+
+				</div>
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="/js/admin/artist_manager.js"></script>
+
+	</div>
+	
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+	
+</html>
