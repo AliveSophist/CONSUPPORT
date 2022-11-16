@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/css/common/seat_form.css" />
+<title>Movie Seat Booking</title>
+</head>
+<body>
+	<div class="movie-container">
+		<label> Select a movie:</label> <select id="movie">
+			<option value="220">Godzilla vs Kong (RS.220)</option>
+			<option value="320">Radhe (RS.320)</option>
+			<option value="250">RRR (RS.250)</option>
+			<option value="260">F9 (RS.260)</option>
+		</select>
+	</div>
+
+	<ul class="showcase">
+		<li>
+			<div class="seat"></div> <small>Available</small>
+		</li>
+		<li>
+			<div class="seat selected"></div> <small>Selected</small>
+		</li>
+		<li>
+			<div class="seat sold"></div> <small>Sold</small>
+		</li>
+	</ul>
+
+
+
+	<div class="container">
+		<div class="screen"></div>
+
+		<div class="row">
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+			<div class="seat seat40 seatR"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+			<div class="seat seat40 seatS"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+			<div class="seat seat40"></div>
+		</div>
+	</div>
+
+
+
+
+
+<!-- 
+
+	<div class="container">
+		<div class="screen"></div>
+
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+			<div class="seat seat70"></div>
+		</div>
+	</div>
+	
+ -->
+	
+
+	<!-- 
+	
+	
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+	
+	
+	<div class="container">
+		<div class="screen"></div>
+
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row">
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+			<div class="seat seat100"></div>
+		</div>
+		<div class="row" style="display: flex; justify-content : center;">
+			<div class="seat"></div>
+			<div class="seat"></div>
+			<div class="seat"></div>
+			<div class="seat"></div>
+		</div>
+	</div>
+	
+	 -->
+
+	<!-- <input type="hidden" id="seatList" th:value="${seatList}"/> -->
+
+	<p class="text">
+		You have selected <span id="count">0</span> seat for a price of RS.<span
+			id="total">0</span>
+	</p>
+	<script src="/js/common/seat_form.js"></script>
+</body>
+</html>

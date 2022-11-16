@@ -82,7 +82,7 @@ public class CommonController {
 	
 	@GetMapping("")
 	public String index() {
-		return "redirect:/test";
+		return "redirect:/concertList";
 	}
 	
 	// 현재 접속 아이디가 모임?
@@ -94,7 +94,11 @@ public class CommonController {
 		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!");
 		
-		return "redirect:/concertList";
+		//return "redirect:/concertList";
+		
+		
+		
+		return "/content/common/seat_form";
 	}
 
 	@GetMapping("accessDenied")
@@ -102,8 +106,6 @@ public class CommonController {
 		return "/content/common/accessDenied";
 	}
 	
-	
-
 	@GetMapping("concertList")
 	public String goConcertList() {
 		return "/content/common/concert_list";

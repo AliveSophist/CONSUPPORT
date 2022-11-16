@@ -1,121 +1,180 @@
 <!DOCTYPE html>
-<html	xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-	<th:block th:fragment="top">
 
-		<th:block>
-			<style>
-			#modalAlert {
-				top: 80px;
-				margin-top: -50px;
-			}
-			
-			
-			@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-			
-			.login-page {
-				width: 360px;
-				padding: 0 0;
-				margin: 0 0;
+<th:block th:fragment="top">
+
+	<th:block>
+		<!-- 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+		-->
+		<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+		
+		<style>
+		
+		#modalAlert {
+			top: 80px;
+			margin-top: -50px;
+		}
+		
+		.login-page {
+			width: 360px;
+			padding: 0 0;
+			margin: 0 0;
+		
+			/* padding-top: 100px; */
+		}
+		
+		.form {
+			position: relative;
+			z-index: 1;
+			background: #FFFFFF;
+			max-width: 360px;
+			margin: 0 auto 100px;
+			padding: 45px;
+			text-align: center;
+			box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
+				rgba(0, 0, 0, 0.24);
+		}
+		
+		.form input {
+			font-family: 'Roboto', sans-serif;
+			outline: 0;
+			background: #f2f2f2;
+			width: 100%;
+			border: 0;
+			margin: 0 0 15px;
+			padding: 15px;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+		
+		.form button {
+			font-family: 'Roboto', sans-serif;
+			text-transform: uppercase;
+			outline: 0;
+			background: #414358; /* ※중요※ 버튼색 */
+			width: 100%;
+			border: 0;
+			padding: 15px;
+			color: #FFFFFF;
+			font-size: 14px;
+			-webkit-transition: all 0.3 ease;
+			transition: all 0.3 ease;
+			cursor: pointer;
+		}
+		
+		.form button:hover, .form button:active, .form button:focus {
+			background: #52587a;
+		}
+		
+		.form .message {
+			margin: 15px 0 0;
+			color: #b3b3b3;
+			font-size: 12px;
+		}
+		
+		.form .message a {
+			color: #414358; /* ※중요※ 버튼색 */
+			text-decoration: none;
+		}
+		
+		.form .register-form {
+			display: none;
+		}
+		
+		.container .info {
+			margin: 50px auto;
+			text-align: center;
+		}
+		
+		.container .info h1 {
+			margin: 0 0 15px;
+			padding: 0;
+			font-size: 36px;
+			font-weight: 300;
+			color: #1a1a1a;
+		}
+		
+		.container .info span {
+			color: #4d4d4d;
+			font-size: 12px;
+		}
+		
+		.container .info span a {
+			color: #000000;
+			text-decoration: none;
+		}
+		
+		.container .info span .fa {
+			color: #EF3B3A;
+		}
+		</style>
+	</th:block>
+
+
+	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width: 100%; height: 5rem; padding: 35px 0px;">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/" style="font-family: 'Lobster', cursive; font-size: 4rem; margin-left: 30px;">CONSUPPORT</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+				aria-controls="navbarColor01" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav me-auto">
 				
-				/* padding-top: 100px; */
-			}
-			
-			.form {
-				position: relative;
-				z-index: 1;
-				background: #FFFFFF;
-				max-width: 360px;
-				margin: 0 auto 100px;
-				padding: 45px;
-				text-align: center;
-				box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
-					rgba(0, 0, 0, 0.24);
-			}
-			
-			.form input {
-				font-family: "Roboto", sans-serif;
-				outline: 0;
-				background: #f2f2f2;
-				width: 100%;
-				border: 0;
-				margin: 0 0 15px;
-				padding: 15px;
-				box-sizing: border-box;
-				font-size: 14px;
-			}
-			
-			.form button {
-				font-family: "Roboto", sans-serif;
-				text-transform: uppercase;
-				outline: 0;
-				background: #414358;	/* ※중요※ 버튼색 */
-				width: 100%;
-				border: 0;
-				padding: 15px;
-				color: #FFFFFF;
-				font-size: 14px;
-				-webkit-transition: all 0.3 ease;
-				transition: all 0.3 ease;
-				cursor: pointer;
-			}
-			
-			.form button:hover, .form button:active, .form button:focus {
-				background: #52587a;
-			}
-			
-			.form .message {
-				margin: 15px 0 0;
-				color: #b3b3b3;
-				font-size: 12px;
-			}
-			
-			.form .message a {
-				color: #414358;	/* ※중요※ 버튼색 */
-				text-decoration: none;
-			}
-			
-			.form .register-form {
-				display: none;
-			}
-			
-			.container .info {
-				margin: 50px auto;
-				text-align: center;
-			}
-			
-			.container .info h1 {
-				margin: 0 0 15px;
-				padding: 0;
-				font-size: 36px;
-				font-weight: 300;
-				color: #1a1a1a;
-			}
-			
-			.container .info span {
-				color: #4d4d4d;
-				font-size: 12px;
-			}
-			
-			.container .info span a {
-				color: #000000;
-				text-decoration: none;
-			}
-			
-			.container .info span .fa {
-				color: #EF3B3A;
-			}
-			</style>
-		</th:block>
-		
-		
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+					<!-- <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="about.html">About</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a>
+					</li> -->
 
-		
-		<!-- Navigation-->
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				</ul>
+				<!-- <form class="d-flex">
+					<input class="form-control me-sm-2" type="text"
+						placeholder="Search">
+					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				</form> -->
+
+				<ul class="navbar-nav" style="margin-right: 30px; font-size: 1.5rem">
+					<th:block sec:authorize="hasRole('ROLE_ANONYMOUS')">
+						<li class="nav-item"><a class="nav-link"
+							data-bs-toggle="modal" data-bs-target="#modalLogin"
+							style="cursor: pointer">LOGIN | JOIN</a></li>
+					</th:block>
+
+					<th:block
+						sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
+						<li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a>
+						</li>
+					</th:block>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+
+
+
+
+
+
+
+	<!-- Navigation
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container px-5">
 				<a class="navbar-brand" href="/">CONSUPPORT</a>
 				<button class="navbar-toggler" type="button"
@@ -156,124 +215,109 @@
 
 
 
-						<!-- <li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#"
-							role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
-							<ul class="dropdown-menu dropdown-menu-end"
-								aria-labelledby="navbarDropdownBlog">
-								<li><a class="dropdown-item" href="blog-home.html">Blog
-										Home</a></li>
-								<li><a class="dropdown-item" href="blog-post.html">Blog
-										Post</a></li>
-							</ul></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" id="navbarDropdownPortfolio"
-							href="#" role="button" data-bs-toggle="dropdown"
-							aria-expanded="false">Portfolio</a>
-							<ul class="dropdown-menu dropdown-menu-end"
-								aria-labelledby="navbarDropdownPortfolio">
-								<li><a class="dropdown-item" href="portfolio-overview.html">Portfolio
-										Overview</a></li>
-								<li><a class="dropdown-item" href="portfolio-item.html">Portfolio
-										Item</a></li>
-							</ul></li> -->
 					</ul>
 				</div>
 			</div>
 		</nav>
+-->
+
+	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+	<!-- Login a태그 클릭 시 실행되는 Modal -->
+	<div id="modalLogin" class="modal fade" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content"
+				style="background-color: rgba(0, 0, 0, 0); border-color: rgba(0, 0, 0, 0);">
+
+				<button type="button" class="btn-close btnModalClose"
+					data-bs-dismiss="modal" aria-label="Close"
+					style="position: absolute; top: 1.0rem; right: 5.0rem;"></button>
+
+				<div class="row">
+					<div class="col login-page">
+						<div class="form">
+
+							<form class="register-form" name="registerForm"
+								autocomplete="off">
+								<!-- 자동완성 방지용 더미태그 -->
+								<input name="username_dummy" type="text" style="display: none"
+									aria-hidden="true"> <input name="password_dummy"
+									type="password" style="display: none" aria-hidden="true">
+
+								<input name="userId" type="email" placeholder="ID (email)"
+									autocomplete="off" required /> <input name="userPw"
+									type="password" placeholder="Password" autocomplete="off"
+									required /> <input name="userPwChecker" type="password"
+									placeholder="Password" autocomplete="off" required /> <input
+									name="userName" type="text" placeholder="userName" required />
+
+								<input name="userAddr" type="text" placeholder="userAddr"
+									required /> <input name="userAddrDetail" type="text"
+									placeholder="userAddrDetail" /> <input name="userBirth"
+									type="text" placeholder="userBirth" required /> <input
+									name="userTell" type="text" placeholder="userTell" required />
+
+								<button type="button" onclick="join()">create</button>
+								<p class="message">
+									Already registered? <a>Sign In</a>
+								</p>
+							</form>
+
+							<form class="login-form" name="loginForm">
+								<input name="userId" type="text" placeholder="ID (email)" /> <input
+									name="userPw" type="password" placeholder="Password" />
+
+								<button type="button" onclick="login()">login</button>
+								<p class="message">
+									Not registered? <a>Create an account</a>
+								</p>
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" id="openLogin" th:value="${openLogin}" />
 
 
-		<!-- Login a태그 클릭 시 실행되는 Modal -->
-		<div id="modalLogin" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div 	class="modal-content" 
-						style="background-color: rgba(0, 0, 0, 0); border-color: rgba(0, 0, 0, 0);">
-					
-					<button	type="button" class="btn-close btnModalClose" data-bs-dismiss="modal" aria-label="Close"
-							style="position: absolute; top: 1.0rem; right: 5.0rem;"></button>
-					
+	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+	<!-- Alert! -->
+	<div id="modalAlert" class="modal" tabindex="-1" style="z-index: 1070;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-body">
 					<div class="row">
-						<div class="col login-page" >
-							<div class="form">
-								
-								<form class="register-form" name="registerForm" autocomplete="off">
-									<!-- 자동완성 방지용 더미태그 -->
-									<input name="username_dummy" type="text" style="display:none" aria-hidden="true">
-									<input name="password_dummy" type="password" style="display:none" aria-hidden="true">
-									
-									<input name="userId"			type="email" placeholder="ID (email)" autocomplete="off" required/>
-									<input name="userPw"			type="password" placeholder="Password" autocomplete="off" required/>
-									<input name="userPwChecker"		type="password" placeholder="Password" autocomplete="off" required/>
-									<input name="userName"			type="text" placeholder="userName" required/>
-									
-									<input name="userAddr"			type="text" placeholder="userAddr" required/>
-									<input name="userAddrDetail"	type="text" placeholder="userAddrDetail"/>
-									
-									<input name="userBirth"			type="text" placeholder="userBirth" required/>
-									<input name="userTell"			type="text" placeholder="userTell" required/>
-									
-									<button type="button" onclick="join()">create</button>
-									<p class="message">
-										Already registered? <a>Sign In</a>
-									</p>
-								</form>
-								
-								<form class="login-form" name="loginForm">
-									<input name="userId"	type="text" placeholder="ID (email)"/>
-									<input name="userPw"	type="password" placeholder="Password"/>
-									
-									<button type="button" onclick="login()">login</button>
-									<p class="message">
-										Not registered? <a>Create an account</a>
-									</p>
-								</form>
-								
-							</div>
+						<div class="col modalAlert_InnerContent">alert msg</div>
+					</div>
+					<div class="row">
+						<div class="col text-end">
+							<button type="button"
+								class="btn btn-secondary btn-sm modal_OK_button"
+								data-bs-dismiss="modal"
+								style="-bs-btn-padding-y: .25rem; - -bs-btn-padding-x: 3rem; - -bs-btn-font-size: 1rem;">OK
+							</button>
 						</div>
 					</div>
-				
 				</div>
+
 			</div>
 		</div>
-		
-		<input type="hidden" id="openLogin" th:value="${openLogin}"/>
+	</div>
 
 
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
-		<!-- Alert! -->
-		<div id="modalAlert" class="modal" tabindex="-1" style="z-index: 1070;">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-				
-					<div class="modal-body">
-						<div class="row">
-							<div class="col modalAlert_InnerContent">alert msg</div>
-						</div>
-						<div class="row">
-							<div class="col text-end">
-								<button type="button"
-										class="btn btn-secondary btn-sm modal_OK_button" 
-										data-bs-dismiss="modal"
-										style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: 3rem; --bs-btn-font-size: 1rem;">OK
-								</button>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-
-
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-	
-		<script th:inline="javascript">
+	<script th:inline="javascript">
 			//bootstrap Modal 좀 더 편하게 다루기
 			let bootstrapModal;
 			function showModal(modalTag) {
@@ -418,6 +462,6 @@
 			if (isOpenLogin.indexOf("true") > -1)
 				showModal(modalLogin);
 		</script>
-		
-	</th:block>
+
+</th:block>
 </html>
