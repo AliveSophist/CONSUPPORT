@@ -4,22 +4,27 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="/css/common/seat_form.css" />
+<link rel="stylesheet" href="/css/common/reserve_seat_form.css" />
 <title>Movie Seat Booking</title>
 </head>
 <body>
-	<div class="movie-container">
-		<label> Select a movie:</label> <select id="movie">
-			<option value="220">Godzilla vs Kong (RS.220)</option>
-			<option value="320">Radhe (RS.320)</option>
-			<option value="250">RRR (RS.250)</option>
-			<option value="260">F9 (RS.260)</option>
-		</select>
-	</div>
+
+
+	<!-- jQuery --> 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> 
+	<!-- iamport.payment.js --> 
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+			
+
+
 
 	<ul class="showcase">
 		<li>
-			<div class="seat"></div> <small>Available</small>
+			<span></span>
+						<div class="seat seatR">R</div>
+						<div class="seat seatS">S</div>
+						<div class="seat">A</div>
+				<div class="col"> <small>Available</small> </div>
 		</li>
 		<li>
 			<div class="seat selected"></div> <small>Selected</small>
@@ -34,8 +39,12 @@
 
 	<div class="container">
 		<div class="screen"></div>
+		
+		
+		<input type="hidden" id="ticketList" th:value="${ticketList}">
 
-		<th:block th:if="${hallSeatCnt == 40}">
+
+		<th:block th:if="${ticketList.size() == 40}">
 		<div class="row">
 			<div class="seat seat40"></div>
 			<div class="seat seat40"></div>
@@ -88,11 +97,8 @@
 		</div>
 		</th:block>
 		
-		
-		
-		
-		
-		<th:block th:if="${hallSeatCnt == 70}">
+
+		<th:block th:if="${ticketList.size() == 70}">
 		<div class="row">
 			<div class="seat seat70"></div>
 			<div class="seat seat70"></div>
@@ -178,9 +184,9 @@
 			<div class="seat seat70"></div>
 		</div>
 		</th:block>
-
-	
-		<th:block th:if="${hallSeatCnt == 100}">
+		
+		
+		<th:block th:if="${ticketList.size() == 100}">
 		<div class="row">
 			<div class="seat seat100"></div>
 			<div class="seat seat100"></div>
@@ -301,16 +307,165 @@
 		</div>
 		</th:block>
 		
+		
 	</div>
 	
+	<br>
+	<br>
+	<br>
 	
+	<form action="/reserveSeat" id="reserveSeatForm" method="post">
+		<input type="number" id="numSelectedR" readonly>
+		<br>
+		<input type="number" id="numSelectedS" readonly>
+		<br>
+		<input type="number" id="numSelectedA" readonly>
+		<br>
+		<br>
+		<input type="number" 	name="salesTotalPrice" id="salesTotalPrice" readonly>
+		<br>
+		
+		<input type="hidden"	name="hallCode" th:value="${concert.hallCode}">
+		<input type="hidden"	name="concertCode" th:value="${concert.concertCode}">
+		
+		<input type="hidden"	name="ticketCodeList" id="ticketCodeList">
+		<input type="hidden"	name="salesAmount" id="salesAmount">
 
-	<!-- <input type="hidden" id="seatList" th:value="${seatList}"/> -->
-
-	<p class="text">
-		You have selected <span id="count">0</span> seat for a price of RS.<span
-			id="total">0</span>
-	</p>
-	<script src="/js/common/seat_form.js"></script>
+		<input type="hidden"	name="salesCode" id="salesCode">
+	</form>
+	
+	
+    <div> 
+        <h2>IAMPORT 결제 데모</h2> 
+        <li> 
+           	<button id="iamportPayment" type="button">결제테스트</button> 
+        </li> 
+    </div> 
+	
+	
+	<br>
+	<br>
+	
+	
+	
+	
+	<script th:inline="javascript">
+		const seats = document.querySelectorAll(".row .seat");
+	
+		const ticketList = /*[[${ticketList}]]*/[];	// 대괄호 안넣으면 오류는 안나는데 빨간줄뜸 거지같은 타임리프 문법 수준...
+		console.log(ticketList)
+///////////////////////////////////////////////////// 넣자.
+		let concertPriceR = 30000;
+		let concertPriceS = 555;
+		let concertPriceA = 111;
+///////////////////////////////////////////////////// 넣자.
+		let numSelectedR	= 0;
+		let numSelectedS	= 0;
+		let numSelectedA	= 0;
+		
+		let salesAmount		= 0;
+		let salesTotalPrice	= 0;
+		var ticketCodeList = [];
+		function addSeat(ticketCode) { ticketCodeList.push(ticketCode); }
+		function delSeat(ticketCode) {
+			for (let i = 0; i < ticketCodeList.length; i++) {
+				if (ticketCodeList[i] === ticketCode) {
+					ticketCodeList.splice(i, 1);
+					return;
+				}
+			}
+		}
+		
+		
+		
+		let arrnum = 0;
+		for (const s of seats) {
+			// seatCode 포함된 문자에 따라 R석 S석 표시
+			if (ticketList[arrnum].seatCode.indexOf('R_') > -1)
+				s.classList.add('seatR');
+			else if (ticketList[arrnum].seatCode.indexOf('S_') > -1)
+				s.classList.add('seatS');
+	
+	
+			// seatStatus 값이 BOOKED 라면 이미 팔린 좌석 표시
+			if (ticketList[arrnum].seatStatus.indexOf('BOOKED') > -1)
+				s.classList.add('sold');
+	
+	
+			// 좌석버튼마다 ticketCode 값 주입
+			s.dataset.ticketCode = ticketList[arrnum].ticketCode;
+	
+	
+			// 좌석버튼마다 클릭이벤트 주입...! 햐아아아아압!
+			s.addEventListener("click", function() {
+				if (s.classList.contains('sold'))
+					return;
+	
+				if (!s.classList.contains('selected')) {
+					if(ticketCodeList.length == 4){
+						alert('1인 4좌석까지만 구매 가능');
+						return;
+					}
+					
+					
+					s.classList.add("selected");
+					addSeat(s.dataset.ticketCode);
+	
+	
+					if (s.classList.contains('seatR')) {
+						numSelectedR++;
+						salesTotalPrice += concertPriceR;
+					}
+					else if (s.classList.contains('seatS')) {
+						numSelectedS++;
+						salesTotalPrice += concertPriceS;
+					}
+					else {
+						numSelectedA++;
+						salesTotalPrice += concertPriceA;
+					}
+				}
+				else {
+					s.classList.remove("selected");
+					delSeat(s.dataset.ticketCode);
+	
+	
+					if (s.classList.contains('seatR')) {
+						numSelectedR--;
+						salesTotalPrice -= concertPriceR;
+					}
+					else if (s.classList.contains('seatS')) {
+						numSelectedS--;
+						salesTotalPrice -= concertPriceS;
+					}
+					else {
+						numSelectedA--;
+						salesTotalPrice -= concertPriceA;
+					}
+				}
+				
+				updateView();
+				
+				alert('몇장? : ' + salesAmount + '\n'
+					+ '코드? : ' + ticketCodeList);
+			})
+			arrnum++;
+		}
+	
+		function updateView(){
+			document.querySelector('#numSelectedR').value = (numSelectedR!=0) ? numSelectedR : '';
+			document.querySelector('#numSelectedS').value = (numSelectedS!=0) ? numSelectedS : '';
+			document.querySelector('#numSelectedA').value = (numSelectedA!=0) ? numSelectedA : '';
+			salesAmount = (numSelectedR+numSelectedS+numSelectedA);
+			
+			document.querySelector('#ticketCodeList').value = ticketCodeList;
+			document.querySelector('#salesAmount').value = salesAmount;
+			document.querySelector('#salesTotalPrice').value = salesTotalPrice;
+		}
+	</script>
+	
+	<script type="text/javascript" src="/js/common/reserve_seat_form.js"></script>
+	
+	
 </body>
 </html>

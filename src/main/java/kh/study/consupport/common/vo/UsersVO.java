@@ -30,7 +30,7 @@ public class UsersVO {
 	@Email(message = "아이디의 이메일 형식이 올바르지 않습니다.")
 	private String userId;
 	
-	@Pattern(regexp = "[0-9a-zA-Z]{6,16}$", message = "비밀번호는 특수문자를 제외한 6~16자리여야 합니다.")
+	@Pattern(regexp = "^(?=.*[a-zA-z])(?=.*[0-9]).{6,16}$", message = "비밀번호는 영문 대소문자, 숫자를 포함한 6~16자리여야 합니다.")
 	private String userPw;
 	
 	@Pattern(regexp = "[0-9a-zA-Zㄱ-ㅎ가-힣]{3,10}$", message = "닉네임은 특수문자를 제외한 3~10자리여야 합니다.")

@@ -227,9 +227,9 @@
 	<!-- Login a태그 클릭 시 실행되는 Modal -->
 	<div id="modalLogin" class="modal fade" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog row">
 			<div class="modal-content"
-				style="background-color: rgba(0, 0, 0, 0); border-color: rgba(0, 0, 0, 0);">
+				style="background-color: rgba(0, 0, 0, 0); border:none; backdrop-filter: none; background-image:url('');  box-shadow: none;">
 
 				<button type="button" class="btn-close btnModalClose"
 					data-bs-dismiss="modal" aria-label="Close"
@@ -290,22 +290,13 @@
 
 
 	<!-- Alert! -->
-	<div id="modalAlert" class="modal" tabindex="-1" style="z-index: 1070;">
+	<div id="modalAlert" class="modal" tabindex="-1" style="color: #414358; z-index: 1070;">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 
 				<div class="modal-body">
 					<div class="row">
 						<div class="col modalAlert_InnerContent">alert msg</div>
-					</div>
-					<div class="row">
-						<div class="col text-end">
-							<button type="button"
-								class="btn btn-secondary btn-sm modal_OK_button"
-								data-bs-dismiss="modal"
-								style="-bs-btn-padding-y: .25rem; -bs-btn-padding-x: 3rem; -bs-btn-font-size: 1rem;">OK
-							</button>
-						</div>
 					</div>
 				</div>
 
@@ -318,150 +309,156 @@
 
 
 	<script th:inline="javascript">
-			//bootstrap Modal 좀 더 편하게 다루기
-			let bootstrapModal;
-			function showModal(modalTag) {
-				bootstrapModal = new bootstrap.Modal(modalTag);
-				bootstrapModal.show();
-			}
-			function hideModal() {
-				bootstrapModal.hide();
-			}
-			
-			
-			
-			// login-page 클래스의 애니메이션 기능 활성화
-			$('.message a').click(function() {
-				$('form').animate({
-					height : "toggle",
-					opacity : "toggle"
-				}, "slow");
-			});
-			
-			// 가입 펑션
-			function join() {
-				
-				const registerForm = $("form[name=registerForm]");
-				
-				//비밀번호 체크
-				if(registerForm.find("input[name=userPw]").val() != registerForm.find("input[name=userPwChecker]").val()){
-					modalAlert.querySelector('.modalAlert_InnerContent').innerText = "비밀번호가 일치하지 않습니다!";
-					showModal(modalAlert);
-					
-					return;
-				}
-				
-				//ajax start
-				$.ajax({
-					url : '/join', //요청경로
-					type : 'post',
-					
-					data: registerForm.serialize(),
-					
-					success : function(result) {
+		//$('.modal-content').css('background-image', 'url("")');
 	
-						//가입 실패할 경우 에러 메세지 띄우기..!
-						if (result.userId == null) {
-							
-							if(result.errors != null){
-								let str = '';
-								for(error of result.errors)
-									str += (error + '\n\n');
-								
-								modalAlert.querySelector('.modalAlert_InnerContent').innerText = str;
-								showModal(modalAlert);
-							}
-							if(result.duplicated != null){
-								modalAlert.querySelector('.modalAlert_InnerContent').innerText = result.duplicated;
-								showModal(modalAlert);
-							}
-								
-							return;
-						}
-						
-						//가입 성공한 경우 자동으로 로그인 완료!
-						alert('반갑습니다! ' + result.userName + ' 님');
-	
-						// 						if(result.memberRole.indexOf('ADMIN') > -1){
-						// 							alert('관리자 로그인 입니다..!');
-						// 							location.href = '/admin/regItem';
-						// 							return;
-						// 						}
-	
-						alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
-						location.href = result.Referer;
-					},
-					error : function() {
-						alert('Ajax 실패');
-					}
-				});
-				//ajax end
-			}
-			
-			// 로그인 펑션
-			function login() {
-				//ajax start
-				$.ajax({
-					url : '/login', //요청경로
-					type : 'post',
-					
-					data: $("form[name=loginForm]").serialize(),
-					
-					success : function(result) {
-	
-						//로그인 정보 없을 경우, 강제 탈출!
-						if (result.userId == null) {
-							
-							modalAlert.querySelector('.modalAlert_InnerContent').innerText = result.alertMsg;
-							showModal(modalAlert);
-							
-							return;
-						}
 
-						alert('반갑습니다! ' + result.userName + ' 님');
-	
-						// 						if(result.memberRole.indexOf('ADMIN') > -1){
-						// 							alert('관리자 로그인 입니다..!');
-						// 							location.href = '/admin/regItem';
-						// 							return;
-						// 						}
-	
-						alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
-						location.href = result.Referer;
-					},
-					error : function() {
-						alert('Ajax 실패');
-					}
-				});
-				//ajax end
-			}
-			// 비밀번호창에서 ENTER 하면 login 자동 실행됨
-			document.querySelector('.login-form').querySelector(
-					'input[type="password"]').addEventListener("keydown",
-					function() {
-						e = window.event;
-	
-						// ENTER	https://www.toptal.com/developers/keycode
-						if (e.keyCode == '13')
-							login();
-					});
-	
-			const modalLogin = document.querySelector('#modalLogin');
-			//const modalAlert = document.querySelector('#modalAlert');
-	
-			// 모달 닫을때는 내용 리셋 해줘
-			modalLogin.addEventListener('hidden.bs.modal', function() {
-				modalLogin.querySelector('.login-form').reset();
+		//bootstrap Modal 좀 더 편하게 다루기
+		let bootstrapModal;
+		function showModal(modalTag) {
+			bootstrapModal = new bootstrap.Modal(modalTag);
+			bootstrapModal.show();
+		}
+		function hideModal() {
+			bootstrapModal.hide();
+		}
+
+		const modalLogin = document.querySelector('#modalLogin');
+		const modalAlert = document.querySelector('#modalAlert');
+		
+		
+		
+		// login-page 클래스의 애니메이션 기능 활성화
+		$('.message a').click(function() {
+			$('form').animate({
+				height : "toggle",
+				opacity : "toggle"
+			}, "slow");
+		});
+		
+		// 가입 펑션
+		function join() {
+			
+			const registerForm = $("form[name=registerForm]");
+			
+			//비밀번호 체크
+			if(registerForm.find("input[name=userPw]").val() != registerForm.find("input[name=userPwChecker]").val()){
+				modalAlert.querySelector('.modalAlert_InnerContent').innerText = "비밀번호가 일치하지 않습니다!";
+				showModal(modalAlert);
 				
-				//가입하던거 다 지우는건 에바지
-				//modalLogin.querySelector('.register-form').reset();
+				return;
+			}
+			
+			//ajax start
+			$.ajax({
+				url : '/join', //요청경로
+				type : 'post',
+				
+				data: registerForm.serialize(),
+				
+				success : function(result) {
+
+					//가입 실패할 경우 에러 메세지 띄우기..!
+					if (result.userId == null) {
+						
+						if(result.errors != null){
+							let str = '';
+							for(error of result.errors)
+								if(str == '')
+									str += error;
+								else
+									str += ('\n\n' + error);
+							
+							modalAlert.querySelector('.modalAlert_InnerContent').innerText = str;
+							showModal(modalAlert);
+						}
+						if(result.duplicated != null){
+							modalAlert.querySelector('.modalAlert_InnerContent').innerText = result.duplicated;
+							showModal(modalAlert);
+						}
+							
+						return;
+					}
+					
+					//가입 성공한 경우 자동으로 로그인 완료!
+					alert('반갑습니다! ' + result.userName + ' 님');
+
+					// 						if(result.memberRole.indexOf('ADMIN') > -1){
+					// 							alert('관리자 로그인 입니다..!');
+					// 							location.href = '/admin/regItem';
+					// 							return;
+					// 						}
+
+					alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
+					location.href = result.Referer;
+				},
+				error : function() {
+					alert('Ajax 실패');
+				}
 			});
-	
-			// 로그인 모달 켜라고하면 켜
-			let isOpenLogin = document.querySelector('#openLogin').value;
-			if (isOpenLogin.indexOf("true") > -1)
-				showModal(modalLogin);
-		</script>
+			//ajax end
+		}
+		
+		// 로그인 펑션
+		function login() {
+			//ajax start
+			$.ajax({
+				url : '/login', //요청경로
+				type : 'post',
+				
+				data: $("form[name=loginForm]").serialize(),
+				
+				success : function(result) {
+
+					//로그인 정보 없을 경우, 강제 탈출!
+					if (result.userId == null) {
+						
+						modalAlert.querySelector('.modalAlert_InnerContent').innerText = result.alertMsg;
+						showModal(modalAlert);
+						
+						return;
+					}
+
+					alert('반갑습니다! ' + result.userName + ' 님');
+
+					// 						if(result.memberRole.indexOf('ADMIN') > -1){
+					// 							alert('관리자 로그인 입니다..!');
+					// 							location.href = '/admin/regItem';
+					// 							return;
+					// 						}
+
+					alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
+					location.href = result.Referer;
+				},
+				error : function() {
+					alert('Ajax 실패');
+				}
+			});
+			//ajax end
+		}
+		// 비밀번호창에서 ENTER 하면 login 자동 실행됨
+		document.querySelector('.login-form').querySelector(
+				'input[type="password"]').addEventListener("keydown",
+				function() {
+					e = window.event;
+
+					// ENTER	https://www.toptal.com/developers/keycode
+					if (e.keyCode == '13')
+						login();
+				});
+
+		// 모달 닫을때는 내용 리셋 해줘
+		modalLogin.addEventListener('hidden.bs.modal', function() {
+			modalLogin.querySelector('.login-form').reset();
+			
+			//가입하던거 다 지우는건 에바지
+			//modalLogin.querySelector('.register-form').reset();
+		});
+
+		// 로그인 모달 켜라고하면 켜
+		let isOpenLogin = document.querySelector('#openLogin').value;
+		if (isOpenLogin.indexOf("true") > -1)
+			showModal(modalLogin);
+	</script>
 
 </th:block>
 </html>

@@ -33,6 +33,9 @@ build/
 .vscode/
 
 bin/
-**/src/main/resources/static/img/artist/
-**/src/main/resources/static/img/concert/
-**/src/main/resources/static/img/hall/
+**/img/artist/*.jpg
+**/img/artist/*.png
+**/img/concert/*.jpg
+**/img/concert/*.png
+**/img/hall/*.jpg
+**/img/hall/*.png

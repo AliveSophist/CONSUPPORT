@@ -18,7 +18,16 @@
 		<result column="USER_STATUS" 		property="userStatus"/>
 	</resultMap>
 	
-	
+
+	<resultMap type="kh.study.consupport.common.vo.TicketVO" id="ticket">
+		<id column="TICKET_CODE" 			property="ticketCode"/>
+		<result column="SEAT_CODE" 			property="seatCode"/>
+		<result column="USER_ID" 			property="userId"/>
+		<result column="HALL_CODE" 			property="hallCode"/>
+		<result column="CONCERT_CODE" 		property="concertCode"/>
+		
+		<result column="SEAT_STATUS" 			property="seatStatus"/>
+	</resultMap>
 	
 	
 	
@@ -68,10 +77,104 @@
 	</select>
 
 
-
-
-
+	<select id="selectTicketList" resultMap="ticket">
+		SELECT
+			TICKET_CODE
+			, SEAT_CODE
+			, (DECODE(USER_ID, null		, 'EMPTY'
+										, 'BOOKED')) AS SEAT_STATUS
+		FROM TICKET
+		WHERE CONCERT_CODE = #{concertCode}
+		ORDER BY TICKET_CODE
+	</select>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 구매(티켓팅) 관련 -->
+	<select id="getNextSalesCode" resultType="String">
+		SELECT
+			'SALES_' || LPAD( NVL( MAX( TO_NUMBER(SUBSTR(SALES_CODE,7)) )+1, 1), 6, '0')
+		FROM SALES
+	</select>
+	<insert id="insertSales">
+		INSERT INTO SALES(
+		    SALES_CODE
+		    , SALES_AMOUNT
+		    , SALES_TOTAL_PRICE
+		    , USER_ID
+		    , HALL_CODE
+		    , CONCERT_CODE
+		) VALUES(
+		    #{salesCode}
+		    , #{salesAmount}
+		    , #{salesTotalPrice}
+		    , #{userId}
+		    , #{hallCode}
+		    , #{concertCode}
+		)
+	</insert>
+	<insert id="insertSalesDetail">
+		INSERT INTO SALES_DETAIL(
+		    SALES_DETAIL_CODE
+		    , SALES_CODE
+		    , TICKET_CODE
+		)
+		<foreach collection="ticketCodeList" item="ticketCode" separator="UNION ALL" index="i">
+			SELECT
+				(SELECT #{salesCode}||'_'||LPAD(1+#{i}, 2, '0') FROM DUAL)
+			    , #{salesCode}
+			    , #{ticketCode}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	
+	
+	
+	
+	<select id="checkTicketingList" resultMap="ticket">
+		SELECT
+			TICKET_CODE
+		FROM TICKET
+		WHERE TICKET_CODE IN(
+		<foreach collection="ticketCodeList" item="ticketCode" separator=" , ">
+			#{ticketCode}
+		</foreach>
+		)
+		AND USER_ID IS NULL
+	</select>
+	
+	<update id="updateSales">
+		UPDATE SALES
+		SET
+			SALES_STATUS = #{salesStatus} <!-- 'PAID' or 'CANCELED' -->
+		WHERE
+			SALES_CODE =  #{salesCode}
+	</update>
+	
+	<update id="letsTicketing">
+		UPDATE TICKET
+		SET
+			USER_ID = #{userId}
+		WHERE TICKET_CODE IN(
+		<foreach collection="ticketCodeList" item="ticketCode" separator=" , ">
+			#{ticketCode}
+		</foreach>
+		)
+	</update>
+
 	
 </mapper>

@@ -37,33 +37,35 @@ body {
 	margin-bottom: 30px;
 }
 
+
+
+/* 좌석 색. seatR seatS 구분위함. */
 .seat {
-	background-color: #444451;
+	background-color: rgb(198, 171, 125);
 	height: 26px;
 	width: 32px;
 	margin: 3px;
-	font-size: 50px;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
+	padding: 0 0;
+	text-align: center;
+	font-size: 20px;
+	color: black;
 }
-.seat.selected {
-	background-color: green;
+.seatS {
+	background-color: #D6E4E5;
 }
-.seat.seatR {
-	background-color: #feaf8d;
+.seatR {
+	background-color: rgb(255, 222, 89);
 }
-.seat.seatR.selected {
-	background-color: #fd4e02;
-}
-.seat.seatS {
-	background-color: #8ac5ff;
-}
-.seat.seatS.selected {
-	background-color: #0281ff;
+.selected {
+	background-color: rgb(238, 34, 4);
 }
 
+
+
 .seat.sold {
-	background-color: #fff;
+	background-color: #444451;
 }
 
 .seat.seat40:nth-of-type(2) {

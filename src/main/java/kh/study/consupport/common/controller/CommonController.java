@@ -1,5 +1,6 @@
 package kh.study.consupport.common.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,9 @@ import kh.study.consupport.common.config.SecurityConfig;
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.HallVO;
+import kh.study.consupport.common.vo.SalesVO;
 import kh.study.consupport.common.vo.TicketVO;
 import kh.study.consupport.common.vo.UsersVO;
 import kh.study.consupport.member.service.MemberService;
@@ -96,17 +99,88 @@ public class CommonController {
 		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
-		//return "redirect:/concertList";
+		return "redirect:/concertList";
+	}
+	
+	
+	
+	
+	
+	@GetMapping("reserveSeatForm")
+	public String loadReserveSeatForm(Model model) {
+		
+		//임시... service.select 필요
+		ConcertVO concert = new ConcertVO();
+		concert.setHallCode("HALL_000001");
+		concert.setConcertCode("CONCERT_000001");
 		
 		
 		
-		model.addAttribute("hallSeatCnt", 40);
 		
-		List<TicketVO> ticketList = commonService.selectTicketList();
+		model.addAttribute("concert", concert);
+		
+		
+		List<TicketVO> ticketList = commonService.selectTicketList(concert);
 		model.addAttribute("ticketList", ticketList);
 		
-		return "/content/common/seat_form";
+		return "/content/common/reserve_seat_form";
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("getBuyCode")
+	public String insertSalesAndGetBuyCode(SalesVO sales, Authentication authentication) {
+			//String[] ticketCodeList, int salesAmount, int salesTotalPrice) {
+		
+//		SalesVO sales = new SalesVO();
+//		sales.setTicketCodeList(Arrays.asList(ticketCodeList));
+//		sales.setSalesAmount(salesAmount);
+//		sales.setSalesTotalPrice(salesTotalPrice);
+		
+//		System.out.println();
+//		System.out.println();
+//		for(String t : sales.getTicketCodeList())
+//			System.out.print(t);
+//		System.out.println();
+//		System.out.println();
+//		System.out.println(sales);
+//		System.out.println();
+		sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
+		
+		return commonService.getSalesCode(sales);
+	}
+	@ResponseBody
+	@PostMapping("reserveSeat")
+	public String reserveSeat(SalesVO sales, Authentication authentication) {
+
+		sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
+		
+		return commonService.tryTicketing(sales);
+	}
+	
+	
+	
+	
+	
+	
+//	@PostMapping("reserveSeat")
+//	public String reserveSeat(String[] ticketCodeList, int salesAmount, int salesTotalPrice) {
+//
+//		System.out.println();
+//		System.out.println();
+//		for(String t : ticketCodeList)
+//			System.out.print(t);
+//		System.out.println();
+//		System.out.println();
+//		System.out.println(salesAmount);
+//		System.out.println(salesTotalPrice);
+//		System.out.println();
+//		System.out.println();
+//		
+//		return "redirect:/test";
+//	}
+	
+	
 
 	@GetMapping("accessDenied")
 	public String accessDenied() {
