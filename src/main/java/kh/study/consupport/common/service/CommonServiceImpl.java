@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
+import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.TicketVO;
 import kh.study.consupport.common.vo.UsersVO;
 
@@ -33,6 +34,14 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public List<TicketVO> selectTicketList() {
 		return sqlSession.selectList("commonMapper.selectTicketList");
+	}
+	
+//==================================================================================================================================================================================================================	
+	
+	// 메인화면 콘서트 목록 조회
+	@Override
+	public List<ConcertVO> selectConcertListOfCommon() {
+		return sqlSession.selectList("commonMapper.selectConcertListOfCommon");
 	}
 
 }

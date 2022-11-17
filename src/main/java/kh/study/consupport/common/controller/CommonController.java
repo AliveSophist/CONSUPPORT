@@ -113,8 +113,12 @@ public class CommonController {
 		return "/content/common/accessDenied";
 	}
 	
+//==================================================================================================================================================================================================================
+	
+	// 메인화면 콘서트 목록 조회
 	@GetMapping("concertList")
-	public String goConcertList() {
+	public String selectConcertListOfCommon(Model model) {
+		model.addAttribute("concertList", commonService.selectConcertListOfCommon()); 
 		return "/content/common/concert_list";
 	}
 	
