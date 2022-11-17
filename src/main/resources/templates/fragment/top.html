@@ -157,7 +157,9 @@
 
 					<th:block
 						sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
-						<li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a>
+						<a class="nav-link" href="/member/myPage">My Page</a>
+						<li class="nav-item">
+						<a class="nav-link" href="/logout">LOGOUT</a>
 						</li>
 					</th:block>
 				</ul>

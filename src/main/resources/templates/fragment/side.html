@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<link href="/css/common/side.css"  rel="stylesheet" />
 </head>
-<body th:fragment="side">
-	<div class="">
+
+<th:block th:fragment="side">
+	<th:block>
+	<div class="" style="margin: 15px auto 0;">
 	
-		<div sec:authorize="hasRole('MEMBER')">
+		
+		<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
+			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '1' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/member/editInfoForm(menu=1)}'|"> 
+				<label class="btn btn btn-info text-start" for="vbtn-radio1">내 정보 수정</label>
+			<input type="radio" class="btn-check" th:classappend="${menu} eq '2' ? 'active' : ''" id="vbtn-radio2" name="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/admin/memberRoleManager(menu=2)}'|"> 
+				<label class="btn btn btn-info text-start" for="vbtn-radio2">고객센터 문의</label>
+			<input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off" > 
+				<label class="btn btn btn-info text-start" for="vbtn-radio3">고객센터 문의 목록 페이지</label>
+			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '4' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio4" autocomplete="off" th:onclick="|location.href='@{/member/regArtistForm(menu=4)}'|">
+				<label class="btn btn btn-info text-start" for="vbtn-radio4">아티스트 등록</label>
+		</div>
+			
+		
+		<div sec:authorize="hasRole('ARTIST')" style="margin: 15px auto 0;">
 			<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
-			<input type="radio" class="btn-check" th:classappend="${menu} eq '1' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/member/editInfoForm(menu=1)}'|"> 
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio1">내 정보 수정</label>
-			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '2' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/member/regArtistForm(menu=2)}'|">
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio2">아티스트 등록</label>
-			<input type="radio" class="btn-check" th:classappend="${menu} eq '3' ? 'active' : ''" id="vbtn-radio3" name="vbtn-radio" autocomplete="off" th:onclick="|location.href='@{/admin/memberRoleManager(menu=3)}'|"> 
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio3">고객센터 문의</label>
-			<input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off" > 
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio4">고객센터 문의 목록 페이지</label>
+			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '5' ? 'active' : ''" id="vbtn-radio5" name="vbtn-radio5" autocomplete="off" th:onclick="|location.href='@{/artist/editInfoForm(menu=5)}'|"> 
+				<label class="btn btn btn-info text-start" for="vbtn-radio5">아티스트 정보 수정</label>
+			<input type="radio" class="btn-check" th:classappend="${menu} eq '6' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio6" autocomplete="off" th:onclick="|location.href='@{/artist/regConcertForm(menu=6)}'|"> 
+				<label class="btn btn btn-info text-start" for="vbtn-radio6">공연 등록 페이지 & 계약금 결제 페이지</label>
+			<input type="radio" class="btn-check" th:classappend="${menu} eq '7' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio7" autocomplete="off" th:onclick="|location.href='@{/member/buyRecord(menu=7)}'|">
+				<label class="btn btn btn-info text-start" for="vbtn-radio7">정산관리 & 관람객 추이 페이지</label>
+			<input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio8" autocomplete="off" > 
+				<label class="btn btn btn-info text-start" for="vbtn-radio8">고객센터 문의 </label>
 			</div>
 		</div>
 		
-		<div sec:authorize="hasRole('ARTIST')">
-			<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
-			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '1' ? 'active' : ''" id="vbtn-radio1" name="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/artist/editInfoForm(menu=1)}'|"> 
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio1">내 정보 수정</label>
-			<input type="radio" class="btn-check" th:classappend="${menu} eq '2' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/artist/regConcertForm(menu=2)}'|"> 
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio2">공연 등록 페이지 & 계약금 결제 페이지</label>
-			<input type="radio" class="btn-check" th:classappend="${menu} eq '3' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio3" autocomplete="off" th:onclick="|location.href='@{/member/buyRecord(menu=3)}'|">
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio3">정산관리 & 관람객 추이 페이지</label>
-			<input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off" > 
-				<label class="btn btn-outline-secondary text-start" for="vbtn-radio4">고객센터 문의 </label>
-			</div>
-		</div>
-		
-		<div sec:authorize="hasRole('OWNER')">
+		<!-- <div sec:authorize="hasRole('admin')">
 			<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
 			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '1' ? 'active' : ''" id="vbtn-radio1" name="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/owner/regHallForm(menu=1)}'|"> 
 				<label class="btn btn-outline-secondary text-start" for="vbtn-radio1">홀 등록 </label>
@@ -43,10 +46,12 @@
 			<input type="radio" class="btn-check" th:classappend="${menu} eq '3' ? 'active' : ''" name="vbtn-radio" id="vbtn-radio3" autocomplete="off" th:onclick="|location.href='@{/member/buyRecord(menu=3)}'|">
 				<label class="btn btn-outline-secondary text-start" for="vbtn-radio3"> </label>
 			</div>
-		</div>
+		</div> -->
 		
 	</div>
-</body>
+	</th:block>
+</th:block>
+
 </html>
 
 <!-- 클릭시 변동사항 입력은 많이 쓰이는 기능 

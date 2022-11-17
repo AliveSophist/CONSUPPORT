@@ -9,7 +9,7 @@
 	<div class="container">
 
 
-		<div>콘서트 등록</div>
+		<div style="margin: 15px auto 0;">콘서트 등록</div>
 
 		<div class="col-12">
 
@@ -17,13 +17,14 @@
 				
 				<!-- userId 삽입 -->
 				<input type="hidden" th:value="${hall.userId}" name="userId">
-				<div class="input-group">
+				<div class="input-group" style="margin: 15px auto 0;">
 					<span class="input-group-text">콘서트명</span> <input type="text"
 						aria-label="First name" class="form-control" name="concertName">
 				</div>
 
-				<div class="input-group">
-					<span class="input-group-text">콘서트 장르</span> <select
+				<div class="input-group" style="margin: 15px auto 0;">
+					<span class="input-group-text">콘서트 장르</span> 
+					<select class="form-select"
 						name="genreCode" aria-label="Default select example">
 						<option selected>장르를 지정해 주세요</option>
 						<th:block th:each="gen:${genreList}">
@@ -33,7 +34,7 @@
 				</div>
 
 
-				<div class="input-group">
+				<div class="input-group" style="margin: 15px auto 0;">
 					<span class="input-group-text">콘서트 홀</span>
 					<!-- Button trigger modal -->
 					<button type="button" class="btn btn-primary"
@@ -41,7 +42,7 @@
 						콘서트홀 목록</button>
 				</div>
 
-				<div class="input-group">
+				<div class="input-group" style="margin: 15px auto 0;">
 					<span class="input-group-text">콘서트 티켓팅 일</span>
 					<div class="col-6">
 						<input class="form-control" type="date"
@@ -49,18 +50,18 @@
 					</div>
 				</div>
 
-				<div class="col-12">
+				<div class="col-12" style="margin: 15px auto 0;">
 					<span class="form-label" for="concertImg">Main Image</span> <input
 						class="form-control" type="file" name="imgMain">
 					<!-- <input class="form-control" type="file" name="mainImg"> -->
 				</div>
-				<div class="col-12">
+				<div class="col-12" style="margin: 15px auto 0;">
 					<span class="form-label" for="concertImg">Sub Image</span> <input
 						class="form-control" type="file" multiple name="imgsSub">
 					<!-- <input class="form-control" type="file" multiple name="subImgs"> -->
 				</div>
 
-				<div class="input-group">
+				<div class="input-group" style="margin: 15px auto 0;">
 					<span class="input-group-text">연령 제한</span> <select
 						name="concertRated" class="form-select"
 						aria-label="Default select example">
@@ -71,7 +72,7 @@
 					</select>
 				</div>
 
-				<div class="input-group">
+				<div class="input-group" style="margin: 15px auto 0;">
 					<span class="input-group-text">콘서트 티켓가격(R석)</span> <input
 						type="text" name="concertPrice.concertPriceR"
 						aria-label="First name" class="form-control"> <span
@@ -85,10 +86,11 @@
 				<!-------------------------------------------------------------------------------  -->
 
 				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1"
+				<div class="modal fade"  id="exampleModal" tabindex="-1"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
+						<div class="modal-content"
+						style="max-width: 100%; background-image: linear-gradient(125deg,rgba(255,255,255,.1),rgba(255,255,255,.1) 70%);">
 							<div class="modal-header">
 								<h1 class="modal-title fs-5" id="exampleModalLabel">공연장을
 									골라주세요.</h1>
@@ -137,7 +139,7 @@
 
 			</form>
 
-			<button th:onclick="regConcert();">등록</button>
+			<button th:onclick="regConcert();" class="btn btn-primary" style="margin: 15px auto 0;">등록</button>
 
 			<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 			<script type="text/javascript" th:src="@{/js/artist/reg_concert.js}"></script>
