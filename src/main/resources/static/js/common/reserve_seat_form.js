@@ -68,11 +68,14 @@ function payment() {
 	}
 	
 	
+	alert();
+	const mer_uid = 'mer_' + document.querySelector('#salesCode').value;
+	
 	IMP.init('imp60175080');				//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 	IMP.request_pay({						// param
 		pg: "kakaopay.TC0ONETIME", 			//pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
 		pay_method: "card", 				//지불 방법
-		merchant_uid: document.querySelector('#salesCode').value +"1", //+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+		merchant_uid: 'ssssssssssss', //+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
 		name: "티켓", 						//결제창에 노출될 상품명
 		//amount: document.querySelector('#salesTotalPrice').value,	//금액
 		amount: 100,	//금액
