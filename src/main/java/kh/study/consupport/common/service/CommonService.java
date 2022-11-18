@@ -18,4 +18,6 @@ public interface CommonService {
 	String getSalesCode(SalesVO sales);
 	
 	String tryTicketing(SalesVO sales);
+	
+	void cancelWhenPaying(SalesVO sales);
 }

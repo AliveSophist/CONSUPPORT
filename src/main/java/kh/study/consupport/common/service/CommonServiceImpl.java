@@ -39,6 +39,16 @@ public class CommonServiceImpl implements CommonService{
 	@Transactional(rollbackFor = Exception.class) //트랜잭션처리
 	public String getSalesCode(SalesVO sales) {
 		
+		// 받아온 ticketCode 중에 이미 팔려버린 티켓이 있다면... 넌 못사! 
+		// 받아온 ticketCode 중에 '결제 대기 상태(WAIT)'인 TICKET이 있다면... 넌 못사!
+		if( sales.getSalesAmount() != sqlSession.selectList("commonMapper.checkTicketingList", sales).size()
+			|| sqlSession.selectList("commonMapper.isExistWaitStatus", sales).size() > 0) {
+			
+			System.out.println("넌 못사!넌 못사!넌 못사!넌 못사!넌 못사!");
+			
+			return null;
+		}
+		
 		sales.setSalesCode(sqlSession.selectOne("commonMapper.getNextSalesCode"));
 		
 		sqlSession.insert("commonMapper.insertSales", sales);
@@ -50,6 +60,7 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	@Transactional(rollbackFor = Exception.class) //트랜잭션처리
 	public String tryTicketing(SalesVO sales) {
+		
 		// 받아온 ticketCode 중에 이미 팔려버린 티켓이 있다면... 넌 못사! 
 		if(sales.getSalesAmount() != sqlSession.selectList("commonMapper.checkTicketingList", sales).size()) {
 			sales.setSalesStatus("CANCELED");
@@ -64,6 +75,13 @@ public class CommonServiceImpl implements CommonService{
 		sqlSession.update("commonMapper.letsTicketing", sales);
 		
 		return "PAID";
+	}
+
+	@Override
+	public void cancelWhenPaying(SalesVO sales) {
+		// 브라우저 새로고침, 종료, 기타여러가지 문제... 발생 시 취소.
+		sales.setSalesStatus("CANCELED");
+		sqlSession.update("commonMapper.updateSales", sales);
 	}
 
 }

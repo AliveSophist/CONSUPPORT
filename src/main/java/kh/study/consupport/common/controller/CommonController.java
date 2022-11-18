@@ -1,5 +1,6 @@
 package kh.study.consupport.common.controller;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import kh.study.consupport.common.config.SecurityConfig;
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.service.PaymentService;
 import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.HallVO;
 import kh.study.consupport.common.vo.SalesVO;
@@ -68,6 +70,9 @@ public class CommonController {
 
 	@Resource(name = "ownerService")
 	private OwnerService ownerService;
+	
+	@Resource(name = "paymentService")
+	private PaymentService paymentService;
 
 	
 	
@@ -92,12 +97,13 @@ public class CommonController {
 	
 	// 현재 접속 아이디가 모임?
 	@GetMapping("test")
-	public String authenticationTest(HttpSession session, Authentication authentication, Model model) {
+	public String authenticationTest(HttpServletRequest request, HttpSession session, Authentication authentication, Model model) {
 		
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
 		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 		
 		return "redirect:/concertList";
 	}
@@ -129,7 +135,7 @@ public class CommonController {
 	
 	@ResponseBody
 	@PostMapping("getBuyCode")
-	public String insertSalesAndGetBuyCode(SalesVO sales, Authentication authentication) {
+	public String insertSalesAndGetBuyCode(HttpServletRequest request, SalesVO sales, Authentication authentication) {
 			//String[] ticketCodeList, int salesAmount, int salesTotalPrice) {
 		
 //		SalesVO sales = new SalesVO();
@@ -145,40 +151,75 @@ public class CommonController {
 //		System.out.println();
 //		System.out.println(sales);
 //		System.out.println();
-		sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
+
+		if(request.isUserInRole("ROLE_ANONYMOUS"))
+			sales.setUserId("ANONYMOUS");
+		else
+			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
 		
 		return commonService.getSalesCode(sales);
 	}
+	
 	@ResponseBody
 	@PostMapping("reserveSeat")
-	public String reserveSeat(SalesVO sales, Authentication authentication) {
+	public String reserveSeat(HttpServletRequest request, Authentication authentication, SalesVO sales) {
 
-		sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
+		if(request.isUserInRole("ROLE_ANONYMOUS"))
+			sales.setUserId("ANONYMOUS");
+		else
+			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
 		
 		return commonService.tryTicketing(sales);
 	}
 	
+	@ResponseBody
+	@PostMapping("cancelWhenPaying")
+	public String cancelWhenPaying(SalesVO sales) {
+		
+		
+		System.out.println(sales.getSalesCode());
+		System.out.println(sales.getSalesCode());
+		System.out.println(sales.getSalesCode());
+		System.out.println(sales.getSalesCode());
+		System.out.println(sales.getSalesCode());
+		System.out.println(sales.getSalesCode());
+
+		commonService.cancelWhenPaying(sales);
+		
+		return "취소OK";
+	}
 	
 	
 	
 	
 	
-//	@PostMapping("reserveSeat")
-//	public String reserveSeat(String[] ticketCodeList, int salesAmount, int salesTotalPrice) {
-//
+//	환불... 포기...
+//	@ResponseBody
+//	@PostMapping("canclePay")
+//	public String canclePay(String imp_uid, int amount) {
+//		
 //		System.out.println();
 //		System.out.println();
-//		for(String t : ticketCodeList)
-//			System.out.print(t);
+//		System.out.println("imp_uid" + imp_uid);
+//		System.out.println("imp_uid" + imp_uid);
 //		System.out.println();
-//		System.out.println();
-//		System.out.println(salesAmount);
-//		System.out.println(salesTotalPrice);
+//		System.out.println("amount" + amount);
+//		System.out.println("amount" + amount);
 //		System.out.println();
 //		System.out.println();
 //		
-//		return "redirect:/test";
+//		try {
+//			paymentService.paymentCancle(imp_uid, amount);
+//			return "와! 환불!?";
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return "ㅠㅠ";
+//		}
 //	}
+	
+	
+	
+	
 	
 	
 

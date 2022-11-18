@@ -104,6 +104,21 @@
 	
 	
 	<!-- 구매(티켓팅) 관련 -->
+	<select id="isExistWaitStatus" resultType="String">
+		SELECT
+			TICKET_CODE
+		FROM
+			SALES, SALES_DETAIL
+		WHERE
+			SALES.SALES_CODE = SALES_DETAIL.SALES_CODE
+		AND SALES_STATUS IN ('WAIT', 'PAID')
+		AND TICKET_CODE IN(
+		<foreach collection="ticketCodeList" item="ticketCode" separator=" , ">
+			#{ticketCode}
+		</foreach>
+		)
+	</select>
+	
 	<select id="getNextSalesCode" resultType="String">
 		SELECT
 			'SALES_' || LPAD( NVL( MAX( TO_NUMBER(SUBSTR(SALES_CODE,7)) )+1, 1), 6, '0')
