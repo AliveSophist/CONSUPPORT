@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html	xmlns:th="http://www.thymeleaf.org">
-<head>
+<html	lang="en" xmlns:th="http://www.thymeleaf.org"
+		>
+		<!-- xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
+		layout:decorate="layout/base_layout"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
+		
+<!-- <head>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="/css/common/reserve_seat_form.css" />
 <title>Movie Seat Booking</title>
-</head>
-<body>
+</head> -->
+
+<th:block layout:fragment="content">
 
 
-	<!-- jQuery --> 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> 
-	<!-- iamport.payment.js --> 
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-			
+	<th:block>
+		<link rel="stylesheet" href="/css/common/reserve_seat_form.css" />
+	
+		<!-- jQuery  --> 
+	    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	    
+		<!-- iamport.payment.js --> 
+	    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+	</th:block>
 
 
 
@@ -335,13 +344,11 @@
 	</form>
 	
 	
-    <div> 
-        <h2>IAMPORT 결제 데모</h2> 
-        <li> 
-           	<button id="iamportPayment" type="button">결제테스트</button> 
-           	<button type="button" onclick="cancelPay();">환test불</button> 
-        </li> 
-    </div> 
+	<div>
+		<h2>IAMPORT 결제 데모</h2> 
+		<button id="iamportPayment" type="button">결제테스트</button>
+		<button type="button" onclick="cancelPay();">환test불</button>
+	</div>
 	
 	
 	<br>
@@ -376,7 +383,6 @@
 				}
 			}
 		}
-		
 		
 		
 		let arrnum = 0;
@@ -468,5 +474,5 @@
 	<script type="text/javascript" src="/js/common/reserve_seat_form.js"></script>
 	
 	
-</body>
+</th:block>
 </html>

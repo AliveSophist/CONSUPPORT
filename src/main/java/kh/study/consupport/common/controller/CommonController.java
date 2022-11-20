@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
@@ -22,8 +23,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -115,15 +118,15 @@ public class CommonController {
 	@GetMapping("reserveSeatForm")
 	public String loadReserveSeatForm(Model model) {
 		
-		//임시... service.select 필요
+		//임시... service.select 필요 혹은 ConcertVO 받아오셈.
 		ConcertVO concert = new ConcertVO();
 		concert.setHallCode("HALL_000001");
 		concert.setConcertCode("CONCERT_000001");
 		
-		
-		
-		
 		model.addAttribute("concert", concert);
+		
+		
+		
 		
 		
 		List<TicketVO> ticketList = commonService.selectTicketList(concert);
@@ -136,21 +139,6 @@ public class CommonController {
 	@ResponseBody
 	@PostMapping("getBuyCode")
 	public String insertSalesAndGetBuyCode(HttpServletRequest request, SalesVO sales, Authentication authentication) {
-			//String[] ticketCodeList, int salesAmount, int salesTotalPrice) {
-		
-//		SalesVO sales = new SalesVO();
-//		sales.setTicketCodeList(Arrays.asList(ticketCodeList));
-//		sales.setSalesAmount(salesAmount);
-//		sales.setSalesTotalPrice(salesTotalPrice);
-		
-//		System.out.println();
-//		System.out.println();
-//		for(String t : sales.getTicketCodeList())
-//			System.out.print(t);
-//		System.out.println();
-//		System.out.println();
-//		System.out.println(sales);
-//		System.out.println();
 
 		if(request.isUserInRole("ROLE_ANONYMOUS"))
 			sales.setUserId("ANONYMOUS");
@@ -169,6 +157,8 @@ public class CommonController {
 		else
 			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
 		
+		
+		// it returns 'PAID' or 'CANCELED'
 		return commonService.tryTicketing(sales);
 	}
 	
@@ -176,46 +166,40 @@ public class CommonController {
 	@PostMapping("cancelWhenPaying")
 	public String cancelWhenPaying(SalesVO sales) {
 		
-		
-		System.out.println(sales.getSalesCode());
-		System.out.println(sales.getSalesCode());
-		System.out.println(sales.getSalesCode());
-		System.out.println(sales.getSalesCode());
-		System.out.println(sales.getSalesCode());
-		System.out.println(sales.getSalesCode());
-
 		commonService.cancelWhenPaying(sales);
 		
-		return "취소OK";
+		return "CANCELED COMPLETE";
 	}
 	
-	
-	
-	
-	
-//	환불... 포기...
-//	@ResponseBody
-//	@PostMapping("canclePay")
-//	public String canclePay(String imp_uid, int amount) {
-//		
-//		System.out.println();
-//		System.out.println();
-//		System.out.println("imp_uid" + imp_uid);
-//		System.out.println("imp_uid" + imp_uid);
-//		System.out.println();
-//		System.out.println("amount" + amount);
-//		System.out.println("amount" + amount);
-//		System.out.println();
-//		System.out.println();
-//		
-//		try {
-//			paymentService.paymentCancle(imp_uid, amount);
-//			return "와! 환불!?";
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return "ㅠㅠ";
-//		}
-//	}
+
+	@ResponseBody
+	@PostMapping("canclePay")
+	@CrossOrigin(origins = "https://api.iamport.kr")	//https://api.iamport.kr/payments/cancel
+	public String canclePay(String merchant_uid, int amount) {
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("merchant_uid : " + merchant_uid);
+		System.out.println("merchant_uid : " + merchant_uid);
+		System.out.println();
+		System.out.println("amount : " + amount);
+		System.out.println("amount : " + amount);
+		System.out.println();
+		System.out.println();
+		
+		try {
+			paymentService.paymentCancle(merchant_uid, amount);
+			
+			
+			// 환불이 완료되면 티켓 원상복구 + 해당 SALES_CODE 'REFUNDED'로 해줘야해오
+			
+			
+			return "와! 환불!?";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "ㅠㅠ";
+		}
+	}
 	
 	
 	
@@ -291,7 +275,8 @@ public class CommonController {
 		// ㄴ 이걸 Object 로 할 수도 있네!?
 		
 		if(bindingResult.hasErrors()){
-			
+
+			//대충 에러 리스트 받아오는 외계어임
 			//람다 개어렵네 무슨뜻인지 모름 ㅅㄱ
 			List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
 			

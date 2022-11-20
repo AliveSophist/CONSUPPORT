@@ -9,7 +9,6 @@ function regHall(){
 		type: 'post',
 		enctype: 'multipart/form-data',
 		
-		//이런것도 가능하네
 		data: new FormData( formTag ),
 		
 		/*============== FormData 쓰려면 필요함 ==============*/
@@ -20,14 +19,16 @@ function regHall(){
     	
 		success: function(result) {
 			
-			if(result>0)
+			if(result>0){
 				alert('일단 성공?');
+				formTag.reset();
+				
+				
+				//href
+				//어디로 날릴까
+			}
 			else
-				alert('추가 실패??????');
-			
-			formTag.reset();
-			
-			//href
+				alert('작성 하지 않은 항목이 있습니다.');
 		},
 		error: function() { alert('실패'); }
 	});

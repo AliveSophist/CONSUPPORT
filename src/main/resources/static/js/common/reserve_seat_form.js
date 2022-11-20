@@ -30,11 +30,14 @@ $(document).ready(function() {
 	});
 })
 
-//버튼 클릭하면 실행
+
+
+let mer_uid_for_test;
+
 function payment() {
-	//좌석 고르지도 않아놓고 누르지마.
+	// 좌석 고르지도 않아놓고 누르지마.
 	if(document.querySelector('#salesAmount').value == 0)
-		return;
+		return;	// 너 결제 못감 ㅅㄱ
 	
 	
 	
@@ -51,7 +54,7 @@ function payment() {
 		async: false,
 		
 		success: function(result) {
-			// 생성 가능하다면 salesCode.
+			// 생성 가능하다면 salesCode. = 'SALES_000001'
 			// 생성 불가능하면 null.
 			document.querySelector('#salesCode').value = result;
 		},
@@ -67,21 +70,19 @@ function payment() {
 		history.go(0);
 	}
 	
-	
-	alert();
-	const mer_uid = 'mer_' + document.querySelector('#salesCode').value;
+	mer_uid_for_test = 'mer_' + document.querySelector('#salesCode').value;
 	
 	IMP.init('imp60175080');				//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 	IMP.request_pay({						// param
-		pg: "kakaopay.TC0ONETIME", 			//pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
-		pay_method: "card", 				//지불 방법
-		merchant_uid: 'ssssssssssss', //+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-		name: "티켓", 						//결제창에 노출될 상품명
-		//amount: document.querySelector('#salesTotalPrice').value,	//금액
-		amount: 100,	//금액
-		buyer_email: "testiamport@naver.com",
-		buyer_name: "테스트",
-		buyer_tel: "01012341234"
+		pg : "kakaopay.TC0ONETIME", 			//pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
+		pay_method : "card", 				//지불 방법
+		merchant_uid : mer_uid_for_test, 				//+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+		name : "티켓", 						//결제창에 노출될 상품명
+		amount : document.querySelector('#salesTotalPrice').value,	//금액
+		//amount : 100,	//금액
+		buyer_email : "testiamport@naver.com",
+		buyer_name : "테스트",
+		buyer_tel : "01012341234"
 	}, function(rsp) { // callback
 		if (rsp.success) {
 			
@@ -97,20 +98,31 @@ function payment() {
 				//동기 방식으로 사용하기
 				async: false,
 				
-				success: function(result)
-				{ alert(result); },
+				success: function(result){
+					// it returns 'PAID' or 'CANCELED'
+					alert(result);
+					
+					// 아마 myPage로 가게 할거임..
+					if(result == 'PAID'){
+						//refreshByForce = true;
+						//history.go(0);
+					}
+				},
 				error: function()
 				{ alert('실패'); }
 			});
 			
 		} else {
+			alert('결제를 취소하셨습니다.\ncancelWhenPaying_' + document.querySelector('#salesCode').value);
 			
 			$.ajax({
 				url: '/cancelWhenPaying', //요청경로
 				type: 'post',
-				data: {	"salesCode" : salesCode },
-				success: function(result)
-				{ console.log(result); },
+				data: {	"salesCode" : document.querySelector('#salesCode').value },
+				success: function(result) {
+					refreshByForce = true;
+					history.go(0);
+				},
 				error: function()
 				{ console.log('실패'); }
 			});
@@ -151,15 +163,16 @@ function payment() {
 
 
 
-// 환불... 포기...
+// 환불... 포기... 는 씨발 구현했다.
 function cancelPay() {
 	//ajax start
 	$.ajax({
 		url: '/canclePay', //요청경로
 		type: 'post',
-		data: {	"imp_uid" : document.querySelector('#salesCode').value,
-//				"amount" : document.querySelector('#salesTotalPrice').value,	//금액
-				"amount" : 100 },
+		data: {	"merchant_uid" : mer_uid_for_test
+				, "amount" : document.querySelector('#salesTotalPrice').value	//금액
+//				, "amount" : 100
+		},
 		success: function(result) {
 			alert(result)
 		},
@@ -170,3 +183,26 @@ function cancelPay() {
 	//ajax end
 }
 
+
+/*
+// 이걸로하면 CORS 오류... 나더라...
+// https://evan-moon.github.io/2020/05/21/about-cors/
+// 솔까 뭔지 모름 ㅈㅈ
+function cancelPay() {
+	jQuery.ajax({
+		// 예: http://www.myservice.com/payments/cancel
+		url : "https://api.iamport.kr/payments/cancel",
+		type : "POST",
+		contentType : "application/json",
+		data : JSON.stringify({
+			"merchant_uid" : 'mer_SALES_000002'			//document.querySelector('#salesCode').value
+//			, "amount" : document.querySelector('#salesTotalPrice').value	//금액
+			, "cancel_request_amount" : 100
+			, "reason": '테스트 결제 환불'
+			//"merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+			//"cancel_request_amount": 2000, // 환불금액
+		}),
+		dataType : "json"
+	});
+}
+*/
