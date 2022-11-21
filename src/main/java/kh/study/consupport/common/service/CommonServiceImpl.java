@@ -44,5 +44,43 @@ public class CommonServiceImpl implements CommonService{
 		return sqlSession.selectList("commonMapper.selectConcertListOfCommon");
 	}
 
+//==================================================================================================================================================================================================================
+	
+	// 콘서트 상세 조회
+	@Override
+	public ConcertVO selectConcertDetail(ConcertVO concertVO) {
+		return sqlSession.selectOne("commonMapper.selectConcertDetail", concertVO);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

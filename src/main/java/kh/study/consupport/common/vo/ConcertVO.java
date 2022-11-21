@@ -16,7 +16,6 @@ public class ConcertVO {
 //		CONCERT_RATED     VARCHAR2(20) DEFAULT 'ALL' NOT NULL        -- (ALL, 15+, 19+)
 //		
 //		CONCERT_TICKETING_DATE    DATE
-//		CONCERT_DATE              DATE
 //		
 //		HALL_DATE_CODE    VARCHAR2(100) NOT NULL	
 //		GENRE_CODE        VARCHAR2(100) NOT NULL
@@ -32,21 +31,24 @@ public class ConcertVO {
 	private String concertStatus;
 	private String concertRated;
 	private String concertTicketingDate;
-	private String concertDate;
 	private String genreCode;
 	private String hallCode;
 	private String userId;
 	private String hallDateCode;
-	//홀 선택 일단 보류
+	
+	
+
+	private String concertDate;
+	
 	//private HallVO hallVO;
 	
-	//가격 설정
+	// A 가격 설정
 	private ConcertPriceVO concertPrice;
 	
-	//콘서트 이미지
-	private List<ConcertImgVO> concertImgList;
-	
-	//아티스트
+	// A 아티스트
 	private ArtistVO artist;
 	
+	
+	// C 콘서트 이미지
+	private List<ConcertImgVO> concertImgList;
 }

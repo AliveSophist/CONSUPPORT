@@ -13,6 +13,7 @@
 		-->
 		<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+		<link href="/css/common/top.css" rel="stylesheet">
 		
 		<style>
 		
@@ -154,72 +155,56 @@
 							data-bs-toggle="modal" data-bs-target="#modalLogin"
 							style="cursor: pointer">LOGIN | JOIN</a></li>
 					</th:block>
+					
 
 					<th:block
 						sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
 						<li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a>
 						</li>
 					</th:block>
+					
 				</ul>
 			</div>
 		</div>
 	</nav>
 
 
+	<!-- ================================================================================================================================================================================================================================================================================ -->
+	<!-- 따라지 -->
+	<ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
+		<li class="mfb-component__wrap">
+			<a href="#" class="mfb-component__button--main">
+				<i class="mfb-component__main-icon--resting ion-plus-round"></i> 
+				<i class="mfb-component__main-icon--active ion-close-round"></i>
+			</a>
+			<ul class="mfb-component__list">
+				<li>
+					<a href="/logout" data-mfb-label="로그아웃" class="mfb-component__button--child" > 
+						<i class="mfb-component__child-icon ion-social-github"></i>
+					</a>
+				</li>
+				<li>
+					<a href="#" data-mfb-label="오너신청" class="mfb-component__button--child"> 
+						<i class="mfb-component__child-icon ion-social-octocat"> </i>
+					</a>
+				</li>
+				<li>
+					<a href="#" data-mfb-label="아티스트 신청" class="mfb-component__button--child"> 
+						<i class="mfb-component__child-icon ion-social-twitter"> </i>
+					</a>
+				</li>
+				<li>
+					<a href="#" data-mfb-label="1:1 상담" class="mfb-component__button--child"> 
+						<i class="mfb-component__child-icon ion-social-twitter"> </i>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<!-- ================================================================================================================================================================================================================================================================================ -->
 
 
 
-
-
-
-
-	<!-- Navigation
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container px-5">
-				<a class="navbar-brand" href="/">CONSUPPORT</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link" href="/">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="about.html">About</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="contact.html">Contact</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="pricing.html">Pricing</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="faq.html">FAQ</a>
-						</li>
-						
-						<th:block sec:authorize="hasRole('ROLE_ANONYMOUS')">
-						<li class="nav-item">
-							<a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalLogin" style="cursor: pointer">LOGIN</a>
-						</li>
-						</th:block>
-						
-						<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
-						<li class="nav-item">
-							<a class="nav-link" href="/logout">LOGOUT</a>
-						</li>
-						</th:block>
-
-
-
-					</ul>
-				</div>
-			</div>
-		</nav>
--->
 
 	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
@@ -312,6 +297,11 @@
 			</div>
 		</div>
 	</div>
+
+	
+
+
+
 
 
 	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
@@ -462,6 +452,43 @@
 			if (isOpenLogin.indexOf("true") > -1)
 				showModal(modalLogin);
 		</script>
+		<script type="text/javascript" th:src="@{/js/common/top.js}"></script>
+		<link href="css/common/mfb.css" rel="stylesheet">
+		<script type="text/javascript" src="js/common/mfb.js"></script>
 
 </th:block>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>

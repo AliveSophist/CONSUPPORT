@@ -36,6 +36,7 @@ import kh.study.consupport.common.config.SecurityConfig;
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.HallVO;
 import kh.study.consupport.common.vo.TicketVO;
 import kh.study.consupport.common.vo.UsersVO;
@@ -122,6 +123,14 @@ public class CommonController {
 		return "/content/common/concert_list";
 	}
 	
+//==================================================================================================================================================================================================================
+	
+	// 콘서트 상세 조회
+	@ResponseBody
+	@PostMapping("/selectConcertDetail")
+	public ConcertVO selectConcertDetail(ConcertVO concertVO) {
+		return commonService.selectConcertDetail(concertVO);
+	}
 	
 	
 	

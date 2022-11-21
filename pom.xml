@@ -112,6 +112,15 @@
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 			<version>3.0.4.RELEASE</version>
 		</dependency>
+		
+		<!-- 웹소켓 추가 -->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-websocket</artifactId>
+         <version>2.6.2</version>
+      </dependency>
+		
+		
 	</dependencies>
 
 	<build>
