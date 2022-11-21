@@ -8,17 +8,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.QboardVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
 
 @Controller
 @RequestMapping("/board")
-public class boardController {
+public class QboardController {
 
 	@Resource(name = "adminService")
 	private AdminService adminService;
@@ -41,17 +43,26 @@ public class boardController {
 		
 	}
 	
+	//문의 리스트창으로 이동
 	@GetMapping("/qboardList")
-	public String qboardList(Model model, Authentication authentication) {
+	public String qboardList(QboardVO qboard,Model model, Authentication authentication) {
 		
 		
 		return "content/board/qboardList";
 	}
 	
+	// 문의 등록창으로 이동
 	@GetMapping("/regQboard")
 	public String regQboard() {
 		
 		return "content/board/regQboard";
+	}
+	
+	//문의사항 등록
+	@PostMapping("/regQboard")
+	public String regQboard(QboardVO qboard) {
+		
+		return "board/qboardList";
 	}
 	
 	

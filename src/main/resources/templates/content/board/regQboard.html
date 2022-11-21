@@ -6,8 +6,23 @@
 
 
 
-<div layout:fragment="content">
-콘텐츠
+<div layout:fragment="content" style="width: 80%; margin: 15px  0 auto;">
+<form action="/board/regQboard" method="post">
+  <div class="mb-3">
+    <label for="qTItle" class="form-label">제목</label>
+    <input type="email" class="form-control" id="qboardTitle" aria-describedby="emailHelp">
+    <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">문의 내용</label>
+    <textarea class="form-control" rows="6px;" cols="" id="qboardContent"></textarea>
+  </div>
+<!--   <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">비밀글</label>
+  </div> -->
+  <button type="submit" class="btn btn-primary">등록</button>
+</form>
 
 
 

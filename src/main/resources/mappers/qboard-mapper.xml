@@ -17,12 +17,12 @@
 	<!-- 문의 입력 -->
 	<insert id="insertQboard">
 		INSERT INTO QBOARD
-			(QBOARD_CODE
+			(QBOARD_NUM
 			, QBOARD_TITLE
 			, QBOARD_CONTENT
 			, USER_ID)
 		VALUES (
-			BOARD_NUM_SEQ.NEXTVAL
+			QBOARD_NUM_SEQ.NEXTVAL
 			, #{title}
 			, #{content}
 			, #{writer}
