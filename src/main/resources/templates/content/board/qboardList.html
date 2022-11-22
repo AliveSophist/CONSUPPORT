@@ -12,8 +12,8 @@
 			<form action="/board/qboardList" method="post">
 					<select class="form-select" name="searchKeyword">
 					<!-- 이상태 에서는 값으로 QBOARD_TITLE, USER_ID가 넘어간다 -->
-						<option value="QBOARD_TITLE" th:selected="${qboardVO?.searchKeyword == 'QBOARD_TITLE'}">제목</option>
-						<option value="USER_ID" th:selected="${qboardVO?.searchKeyword == 'USER_ID'}">작성자</option>
+						<option value="QBOARD_TITLE" th:selected="${qboardVO.searchKeyword == 'QBOARD_TITLE'}">제목</option>
+						<option value="USER_ID" th:selected="${qboardVO.searchKeyword == 'USER_ID'}">작성자</option>
 					</select>
 				 <div class="input-group mb-3">
 					<input type="text" class="form-control" name="searchValue" th:value="${QboardVO?.searchValue}">
@@ -44,7 +44,7 @@
 			<th:block th:unless="${#lists.size(qboardList) == 0}">
 				<tr th:each="qboard : ${qboardList}">
 					<td th:text="${qboard.qboardNum}"></td>
-					<td> <a th:href="@{/board/detailBoard(num = ${qboard.qboardNum})}" th:text="${qboard.qboardTitle}"></a> </td>
+					<td> <a th:href="@{/board/detailQboard(num = ${qboard.qboardNum})}" th:text="${qboard.qboardTitle}"></a> </td>
 					<td th:text="${qboard.userId}"></td>
 					<td th:text="${qboard.qboardCreateDate}"></td>
 				</tr>

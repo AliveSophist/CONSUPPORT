@@ -35,8 +35,7 @@ public class QboardServiceImpl implements QboardService{
 	//문의 상세보기
 	@Override
 	public QboardVO selectDetailQboard(int qboardNum) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("qboardMapper.selectDetailQboard", qboardNum);
 	}
 	
 	

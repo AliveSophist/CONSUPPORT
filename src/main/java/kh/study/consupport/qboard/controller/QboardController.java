@@ -77,14 +77,24 @@ public class QboardController {
 		qboardService.insertQboard(qboard);
 		return "content/board/qboardList";
 	}
-	
+
+	//글 상세보기
+	//넘어오는 데이터의 이름과 매개변수의 이름을 일치시키면
+	//매개변수에 자동으로 데이터가 넘어온다
+	//매개변수에 @RequestParam 어노테이션을 사용하면
+	//넘어오는 데이터에 관한 설정을 할 수 있다.
+	//속성1 required : true, false 값이 올 수 있고, 넘어오는 
+	//				데이터의 필수여부를 지정한다.
+	//속성2 defaultValue : 넘어오는 데이터가 없을 때 기본값 지정
+	//속성3 name : 넘어오는 데이터의 이름과 매개변수의 이름이 불일치 할때
+	//				데이터를 바인딩(연결) 시켜준다.
 	@GetMapping("/detailQboard")
 	public String detailBoard(
 			@RequestParam(required = false
 						, defaultValue = "10"
 						, name = "num") int qboardNum, Model model) {
 		model.addAttribute("board", qboardService.selectDetailQboard(qboardNum));
-		return "board/detail_board";
+		return "content/board/detail_qboard";
 	}
 	
 }
