@@ -31,8 +31,8 @@
 	
 	<div class="input-group" style="margin: 15px auto 0;">
 		<span class="input-group-text">내용</span> 	
-		<input type="text" class="form-control" 
-		name="qboardContent" th:value="${qboard.qboardContent}">
+		<textarea rows="6" cols="140" name="qboardContent">[[${qboard.qboardContent}]]
+		</textarea>
 	</div>
 	
 	<div class="input-group" style="margin: 15px auto 0;">
