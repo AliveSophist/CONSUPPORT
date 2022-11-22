@@ -17,6 +17,7 @@ import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.QboardVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
+import kh.study.consupport.qboard.service.QboardService;
 
 @Controller
 @RequestMapping("/board")
@@ -36,6 +37,9 @@ public class QboardController {
 
 	@Resource(name = "ownerService")
 	private OwnerService ownerService;
+	
+	@Resource(name = "qboardService")
+	private QboardService qboardService;
 	
 	//이 Controller의 모든 Request가 실행되기전에 무조건 거쳐가야하는 메소드!
 	@ModelAttribute
@@ -61,8 +65,8 @@ public class QboardController {
 	//문의사항 등록
 	@PostMapping("/regQboard")
 	public String regQboard(QboardVO qboard) {
-		
-		return "board/qboardList";
+		qboardService.insertQboard(qboard);
+		return "content/board/qboardList";
 	}
 	
 	

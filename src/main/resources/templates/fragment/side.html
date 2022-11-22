@@ -15,7 +15,7 @@
 		<div class="d-grid gap-2" role="group" aria-label="Vertical radio toggle button group">
 			<input type="radio" class="btn-check text-start" th:classappend="${menu} eq '1' ? 'active' : ''" name="vbtn-radio"	id="vbtn-radio1" autocomplete="off" th:onclick="|location.href='@{/member/editInfoForm(menu=1)}'|"> 
 				<label class="btn btn btn-info text-start" for="vbtn-radio1">내 정보 수정</label>
-			<input type="radio" class="btn-check" th:classappend="${menu} eq '2' ? 'active' : ''" id="vbtn-radio2" name="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/admin/memberRoleManager(menu=2)}'|"> 
+			<input type="radio" class="btn-check" th:classappend="${menu} eq '2' ? 'active' : ''" id="vbtn-radio2" name="vbtn-radio2" autocomplete="off" th:onclick="|location.href='@{/board/regQboard(menu=2)}'|"> 
 				<label class="btn btn btn-info text-start" for="vbtn-radio2">고객센터 문의</label>
 			<input type="radio" class="btn-check" th:classappend="${menu} eq '3' ? 'active' : ''" name="vbtn-radio3" id="vbtn-radio3" autocomplete="off" th:onclick="|location.href='@{/board/qboardList(menu=3)}'|"> 
 				<label class="btn btn btn-info text-start" for="vbtn-radio3">고객센터 문의 목록 페이지</label>

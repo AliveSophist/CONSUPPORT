@@ -20,16 +20,48 @@
 			(QBOARD_NUM
 			, QBOARD_TITLE
 			, QBOARD_CONTENT
-			, USER_ID)
+			, USER_ID
+			)
 		VALUES (
 			QBOARD_NUM_SEQ.NEXTVAL
-			, #{title}
-			, #{content}
-			, #{writer}
+			, #{qboardTitle}
+			, #{qboardContent}
+			, #{userId}
 			)
 	</insert>
 
-	
+	<select id="selectBoardList" resultMap="qboard">
+		SELECT ROW_NUM
+			, QBOARD_NUM
+		    , QBOARD_TITLE
+		    , USER_ID
+		    , QBOARD_CREATE_DATE
+		FROM 
+		(
+		    SELECT ROWNUM AS ROW_NUM
+		    	, QBOARD_NUM
+		        , QBOARD_TITLE
+		        , USER_ID
+		        , QBOARD_CREATE_DATE    
+		    FROM
+		    (
+		        SELECT QBOARD_NUM
+					, QBOARD_TITLE
+					, USER_ID
+					, QBOARD_CREATE_DATE
+				FROM SPRING_BOARD		<!-- boarVO.getSearchKeyword -->
+				<!-- _parameter : 빈값을 채우기 위해 들어오는 데이터 -->
+				<!-- !=null은 처음 list화면에 들어올때 null값으로 들어온다
+						처음화면에 모든 값이 출력되는 것 -->
+				<if test="searchValue != null and !searchValue.equals('')">
+				WHERE UPPER(${searchKeyword}) LIKE UPPER('%'||#{searchValue}||'%')
+				</if>
+				ORDER BY QBOARD_NUM DESC
+		    )
+		)
+		WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+		
+	</select>
 
 
 
