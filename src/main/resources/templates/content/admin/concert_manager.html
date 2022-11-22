@@ -189,8 +189,7 @@
 						<tbody>
 							<tr th:each="concert, iterState : ${concertListACT}">
 								<th scope="row" th:text="${iterState.count}"></th>
-								<td><a data-bs-toggle="modal"
-									data-bs-target="#concertDetailModal" style="cursor: pointer">
+								<td><a data-bs-toggle="modal" data-bs-target="#concertDetailModal" style="cursor: pointer">
 										<img
 										th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
 										style="height: 120px; width: 100px">
@@ -198,15 +197,6 @@
 								<td>[[${concert.concertName}]]</td>
 								<td>[[${concert.artist.artistName}]]</td>
 								<td>[[${concert.concertRated}]]</td>
-
-
-
-
-
-
-
-
-
 
 							</tr>
 						</tbody>
