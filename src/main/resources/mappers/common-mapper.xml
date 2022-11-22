@@ -53,6 +53,13 @@
 		<result column="ARTIST_NAME" 			property="artistName"/>
 		<result column="ARTIST_DETAIL" 			property="artistDetail"/>
 		
+		<association property="artistImg" 	resultMap="artistImg"/>
+	</resultMap>
+	<resultMap type="kh.study.consupport.common.vo.ArtistVO" id="artistDetail">
+		<id column="USER_ID" 					property="userId"/>
+		<result column="ARTIST_NAME" 			property="artistName"/>
+		<result column="ARTIST_DETAIL" 			property="artistDetail"/>
+		
 		<collection property="artistImgList" 	resultMap="artistImg"/>
 	</resultMap>
 	
@@ -160,6 +167,7 @@
 			, CONCERT_PRICE_S
 			, CONCERT_PRICE_A
             
+            , ART.USER_ID
 			, ART.ARTIST_NAME
 			, ARTIST_IMG_NAME_ATTACHED
 			, ARTIST_IMG_IS_MAIN

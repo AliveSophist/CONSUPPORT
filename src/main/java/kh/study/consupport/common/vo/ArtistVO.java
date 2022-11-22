@@ -21,6 +21,7 @@ public class ArtistVO {
 	private String artistName;
 	private String artistDetail;
 	
+	private ArtistImgVO artistImg;
 	private List<ArtistImgVO> artistImgList;
 	private UsersVO users;
 }
