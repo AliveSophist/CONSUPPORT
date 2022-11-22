@@ -75,7 +75,7 @@ public class QboardController {
 	@PostMapping("/regQboard")
 	public String regQboard(QboardVO qboard) {
 		qboardService.insertQboard(qboard);
-		return "content/board/qboardList";
+		return "content/board/regQboard_result";
 	}
 
 	//글 상세보기
@@ -93,8 +93,12 @@ public class QboardController {
 			@RequestParam(required = false
 						, defaultValue = "10"
 						, name = "num") int qboardNum, Model model) {
-		model.addAttribute("board", qboardService.selectDetailQboard(qboardNum));
+		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
 		return "content/board/detail_qboard";
 	}
+	
+	
+	
+	
 	
 }
