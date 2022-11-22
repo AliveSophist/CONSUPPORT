@@ -1,9 +1,9 @@
 // 테스트시 SALES 코드 중첩이 발생하기 쉬우므로 덧붙이는 문자열 필요..
-let append_id = 'za12_';
+let append_id = 'au91_';
 
 var refreshByForce = false;
 window.addEventListener('beforeunload', (event) => {
-	if(refreshByForce)	// 강제 새로고침은 발생 가능
+	if(refreshByForce)	// 스크립트에 의한 강제 새로고침은 발동 가능하도록.
 		return;
 	
 	salesCode = document.querySelector('#salesCode').value;
@@ -71,8 +71,6 @@ function payment() {
 		refreshByForce = true;
 		history.go(0);
 	}
-	
-	//mer_uid_for_test = 'kui_' + document.querySelector('#salesCode').value;
 	
 	IMP.init('imp60175080');				//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 	IMP.request_pay({						// param
@@ -178,6 +176,9 @@ function cancelPay() {
 		},
 		success: function(result) {
 			alert(result)
+			
+			refreshByForce = true;
+			window.close();
 		},
 		error: function() {
 			alert('ㅠㅠ');

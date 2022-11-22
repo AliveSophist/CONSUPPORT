@@ -13,13 +13,19 @@ public interface CommonService {
 	
 	UsersVO selectLoginInfo(String username);
 	
+	
+	
+	// 티켓 및 결제 기능
 	List<TicketVO> selectTicketList(ConcertVO concert);
-	
 	String getSalesCode(SalesVO sales);
-	
 	String tryTicketing(SalesVO sales);
-	
 	void cancelWhenPaying(SalesVO sales);
-	
 	void refundAll(SalesVO sales);
+	
+
+	// 메인화면 콘서트 목록 조회
+	List<ConcertVO> selectConcertListOfCommon();
+	
+	// 콘서트 상세 조회
+	ConcertVO selectConcertDetail(ConcertVO concertVO);
 }

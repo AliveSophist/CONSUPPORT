@@ -111,24 +111,49 @@ public class CommonController {
 		return "redirect:/concertList";
 	}
 	
+
+	
+//==================================================================================================================================================================================================================
+
+	
+
+
+	@GetMapping("accessDenied")
+	public String accessDenied() {
+		return "/content/common/accessDenied";
+	}
+
+	
+	// 메인화면 콘서트 목록 조회
+	@GetMapping("concertList")
+	public String selectConcertListOfCommon(Model model) {
+		model.addAttribute("concertList", commonService.selectConcertListOfCommon()); 
+		return "/content/common/concert_list";
+	}
 	
 	
+	
+	
+	// 콘서트 상세 조회
+	@ResponseBody
+	@PostMapping("selectConcertDetail")
+	public ConcertVO selectConcertDetail(ConcertVO concertVO) {
+		return commonService.selectConcertDetail(concertVO);
+	}
+	
+	
+	
+//==================================================================================================================================================================================================================
+
 	
 	
 	@GetMapping("reserveSeatForm")
-	public String loadReserveSeatForm(Model model) {
-		
-		//임시... service.select 필요 혹은 ConcertVO 받아오셈.
-		ConcertVO concert = new ConcertVO();
-		concert.setHallCode("HALL_000001");
-		concert.setConcertCode("CONCERT_000001");
-		
+	public String loadReserveSeatForm(ConcertVO concert, Model model) {
+
+		// concertCode, hallCode 넣어서 가라
 		model.addAttribute("concert", concert);
 		
-		
-		
-		
-		
+		// 좌석목록 넣어서 가라
 		List<TicketVO> ticketList = commonService.selectTicketList(concert);
 		model.addAttribute("ticketList", ticketList);
 		
@@ -202,18 +227,6 @@ public class CommonController {
 	}
 	
 	
-	
-	
-
-	@GetMapping("accessDenied")
-	public String accessDenied() {
-		return "/content/common/accessDenied";
-	}
-	
-	@GetMapping("concertList")
-	public String goConcertList() {
-		return "/content/common/concert_list";
-	}
 	
 	
 	

@@ -68,7 +68,7 @@ function artistDetailModal(userId){
 		str +=		`</div>`;
 		str +=		`<hr>`;
 		
-		str +=`<ul class="gallery zoom">`
+		str +=`<ul class="gallery zoom text-center">`
 		
 			for(const artistImg of artist.artistImgList){
 				if(artistImg.artistImgIsMain == 'N'){
