@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
@@ -48,11 +49,17 @@ public class QboardController {
 	}
 	
 	//문의 리스트창으로 이동
-	@GetMapping("/qboardList")
-	public String qboardList(QboardVO qboard,Model model, Authentication authentication) {
+	@RequestMapping("/qboardList")
+	public String qboardList(QboardVO qboard, Model model, Authentication authentication) {
+		
+		//전체 데이터 수
+		int totalCnt = qboardService.selectQboardCnt();
+		
+		//페이지 정보 세팅
+		qboard.setTotalDataCnt(totalCnt);
+		qboard.setPageInfo();
+		
 		model.addAttribute("qboardList", qboardService.selectQboardList(qboard));
-		
-		
 		
 		return "content/board/qboardList";
 	}
@@ -71,5 +78,13 @@ public class QboardController {
 		return "content/board/qboardList";
 	}
 	
+	@GetMapping("/detailQboard")
+	public String detailBoard(
+			@RequestParam(required = false
+						, defaultValue = "10"
+						, name = "num") int qboardNum, Model model) {
+		model.addAttribute("board", qboardService.selectDetailQboard(qboardNum));
+		return "board/detail_board";
+	}
 	
 }

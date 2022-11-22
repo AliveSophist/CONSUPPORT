@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class QboardVO {
+public class QboardVO extends PageVO{
 	
 //    QBOARD_NUM VARCHAR2(100) CONSTRAINT Q_BOARD_PK PRIMARY KEY
 //    , QBOARD_TITLE VARCHAR2(100) NOT NULL

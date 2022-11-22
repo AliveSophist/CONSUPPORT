@@ -25,6 +25,19 @@ public class QboardServiceImpl implements QboardService{
 	public List<QboardVO> selectQboardList(QboardVO qboard) {
 		return sqlSession.selectList("qboardMapper.selectQboardList", qboard);
 	}
+
+	//문의 개수 조회
+	@Override
+	public int selectQboardCnt() {
+		return sqlSession.selectOne("qboardMapper.selectQboardCnt");
+	}
+
+	//문의 상세보기
+	@Override
+	public QboardVO selectDetailQboard(int qboardNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

@@ -5,7 +5,7 @@
 <mapper namespace="qboardMapper">
 	
 	<resultMap type="kh.study.consupport.common.vo.QboardVO" id="qboard">
-		<id column="QBOARD_NUM" 			property="qboardCode"/>
+		<id column="QBOARD_NUM" 			property="qboardNum"/>
 		<result column="QBOARD_TITLE" 		property="qboardTitle"/>
 		<result column="QBOARD_CONTENT" 	property="qboardContent"/>
 		<result column="USER_ID" 			property="userId"/>
@@ -49,7 +49,7 @@
 					, QBOARD_TITLE
 					, USER_ID
 					, QBOARD_CREATE_DATE
-				FROM SPRING_BOARD		<!-- boarVO.getSearchKeyword -->
+				FROM QBOARD		<!-- boarVO.getSearchKeyword -->
 				<!-- _parameter : 빈값을 채우기 위해 들어오는 데이터 -->
 				<!-- !=null은 처음 list화면에 들어올때 null값으로 들어온다
 						처음화면에 모든 값이 출력되는 것 -->
@@ -60,10 +60,24 @@
 		    )
 		)
 		WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
-		
 	</select>
-
-
+		
+	<!-- 게시글 개수 조회 -->
+	<select id="selectQboardCnt" resultType="int">
+		SELECT COUNT(QBOARD_NUM)
+		FROM QBOARD
+	</select>
+		
+	<!-- 문의 상세보기 -->
+	<select id="selectDetailQboard" resultMap="qboard">
+		SELECT QBOARD_NUM
+			, QBOARD_TITLE
+			, QBOARD_CONTENT
+			, USER_ID
+			, QBOARD_CREATE_DATE
+		FROM QBOARD
+		WHERE QBOARD_NUM = #{boardNum}
+	</select>
 
 
 
