@@ -8,15 +8,15 @@
 
 <div layout:fragment="content">
 	<div align="center">
-		<!-- <form action="/board/list" method="post">
+		<form action="/board/qboardList" method="post">
 			<select name="searchKeyword">
-			이상태 에서는 값으로 TITLE, WRITER가 넘어간다
-				<option value="TITLE" th:selected="${boardVO.searchKeyword == 'TITLE'}">제목</option>
-				<option value="WRITER" th:selected="${boardVO.searchKeyword == 'WRITER'}">작성자</option>
+			<!-- 이상태 에서는 값으로 TITLE, WRITER가 넘어간다 -->
+				<option value="QBOARD_TITLE" th:selected="${QboardVO.searchKeyword == 'QBOARD_TITLE'}">제목</option>
+				<option value="USER_ID" th:selected="${QboardVO.searchKeyword == 'USER_ID'}">작성자</option>
 			</select>
 		<input type="text" name="searchValue" th:value="${boardVO.searchValue}">
 		<input type="submit" value="검색"><br>
-		</form> -->
+		</form>
 	
 		<table border="1" class="table table-hover" style="width: 80%; margin: 15px  0 auto;">
 			<tr class="table-light">
