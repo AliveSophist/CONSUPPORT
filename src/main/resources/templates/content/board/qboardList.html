@@ -7,56 +7,53 @@
 
 
 <div layout:fragment="content">
-<div align="center">
-	<!-- <form action="/board/list" method="post">
-		<select name="searchKeyword">
-		이상태 에서는 값으로 TITLE, WRITER가 넘어간다
-			<option value="TITLE" th:selected="${boardVO.searchKeyword == 'TITLE'}">제목</option>
-			<option value="WRITER" th:selected="${boardVO.searchKeyword == 'WRITER'}">작성자</option>
-		</select>
-	<input type="text" name="searchValue" th:value="${boardVO.searchValue}">
-	<input type="submit" value="검색"><br>
-	</form> -->
-
-	<table border="1" class="table table-hover" style="width: 80%; margin: 15px  0 auto;">
-		<tr class="table-light">
-			<td>NO</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>작성일</td>
-		</tr>
-		<!-- <th:block th:if="${#lists.size(qboardList) == 0}">
-			<tr>
-				<td colspan="4">데이터가 없습니다.</td>
+	<div align="center">
+		<!-- <form action="/board/list" method="post">
+			<select name="searchKeyword">
+			이상태 에서는 값으로 TITLE, WRITER가 넘어간다
+				<option value="TITLE" th:selected="${boardVO.searchKeyword == 'TITLE'}">제목</option>
+				<option value="WRITER" th:selected="${boardVO.searchKeyword == 'WRITER'}">작성자</option>
+			</select>
+		<input type="text" name="searchValue" th:value="${boardVO.searchValue}">
+		<input type="submit" value="검색"><br>
+		</form> -->
+	
+		<table border="1" class="table table-hover" style="width: 80%; margin: 15px  0 auto;">
+			<tr class="table-light">
+				<td>NO</td>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>작성일</td>
 			</tr>
-		</th:block> -->
-		<!-- <th:block th:unless="${#lists.size(boardList) == 0}">
-			<tr th:each="board : ${boardList}">
-				<td th:text="${board.boardNum}"></td>
-				<td> <a th:href="@{/board/detailBoard(num = ${board.boardNum})}" th:text="${board.title}"></a> </td>
-				<td th:text="${board.title}" th:href="@{/board/detailBoard>}"
-				<td th:text="${board.writer}"></td>
-				<td th:text="${board.createDate}"></td>
-			</tr>
-		</th:block> -->
-		
-	</table>
-	<!-- <div>
-		<th:block th:if="${boardVO.prev}">
-			<a th:text="prev" th:href="@{/board/list(nowPage=${boardVO.beginPage - 1})}"></a>
-		</th:block>
-	   <th:block th:each="pageNum : ${#numbers.sequence(boardVO.beginPage, boardVO.endPage)}">
-	      <a th:text="${pageNum}" th:href='@{/board/list(nowPage=${pageNum})}'></a>
-	   </th:block>
-	   <th:block th:if="${boardVO.next} ">
-			<a th:text="next" th:href="@{/board/list(nowPage=${boardVO.endPage + 1})}"></a>
-		</th:block>
-	</div> -->
-<input type="button" value="글작성" onclick="location.href='/board/regQboard';">
+			<th:block th:if="${#lists.size(qboardList) == 0}">
+				<tr>
+					<td colspan="4">데이터가 없습니다.</td>
+				</tr>
+			</th:block>
+			<th:block th:unless="${#lists.size(qboardList) == 0}">
+				<tr th:each="qboard : ${qboardList}">
+					<td th:text="${qboard.qboardNum}"></td>
+					<td> <a th:href="@{/board/detailBoard(num = ${qboard.qboardNum})}" th:text="${board.title}"></a> </td>
+					<td th:text="${qboard.userId}"></td>
+					<td th:text="${qboard.qboardCreateDate}"></td>
+				</tr>
+			</th:block>
+			
+		</table>
+		<!-- <div>
+			<th:block th:if="${boardVO.prev}">
+				<a th:text="prev" th:href="@{/board/list(nowPage=${boardVO.beginPage - 1})}"></a>
+			</th:block>
+		   <th:block th:each="pageNum : ${#numbers.sequence(boardVO.beginPage, boardVO.endPage)}">
+		      <a th:text="${pageNum}" th:href='@{/board/list(nowPage=${pageNum})}'></a>
+		   </th:block>
+		   <th:block th:if="${boardVO.next} ">
+				<a th:text="next" th:href="@{/board/list(nowPage=${boardVO.endPage + 1})}"></a>
+			</th:block>
+		</div> -->
+	<input type="button" value="글작성" onclick="location.href='/board/regQboard';">
+	</div>
+	
 </div>
 
-
-
-
-</div>
 </html>	

@@ -50,6 +50,8 @@ public class QboardController {
 	//문의 리스트창으로 이동
 	@GetMapping("/qboardList")
 	public String qboardList(QboardVO qboard,Model model, Authentication authentication) {
+		model.addAttribute("qboardList", qboardService.selectQboardList(qboard));
+		
 		
 		
 		return "content/board/qboardList";

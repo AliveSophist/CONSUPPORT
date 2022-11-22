@@ -30,7 +30,7 @@
 			)
 	</insert>
 
-	<select id="selectBoardList" resultMap="qboard">
+	<select id="selectQboardList" resultMap="qboard">
 		SELECT ROW_NUM
 			, QBOARD_NUM
 		    , QBOARD_TITLE
