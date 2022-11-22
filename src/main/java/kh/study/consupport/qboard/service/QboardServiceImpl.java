@@ -38,6 +38,20 @@ public class QboardServiceImpl implements QboardService{
 		return sqlSession.selectOne("qboardMapper.selectDetailQboard", qboardNum);
 	}
 	
+	//문의 수정
+	@Override
+	public void updateQboard(QboardVO qboard) {
+		sqlSession.update("qboardMapper.updateQboard", qboard);
+	}
+	
+	//문의 삭제
+	@Override
+	public void deleteQboard(int qboardNum) {
+		sqlSession.delete("qboardMapper.deleteQboard", qboardNum);
+	}
+
+	
+	
 	
 	
 	

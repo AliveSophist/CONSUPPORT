@@ -97,7 +97,30 @@ public class QboardController {
 		return "content/board/detail_qboard";
 	}
 	
+	//글 수정페이지 이동
+	@GetMapping("/qboardUpdate")
+	public String boardUpdate(@RequestParam(required = false
+								, defaultValue = "10"
+								, name = "num") int qboardNum, Model model) {
+		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
+		return "content/board/qboard_update";
+	}
 	
+	//글 수정
+	@PostMapping("/qboardUpdate")
+	public String boardUpdate(QboardVO qboard) {
+		qboardService.updateQboard(qboard);
+		return "redirect:/board/detailQboard?num=" + qboard.getQboardNum();
+	}
+	
+	//글 삭제
+	@GetMapping("/qboardDelete")
+	public String boardDelete(@RequestParam(required = false
+											, defaultValue = "10"
+											, name = "num")int qboardNum) {
+		qboardService.deleteQboard(qboardNum);
+		return "redirect:/board/qboardList";
+	}
 	
 	
 	

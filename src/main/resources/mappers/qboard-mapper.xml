@@ -79,9 +79,21 @@
 		WHERE QBOARD_NUM = #{boardNum}
 	</select>
 
+	<!-- 문의 수정 -->
+	<update id="updateQboard">
+		UPDATE QBOARD
+			SET 
+			QBOARD_TITLE = #{qboardTitle}
+			, USER_ID = #{userId}
+			, QBOARD_CONTENT = #{qboardContent}
+		WHERE QBOARD_NUM = #{qboardNum}
+	</update>
 
-
-
+	<!-- 문의 삭제 -->
+	<delete id="deleteQboard">
+		DELETE QBOARD
+		WHERE  QBOARD_NUM = #{qboardNum}
+	</delete>
 
 
 

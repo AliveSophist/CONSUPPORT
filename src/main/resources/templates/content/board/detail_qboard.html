@@ -5,32 +5,37 @@
 		layout:decorate="~{layout/base_layout}">
 
 <div layout:fragment="content">
-	<div>
+	<div class="mb-3" style="margin: 10px;">
 	
 	<table border="1" class="table table-hover">
-		<tr class="table-light">
-			<td>문의번호</td> 
-			<td>제목</td> 
-			<td>작성자</td> 
-			<td>작성일</td> 
-		</tr>
-		<tr class="table-dark">
-			<td th:text="${qboard.qboardNum}"></td> 
-			<td th:text="${qboard.qboardTitle}"></td> 
-			
-			<td th:text="${qboard.userId}"></td> 
-			<td th:text="${qboard.qboardCreateDate}"></td> 
-		</tr>
-		<tr class="table-light">
-			<td colspan="2">내용</td> 
-			<td colspan="2" rowspan="3" th:text="${qboard.qboardContent}"></td> 
-		</tr>
+		<thead class="table-danger">
+			<tr>
+				<td>문의번호</td> 
+				<td>제목</td> 
+				<td>작성자</td> 
+				<td>작성일</td> 
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${qboard.qboardNum}"></td> 
+				<td th:text="${qboard.qboardTitle}"></td> 
+				<td th:text="${qboard.userId}"></td> 
+				<td th:text="${qboard.qboardCreateDate}"></td> 
+			</tr>
+			<tr>
+				<td colspan="2">내용</td> 
+				<td colspan="2" rowspan="3" th:text="${qboard.qboardContent}"></td> 
+			</tr>
+		</tbody>
 	</table>
 	<!-- "|location.href='@{/board/boardUpdate(num = ${board.boardNum})}'|" |를 붙여서 문자로 인식시킨다. -->
-	<!-- <input type="button" value="수정" th:onclick="|location.href='@{/board/qboardUpdate(num = ${board.boardNum})}'|"> -->
+	<input type="button" class="btn btn-primary" value="수정" 
+	th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
 	<!-- <input type="button" value="삭제" onclick="location.href='/board/boardDelete@(num = ${board.boardNum})'"> -->
 	<!-- <input type="button" value="삭제2" th:onclick="'location.href=\'' + @{/board/boardDelete(num = ${board.boardNum})} +'\''"> -->
-	<!-- <input type="button" value="삭제" th:onclick="|location.href='@{/board/boardDelete(num = ${board.boardNum})}'|"> -->
+	<input type="button" class="btn btn-primary" value="삭제" 
+	th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
 
 	</div>
 
