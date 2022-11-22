@@ -104,7 +104,7 @@ public class PaymentService {
 		return response.getResponse().getAmount();
 	}
 
-	public void paymentCancle(/* String access_token, */ String merchant_uid, int amount/* , String reason */)
+	public void paymentCancle(/* String access_token, */ String merchant_uid, int cancel_request_amount/* , String reason */)
 			throws IOException {
 
 		String access_token = getToken();
@@ -137,7 +137,7 @@ public class PaymentService {
 //		json.addProperty("reason", reason);
 
 		json.addProperty("merchant_uid", merchant_uid);
-		json.addProperty("cancel_request_amount", amount);
+		json.addProperty("cancel_request_amount", cancel_request_amount);
 		json.addProperty("reason", reason);
 
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));

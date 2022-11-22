@@ -20,4 +20,6 @@ public interface CommonService {
 	String tryTicketing(SalesVO sales);
 	
 	void cancelWhenPaying(SalesVO sales);
+	
+	void refundAll(SalesVO sales);
 }

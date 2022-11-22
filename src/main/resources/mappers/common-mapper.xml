@@ -190,6 +190,20 @@
 		</foreach>
 		)
 	</update>
+	
+	<update id="refundAll">
+		UPDATE TICKET
+		SET
+			USER_ID = null
+		WHERE TICKET_CODE IN(
+			SELECT
+				TICKET_CODE
+			FROM
+				SALES_DETAIL
+			WHERE
+				SALES_CODE = #{salesCode}
+		)
+	</update>
 
 	
 </mapper>

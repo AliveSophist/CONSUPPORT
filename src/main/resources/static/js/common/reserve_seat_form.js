@@ -1,5 +1,7 @@
-var refreshByForce = false;
+// 테스트시 SALES 코드 중첩이 발생하기 쉬우므로 덧붙이는 문자열 필요..
+let append_id = 'za12_';
 
+var refreshByForce = false;
 window.addEventListener('beforeunload', (event) => {
 	if(refreshByForce)	// 강제 새로고침은 발생 가능
 		return;
@@ -32,7 +34,7 @@ $(document).ready(function() {
 
 
 
-let mer_uid_for_test;
+//let mer_uid_for_test;
 
 function payment() {
 	// 좌석 고르지도 않아놓고 누르지마.
@@ -64,25 +66,25 @@ function payment() {
 	});
 	
 	if(document.querySelector('#salesCode').value.length < 4){
-		alert('해당 좌석은 이미 선점되었습니다.');
+		alert('해당 좌석은 이미 구매되었거나 결제 진행중입니다.');
 		
 		refreshByForce = true;
 		history.go(0);
 	}
 	
-	mer_uid_for_test = 'mer_' + document.querySelector('#salesCode').value;
+	//mer_uid_for_test = 'kui_' + document.querySelector('#salesCode').value;
 	
 	IMP.init('imp60175080');				//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 	IMP.request_pay({						// param
-		pg : "kakaopay.TC0ONETIME", 			//pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
-		pay_method : "card", 				//지불 방법
-		merchant_uid : mer_uid_for_test, 				//+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-		name : "티켓", 						//결제창에 노출될 상품명
-		amount : document.querySelector('#salesTotalPrice').value,	//금액
-		//amount : 100,	//금액
-		buyer_email : "testiamport@naver.com",
-		buyer_name : "테스트",
-		buyer_tel : "01012341234"
+		pg : "kakaopay.TC0ONETIME"			//pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
+		, pay_method : "card"				//지불 방법
+		, merchant_uid : (append_id + document.querySelector('#salesCode').value)			//+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+		, name : "티켓"						//결제창에 노출될 상품명
+		, amount : document.querySelector('#salesTotalPrice').value	//금액
+		//, amount : 100	//금액
+		, buyer_email : "testiamport@naver.com"
+		, buyer_name : "테스트"
+		, buyer_tel : "01012341234"
 	}, function(rsp) { // callback
 		if (rsp.success) {
 			
@@ -169,9 +171,10 @@ function cancelPay() {
 	$.ajax({
 		url: '/canclePay', //요청경로
 		type: 'post',
-		data: {	"merchant_uid" : mer_uid_for_test
-				, "amount" : document.querySelector('#salesTotalPrice').value	//금액
-//				, "amount" : 100
+		data: {	"salesCode" : document.querySelector('#salesCode').value
+				, "merchant_uid" : (append_id + document.querySelector('#salesCode').value)
+				, "cancel_request_amount" : document.querySelector('#salesTotalPrice').value	//금액
+//				, "cancel_request_amount" : 100
 		},
 		success: function(result) {
 			alert(result)

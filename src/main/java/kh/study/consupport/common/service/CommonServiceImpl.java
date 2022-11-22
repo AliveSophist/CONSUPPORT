@@ -84,5 +84,16 @@ public class CommonServiceImpl implements CommonService{
 		sqlSession.update("commonMapper.updateSales", sales);
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class) //트랜잭션처리
+	public void refundAll(SalesVO sales) {
+
+		sales.setSalesStatus("REFUNDED");
+		sqlSession.update("commonMapper.updateSales", sales);
+		
+		sqlSession.update("commonMapper.refundAll", sales);
+		
+	}
+
 }
 

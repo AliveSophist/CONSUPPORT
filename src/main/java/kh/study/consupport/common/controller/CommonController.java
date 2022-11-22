@@ -175,24 +175,24 @@ public class CommonController {
 	@ResponseBody
 	@PostMapping("canclePay")
 	@CrossOrigin(origins = "https://api.iamport.kr")	//https://api.iamport.kr/payments/cancel
-	public String canclePay(String merchant_uid, int amount) {
+	public String canclePay(SalesVO sales, String merchant_uid, int cancel_request_amount) {
 		
 		System.out.println();
 		System.out.println();
 		System.out.println("merchant_uid : " + merchant_uid);
 		System.out.println("merchant_uid : " + merchant_uid);
 		System.out.println();
-		System.out.println("amount : " + amount);
-		System.out.println("amount : " + amount);
+		System.out.println("cancel_request_amount : " + cancel_request_amount);
+		System.out.println("cancel_request_amount : " + cancel_request_amount);
 		System.out.println();
 		System.out.println();
 		
 		try {
-			paymentService.paymentCancle(merchant_uid, amount);
-			
-			
-			// 환불이 완료되면 티켓 원상복구 + 해당 SALES_CODE 'REFUNDED'로 해줘야해오
-			
+			// 아임포트에 환불 요청..!
+			paymentService.paymentCancle(merchant_uid, cancel_request_amount);
+
+			// 환불이 완료되면 티켓 원상복구 + 해당 SALES_STATUS는 'REFUNDED'로 변경
+			commonService.refundAll(sales);
 			
 			return "와! 환불!?";
 		} catch (IOException e) {
@@ -200,8 +200,6 @@ public class CommonController {
 			return "ㅠㅠ";
 		}
 	}
-	
-	
 	
 	
 	
