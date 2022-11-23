@@ -13,13 +13,14 @@ public class QboardVO extends PageVO{
 //    , USER_ID VARCHAR2(30) CONSTRAINT Q_BOARD_FK
 //        REFERENCES USERS (USER_ID) 
 //    , QBOARD_CREATE_DATE DATE DEFAULT SYSDATE
+//    , Q_SECRET VARCHAR2(50)
 	
 	private int qboardNum;
 	private String qboardTitle;
 	private String qboardContent;
 	private String userId;
 	private String qboardCreateDate;
-	
+	private boolean qsecret;
 	
 	
 }

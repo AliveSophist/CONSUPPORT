@@ -21,12 +21,14 @@
 			, QBOARD_TITLE
 			, QBOARD_CONTENT
 			, USER_ID
+			, Q_SECRET
 			)
 		VALUES (
 			QBOARD_NUM_SEQ.NEXTVAL
 			, #{qboardTitle}
 			, #{qboardContent}
 			, #{userId}
+			, #{qsecret}
 			)
 	</insert>
 
@@ -36,6 +38,7 @@
 		    , QBOARD_TITLE
 		    , USER_ID
 		    , QBOARD_CREATE_DATE
+		    , Q_SECRET
 		FROM 
 		(
 		    SELECT ROWNUM AS ROW_NUM
@@ -43,12 +46,14 @@
 		        , QBOARD_TITLE
 		        , USER_ID
 		        , QBOARD_CREATE_DATE    
+		        , Q_SECRET
 		    FROM
 		    (
 		        SELECT QBOARD_NUM
 					, QBOARD_TITLE
 					, USER_ID
 					, QBOARD_CREATE_DATE
+					, Q_SECRET
 				FROM QBOARD		<!-- boarVO.getSearchKeyword -->
 				<!-- _parameter : 빈값을 채우기 위해 들어오는 데이터 -->
 				<!-- !=null은 처음 list화면에 들어올때 null값으로 들어온다
@@ -75,6 +80,7 @@
 			, QBOARD_CONTENT
 			, USER_ID
 			, QBOARD_CREATE_DATE
+			, Q_SECRET
 		FROM QBOARD
 		WHERE QBOARD_NUM = #{boardNum}
 	</select>
