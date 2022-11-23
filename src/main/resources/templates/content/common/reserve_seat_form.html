@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html	lang="en" xmlns:th="http://www.thymeleaf.org"
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-		<!-- xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
+<html	lang="en" xmlns:th="http://www.thymeleaf.org">
+		<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
 		layout:decorate="layout/base_layout"
 		 -->
 		
@@ -17,13 +17,13 @@
 
 	<th:block>
 		<link rel="stylesheet" href="/css/common/reserve_seat_form.css" />
-	
-		<!-- jQuery  --> 
-	    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-	    
-		<!-- iamport.payment.js --> 
-	    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 	</th:block>
+	
+	<!-- jQuery  -->
+	<script	src="https://code.jquery.com/jquery-latest.min.js"></script>
+    
+	<!-- iamport.payment.js --> 
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
 
 
@@ -50,8 +50,6 @@
 	<div class="container">
 		<div class="screen"></div>
 		
-		
-		<input type="hidden" id="ticketList" th:value="${ticketList}">
 
 
 		<th:block th:if="${ticketList.size() == 40}">
@@ -324,12 +322,12 @@
 	<br>
 	<br>
 	
-	<form action="/reserveSeat" id="reserveSeatForm" method="post">
-		<input type="number" id="numSelectedR" readonly>
+	<form id="reserveSeatForm" name="reserveSeatForm">
+		<input type="number" 	name="hallSeatRCnt" id="hallSeatRCnt" value="0" readonly>
 		<br>
-		<input type="number" id="numSelectedS" readonly>
+		<input type="number" 	name="hallSeatSCnt" id="hallSeatSCnt" value="0" readonly>
 		<br>
-		<input type="number" id="numSelectedA" readonly>
+		<input type="number" 	name="hallSeatACnt" id="hallSeatACnt" value="0" readonly>
 		<br>
 		<br>
 		<input type="number" 	name="salesTotalPrice" id="salesTotalPrice" readonly>
@@ -346,9 +344,14 @@
 	
 	
 	<div>
-		<h2>IAMPORT 결제 데모</h2> 
-		<button id="iamportPayment" type="button">결제테스트</button>
-		<button type="button" onclick="cancelPay();">환test불</button>
+		<h2>IAMPORT 결제 테스트</h2> 
+		<button type="button" onclick="tryPay(false);">지금 바로 결제</button>
+	</div>
+	<br>
+	<div>
+		<h2>IAMPORT 환불 테스트</h2> 
+		<button type="button" onclick="tryPay(true);">환불test용 결제</button>
+		<button type="button" onclick="cancelPay();">지금 바로 환불</button>
 	</div>
 	
 	
@@ -364,16 +367,17 @@
 		const ticketList = /*[[${ticketList}]]*/[];	// 대괄호 안넣으면 오류는 안나는데 빨간줄뜸 거지같은 타임리프 문법 수준...
 		console.log(ticketList)
 ///////////////////////////////////////////////////// 넣자.
-		let concertPriceR = 30000;
-		let concertPriceS = 555;
-		let concertPriceA = 111;
+		let concertPriceR = /*[[${concert.concertPrice.concertPriceR}]]*/[];
+		let concertPriceS = /*[[${concert.concertPrice.concertPriceS}]]*/[];
+		let concertPriceA = /*[[${concert.concertPrice.concertPriceA}]]*/[];
 ///////////////////////////////////////////////////// 넣자.
-		let numSelectedR	= 0;
-		let numSelectedS	= 0;
-		let numSelectedA	= 0;
+		let hallSeatRCnt	= 0;
+		let hallSeatSCnt	= 0;
+		let hallSeatACnt	= 0;
 		
 		let salesAmount		= 0;
 		let salesTotalPrice	= 0;
+		
 		var ticketCodeList = [];
 		function addSeat(ticketCode) { ticketCodeList.push(ticketCode); }
 		function delSeat(ticketCode) {
@@ -421,15 +425,15 @@
 	
 	
 					if (s.classList.contains('seatR')) {
-						numSelectedR++;
+						hallSeatRCnt++;
 						salesTotalPrice += concertPriceR;
 					}
 					else if (s.classList.contains('seatS')) {
-						numSelectedS++;
+						hallSeatSCnt++;
 						salesTotalPrice += concertPriceS;
 					}
 					else {
-						numSelectedA++;
+						hallSeatACnt++;
 						salesTotalPrice += concertPriceA;
 					}
 				}
@@ -439,32 +443,32 @@
 	
 	
 					if (s.classList.contains('seatR')) {
-						numSelectedR--;
+						hallSeatRCnt--;
 						salesTotalPrice -= concertPriceR;
 					}
 					else if (s.classList.contains('seatS')) {
-						numSelectedS--;
+						hallSeatSCnt--;
 						salesTotalPrice -= concertPriceS;
 					}
 					else {
-						numSelectedA--;
+						hallSeatACnt--;
 						salesTotalPrice -= concertPriceA;
 					}
 				}
 				
 				updateView();
 				
-				alert('몇장? : ' + salesAmount + '\n'
-					+ '코드? : ' + ticketCodeList);
+//				alert('몇장? : ' + salesAmount + '\n'
+//					+ '코드? : ' + ticketCodeList);
 			})
 			arrnum++;
 		}
 	
 		function updateView(){
-			document.querySelector('#numSelectedR').value = (numSelectedR!=0) ? numSelectedR : '';
-			document.querySelector('#numSelectedS').value = (numSelectedS!=0) ? numSelectedS : '';
-			document.querySelector('#numSelectedA').value = (numSelectedA!=0) ? numSelectedA : '';
-			salesAmount = (numSelectedR+numSelectedS+numSelectedA);
+			document.querySelector('#hallSeatRCnt').value = hallSeatRCnt;
+			document.querySelector('#hallSeatSCnt').value = hallSeatSCnt;
+			document.querySelector('#hallSeatACnt').value = hallSeatACnt;
+			salesAmount = (hallSeatRCnt+hallSeatSCnt+hallSeatACnt);
 			
 			document.querySelector('#ticketCodeList').value = ticketCodeList;
 			document.querySelector('#salesAmount').value = salesAmount;

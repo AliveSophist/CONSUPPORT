@@ -34,4 +34,6 @@ public class SalesVO {
 	private String concertCode;
 
 	private List<String> ticketCodeList;
+	
+	private HallSeatVO hallseat;
 }

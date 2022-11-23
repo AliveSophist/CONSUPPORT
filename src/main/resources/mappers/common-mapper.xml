@@ -180,6 +180,15 @@
 	
 	
 	<!-- 구매(티켓팅) 관련 -->
+	<select id="selectConcertPrice" resultMap="concertPrice">
+		SELECT
+			CONCERT_PRICE_R
+			, CONCERT_PRICE_S
+			, CONCERT_PRICE_A
+		FROM CONCERT_PRICE
+		WHERE CONCERT_CODE = #{concertCode}
+	</select>
+	
 	<select id="isExistWaitStatus" resultType="String">
 		SELECT
 			TICKET_CODE
@@ -210,11 +219,19 @@
 		    , CONCERT_CODE
 		) VALUES(
 		    #{salesCode}
-		    , #{salesAmount}
-		    , #{salesTotalPrice}
-		    , #{userId}
-		    , #{hallCode}
-		    , #{concertCode}
+			, #{hallseat.hallSeatRCnt}+#{hallseat.hallSeatSCnt}+#{hallseat.hallSeatACnt}
+			, (	(	SELECT CONCERT_PRICE_R * #{hallseat.hallSeatRCnt}
+		    		FROM CONCERT_PRICE
+		    		WHERE CONCERT_CODE = #{concertCode}	) +
+		    	(	SELECT CONCERT_PRICE_S * #{hallseat.hallSeatSCnt}
+			    	FROM CONCERT_PRICE
+			    	WHERE CONCERT_CODE = #{concertCode}	) +
+		    	(	SELECT CONCERT_PRICE_A * #{hallseat.hallSeatACnt}
+			    	FROM CONCERT_PRICE
+			    	WHERE CONCERT_CODE = #{concertCode}	)	)
+			, #{userId}
+			, #{hallCode}
+			, #{concertCode}
 		)
 	</insert>
 	<insert id="insertSalesDetail">

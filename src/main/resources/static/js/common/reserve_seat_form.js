@@ -1,22 +1,25 @@
 // 테스트시 SALES 코드 중첩이 발생하기 쉬우므로 덧붙이는 문자열 필요..
-let append_id = 'au91_';
+let f_append_id = 'WSK_';
+let b_append_id = '1';
 
 var refreshByForce = false;
 window.addEventListener('beforeunload', (event) => {
 	if(refreshByForce)	// 스크립트에 의한 강제 새로고침은 발동 가능하도록.
 		return;
 	
-	salesCode = document.querySelector('#salesCode').value;
-	if(salesCode.length > 4)
-		$.ajax({
-			url: '/cancelWhenPaying', //요청경로
-			type: 'post',
-			data: {	"salesCode" : salesCode },
-			success: function(result)
-			{ console.log(result); },
-			error: function()
-			{ console.log('실패'); }
-		});
+	if(salesCode.length < 4)	// 결제 진행중인 상태 아니면 그냥 보내줄게.
+		return;
+	
+	const salesCode = document.querySelector('#salesCode').value;
+	$.ajax({
+		url: '/cancelWhenPaying', //요청경로
+		type: 'post',
+		data: {	"salesCode" : salesCode },
+		success: function(result)
+		{ console.log(result); },
+		error: function()
+		{ console.log('실패'); }
+	});
 	
     
     event.preventDefault(); 								// 명세에 따라 preventDefault는 호출해야하며, 기본 동작을 방지합니다.
@@ -26,25 +29,26 @@ window.addEventListener('beforeunload', (event) => {
 
 
 //문서가 준비되면 제일 먼저 실행
-$(document).ready(function() {
-	$("#iamportPayment").click(function() {
-		payment(); //버튼 클릭하면 호출 
-	});
-})
+//$(document).ready(function() {
+//	$("#iamportPayment").click(function() {
+//		payment(); //버튼 클릭하면 호출 
+//	});
+//})
 
 
 
 //let mer_uid_for_test;
 
-function payment() {
+function tryPay(isTest) {
+	
 	// 좌석 고르지도 않아놓고 누르지마.
 	if(document.querySelector('#salesAmount').value == 0)
 		return;	// 너 결제 못감 ㅅㄱ
 	
-	
+	console.log('hallSeatRCnt : ' + document.querySelector('#hallSeatRCnt').value);
 	
 	$.ajax({
-		url: '/getBuyCode', //요청경로
+		url: '/getSalesCode', //요청경로
 		type: 'post',
 		data: new FormData( document.querySelector('#reserveSeatForm') ),
 		
@@ -73,10 +77,10 @@ function payment() {
 	}
 	
 	IMP.init('imp60175080');				//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
-	IMP.request_pay({						// param
+	IMP.request_pay({
 		pg : "kakaopay.TC0ONETIME"			//pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
 		, pay_method : "card"				//지불 방법
-		, merchant_uid : (append_id + document.querySelector('#salesCode').value)			//+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+		, merchant_uid : (f_append_id + document.querySelector('#salesCode').value + b_append_id)			//+"iamport_test_ids", 	//가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
 		, name : "티켓"						//결제창에 노출될 상품명
 		, amount : document.querySelector('#salesTotalPrice').value	//금액
 		//, amount : 100	//금액
@@ -99,13 +103,19 @@ function payment() {
 				async: false,
 				
 				success: function(result){
-					// it returns 'PAID' or 'CANCELED'
-					alert(result);
-					
-					// 아마 myPage로 가게 할거임..
-					if(result == 'PAID'){
-						//refreshByForce = true;
-						//history.go(0);
+					if(result == 'PAID')
+					{
+						if(isTest)
+							return;
+						else{
+							refreshByForce = true;
+							window.close();
+							
+							// myPage로 가게 할거임..
+							//refreshByForce = true;
+							//history.go(0);
+						}
+						
 					}
 				},
 				error: function()
@@ -126,20 +136,9 @@ function payment() {
 				error: function()
 				{ console.log('실패'); }
 			});
-			
 		}
 	});
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -170,7 +169,7 @@ function cancelPay() {
 		url: '/canclePay', //요청경로
 		type: 'post',
 		data: {	"salesCode" : document.querySelector('#salesCode').value
-				, "merchant_uid" : (append_id + document.querySelector('#salesCode').value)
+				, "merchant_uid" : (f_append_id + document.querySelector('#salesCode').value + b_append_id)
 				, "cancel_request_amount" : document.querySelector('#salesTotalPrice').value	//금액
 //				, "cancel_request_amount" : 100
 		},

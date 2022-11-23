@@ -42,7 +42,9 @@ import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.service.PaymentService;
+import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.HallSeatVO;
 import kh.study.consupport.common.vo.HallVO;
 import kh.study.consupport.common.vo.SalesVO;
 import kh.study.consupport.common.vo.TicketVO;
@@ -149,8 +151,9 @@ public class CommonController {
 	
 	@GetMapping("reserveSeatForm")
 	public String loadReserveSeatForm(ConcertVO concert, Model model) {
-
-		// concertCode, hallCode 넣어서 가라
+		
+		// concertPrice 넣어서 가라
+		concert.setConcertPrice( commonService.selectConcertPrice(concert) );
 		model.addAttribute("concert", concert);
 		
 		// 좌석목록 넣어서 가라
@@ -161,22 +164,51 @@ public class CommonController {
 	}
 	
 	
+	
+	
+	//test
 	@ResponseBody
-	@PostMapping("getBuyCode")
-	public String insertSalesAndGetBuyCode(HttpServletRequest request, SalesVO sales, Authentication authentication) {
+	@PostMapping("hello")
+	public String hello(SalesVO sales, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {
 
+		return "hello";
+	}
+	@ResponseBody
+	@PostMapping("getSalesCode")
+	public String insertSalesAndGetBuyCode(SalesVO sales, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {
+
+		System.out.println(hallSeat);
+		System.out.println();
+		System.out.println();
+		System.out.println(hallSeat);
+		System.out.println();
+		System.out.println();
+		System.out.println(hallSeat);
+		System.out.println();
+		System.out.println();
+		
+		
+		
+		
+		
+		
+		
+		
 		if(request.isUserInRole("ROLE_ANONYMOUS"))
 			sales.setUserId("ANONYMOUS");
 		else
 			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
+
+
+		sales.setHallseat(hallSeat);
 		
 		return commonService.getSalesCode(sales);
 	}
 	
 	@ResponseBody
 	@PostMapping("reserveSeat")
-	public String reserveSeat(HttpServletRequest request, Authentication authentication, SalesVO sales) {
-
+	public String reserveSeat(SalesVO sales, HttpServletRequest request, Authentication authentication) {
+		
 		if(request.isUserInRole("ROLE_ANONYMOUS"))
 			sales.setUserId("ANONYMOUS");
 		else
