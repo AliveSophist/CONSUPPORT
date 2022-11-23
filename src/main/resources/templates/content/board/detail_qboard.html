@@ -29,12 +29,11 @@
 			</tr>
 		</tbody>
 	</table>
-	<!-- "|location.href='@{/board/boardUpdate(num = ${board.boardNum})}'|" |를 붙여서 문자로 인식시킨다. -->
-	<input type="button" class="btn btn-primary" value="수정" 
+
+	<input type="button" class="btn btn-primary mb-3" value="수정" 
 	th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
-	<!-- <input type="button" value="삭제" onclick="location.href='/board/boardDelete@(num = ${board.boardNum})'"> -->
-	<!-- <input type="button" value="삭제2" th:onclick="'location.href=\'' + @{/board/boardDelete(num = ${board.boardNum})} +'\''"> -->
-	<input type="button" class="btn btn-primary" value="삭제" 
+
+	<input type="button" class="btn btn-primary mb-3" value="삭제" 
 	th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
 
 	</div>

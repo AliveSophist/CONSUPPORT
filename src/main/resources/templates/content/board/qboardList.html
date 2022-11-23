@@ -10,7 +10,7 @@
 	<div align="center">
 		<div class="col-6" style="margin: 10px;">
 			<form action="/board/qboardList" method="post">
-					<select class="form-select" name="searchKeyword">
+					<select class="form-select mb-1" name="searchKeyword">
 					<!-- 이상태 에서는 값으로 QBOARD_TITLE, USER_ID가 넘어간다 -->
 						<option value="QBOARD_TITLE" th:selected="${qboardVO.searchKeyword == 'QBOARD_TITLE'}">제목</option>
 						<option value="USER_ID" th:selected="${qboardVO.searchKeyword == 'USER_ID'}">작성자</option>
@@ -54,17 +54,17 @@
 	</div>
 		
 		
-		<!-- <div>
-			<th:block th:if="${boardVO.prev}">
-				<a th:text="prev" th:href="@{/board/list(nowPage=${boardVO.beginPage - 1})}"></a>
+		<div>
+			<th:block th:if="${qboardVO.prev}">
+				<a th:text="prev" th:href="@{/board/qboardList(nowPage=${qboardVO.beginPage - 1})}"></a>
 			</th:block>
-		   <th:block th:each="pageNum : ${#numbers.sequence(boardVO.beginPage, boardVO.endPage)}">
-		      <a th:text="${pageNum}" th:href='@{/board/list(nowPage=${pageNum})}'></a>
+		   <th:block th:each="pageNum : ${#numbers.sequence(qboardVO.beginPage, qboardVO.endPage)}">
+		      <a th:text="${pageNum}" th:href='@{/board/qboardList(nowPage=${pageNum})}'></a>
 		   </th:block>
-		   <th:block th:if="${boardVO.next} ">
-				<a th:text="next" th:href="@{/board/list(nowPage=${boardVO.endPage + 1})}"></a>
+		   <th:block th:if="${qboardVO.next} ">
+				<a th:text="next" th:href="@{/board/qboardList(nowPage=${qboardVO.endPage + 1})}"></a>
 			</th:block>
-		</div> -->
+		</div>
 	<input type="button" class="btn btn-primary" value="문의작성" 
 	style="margin: 10px;" onclick="location.href='/board/regQboard';">
 	</div>

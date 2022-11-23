@@ -16,7 +16,7 @@ public class PageVO extends SearchVO{
 	//생성자
 	public PageVO() {
 		nowPage = 1;
-		displayCnt = 10;
+		displayCnt = 5;
 		displayPageCnt = 10;
 	}
 	
