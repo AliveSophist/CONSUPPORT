@@ -12,13 +12,12 @@
 	
 	
 	
-	<hr>
-		<div class="row mb-5">
+	
+		<div class="row">
 			<div class="col-12">
 				<div class="row">
-					<div class="col-12">
+					<div class="col-12" style="padding-left: 20.5%; margin-bottom: 15px; margin-top: 30px;">
 						<h3>콘서트 허가 대기중</h3>
-						<hr>
 					</div>
 					
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -37,7 +36,9 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 					<div class="col-12">
 					
-						<table class="table text-center table-hover align-middle">
+						<table class="table text-center table-hover align-middle" 
+							   style="margin:0 auto; width: 60%; background:rgba(0,0,0,0.2);">
+						
 						
 							<thead>
 								<tr>
@@ -75,8 +76,8 @@
 										<form action="/admin/updateConcertStatus" method="post">
 											<div class="form-check form-check-inline">
 												<input type="hidden" th:value="${concert.concertCode}" name="concertCode"> 
-						                    	<button class="btn btn-outline-secondary" type="submit" id="button-addon2">
-												콘서트하세요~
+						                    	<button class="btn btn-primary" type="submit" id="button-addon2">
+													<b>공 연 허 가</b>
 												</button>
 						                    </div>
 										</form>
@@ -139,14 +140,12 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 
-
-<hr>
+<hr style="margin: 30px 20%;">
 	<div class="row">
 		<div class="col-12">
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12" style="padding-left: 20.5%; margin-bottom: 15px;">
 					<h3>콘서트 허가 목록</h3>
-					<hr>
 				</div>
 
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -165,7 +164,8 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 				<div class="col-12">
 
-					<table class="table text-center table-hover align-middle">
+					<table class="table text-center table-hover align-middle" 
+						   style="margin: auto; width: 60%; background:rgba(0,0,0,0.2);">
 
 						<thead>
 							<tr>
@@ -193,10 +193,6 @@
 								<td>[[${concert.concertName}]]</td>
 								<td>[[${concert.artist.artistName}]]</td>
 								<td>[[${concert.concertRated}]]</td>
-
-
-
-
 
 
 

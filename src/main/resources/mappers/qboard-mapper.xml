@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="qboardMapper">
+	
+	<resultMap type="kh.study.consupport.common.vo.QboardVO" id="qboard">
+		<id column="QBOARD_NUM" 			property="qboardNum"/>
+		<result column="QBOARD_TITLE" 		property="qboardTitle"/>
+		<result column="QBOARD_CONTENT" 	property="qboardContent"/>
+		<result column="USER_ID" 			property="userId"/>
+		<result column="QBOARD_CREATE_DATE" property="qboardCreateDate"/>
+	
+	</resultMap>
+
+
+	<!-- 문의 입력 -->
+	<insert id="insertQboard">
+		INSERT INTO QBOARD
+			(QBOARD_NUM
+			, QBOARD_TITLE
+			, QBOARD_CONTENT
+			, USER_ID
+			, Q_SECRET
+			)
+		VALUES (
+			QBOARD_NUM_SEQ.NEXTVAL
+			, #{qboardTitle}
+			, #{qboardContent}
+			, #{userId}
+			, #{qsecret}
+			)
+	</insert>
+
+	<select id="selectQboardList" resultMap="qboard">
+		SELECT ROW_NUM
+			, QBOARD_NUM
+		    , QBOARD_TITLE
+		    , USER_ID
+		    , QBOARD_CREATE_DATE
+		    , Q_SECRET
+		FROM 
+		(
+		    SELECT ROWNUM AS ROW_NUM
+		    	, QBOARD_NUM
+		        , QBOARD_TITLE
+		        , USER_ID
+		        , QBOARD_CREATE_DATE    
+		        , Q_SECRET
+		    FROM
+		    (
+		        SELECT QBOARD_NUM
+					, QBOARD_TITLE
+					, USER_ID
+					, QBOARD_CREATE_DATE
+					, Q_SECRET
+				FROM QBOARD		<!-- boarVO.getSearchKeyword -->
+				<!-- _parameter : 빈값을 채우기 위해 들어오는 데이터 -->
+				<!-- !=null은 처음 list화면에 들어올때 null값으로 들어온다
+						처음화면에 모든 값이 출력되는 것 -->
+				<if test="searchValue != null and !searchValue.equals('')">
+				WHERE UPPER(${searchKeyword}) LIKE UPPER('%'||#{searchValue}||'%')
+				</if>
+				ORDER BY QBOARD_NUM DESC
+		    )
+		)
+		WHERE ROW_NUM &gt;= #{startNum} AND ROW_NUM &lt;= #{endNum}
+	</select>
+		
+	<!-- 게시글 개수 조회 -->
+	<select id="selectQboardCnt" resultType="int">
+		SELECT COUNT(QBOARD_NUM)
+		FROM QBOARD
+	</select>
+		
+	<!-- 문의 상세보기 -->
+	<select id="selectDetailQboard" resultMap="qboard">
+		SELECT QBOARD_NUM
+			, QBOARD_TITLE
+			, QBOARD_CONTENT
+			, USER_ID
+			, QBOARD_CREATE_DATE
+			, Q_SECRET
+		FROM QBOARD
+		WHERE QBOARD_NUM = #{boardNum}
+	</select>
+
+	<!-- 문의 수정 -->
+	<update id="updateQboard">
+		UPDATE QBOARD
+			SET 
+			QBOARD_TITLE = #{qboardTitle}
+			, USER_ID = #{userId}
+			, QBOARD_CONTENT = #{qboardContent}
+		WHERE QBOARD_NUM = #{qboardNum}
+	</update>
+
+	<!-- 문의 삭제 -->
+	<delete id="deleteQboard">
+		DELETE QBOARD
+		WHERE  QBOARD_NUM = #{qboardNum}
+	</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+</mapper>

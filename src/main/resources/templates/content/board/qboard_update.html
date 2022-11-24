@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/base_layout}">
+
+
+
+<div layout:fragment="content">
+
+<div class="col-8">
+
+<form action="/board/qboardUpdate" method="post">
+	<input type="hidden" name="qboardNum" th:value="${qboard.qboardNum}">
+	<div class="input-group" style="margin: 15px auto 0;">
+		<span class="input-group-text">글번호</span> 
+		<span class="input-group-text" th:text="${qboard.qboardNum}"></span>
+	</div>
+	
+	<div class="input-group" style="margin: 15px auto 0;">
+		<span class="input-group-text">제목</span> 	
+		<input type="text" class="form-control" 
+		name="qboardTitle" th:value="${qboard.qboardTitle}">
+	</div>
+	
+	<div class="input-group" style="margin: 15px auto 0;">
+		<span class="input-group-text">작성자</span> 	
+		<input type="text" class="form-control" 
+		name="userId" th:value="${qboard.userId}">
+	</div>
+	
+	<div class="input-group" style="margin: 15px auto 0;">
+		<span class="input-group-text">내용</span> 	
+		<textarea rows="6" cols="140" name="qboardContent">[[${qboard.qboardContent}]]
+		</textarea>
+	</div>
+	
+	<div class="input-group" style="margin: 15px auto 0;">
+		<span class="input-group-text">등록일</span> 
+		<span class="input-group-text" th:text="${qboard.qboardCreateDate}"></span>
+	</div>
+	
+	
+	
+	 
+<input class="btn btn-primary" style="margin: 10px;" type="submit" value="수정하기">
+</form>
+
+</div>
+
+
+
+</div>
+</html>	

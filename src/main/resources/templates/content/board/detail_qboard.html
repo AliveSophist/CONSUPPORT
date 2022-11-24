@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layout/base_layout}">
+
+<div layout:fragment="content">
+	<div class="mb-3" style="margin: 10px;">
+	
+	<table border="1" class="table table-hover">
+		<thead class="table-danger">
+			<tr>
+				<td>문의번호</td> 
+				<td>제목</td> 
+				<td>작성자</td> 
+				<td>작성일</td> 
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${qboard.qboardNum}"></td> 
+				<td th:text="${qboard.qboardTitle}"></td> 
+				<td th:text="${qboard.userId}"></td> 
+				<td th:text="${qboard.qboardCreateDate}"></td> 
+			</tr>
+			<tr>
+				<td colspan="2">내용</td> 
+				<td colspan="2" rowspan="3" th:text="${qboard.qboardContent}"></td> 
+			</tr>
+		</tbody>
+	</table>
+
+	<input type="button" class="btn btn-primary mb-3" value="수정" 
+	th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
+
+	<input type="button" class="btn btn-primary mb-3" value="삭제" 
+	th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
+
+	</div>
+
+
+
+</div>
+</html>	

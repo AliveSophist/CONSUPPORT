@@ -131,10 +131,10 @@ public class SecurityConfig {
 					.antMatchers("/member/**").hasAnyRole("MEMBER", "ARTIST", "OWNER", "ADMIN")
 
 					// ARTIST권한 전용 페이지
-					.antMatchers("/artist/**").hasAnyRole("ARTIST")
+					.antMatchers("/artist/**").hasAnyRole("ARTIST", "ADMIN")
 
 					// OWNER권한 전용 페이지
-					.antMatchers("/owner/**").hasAnyRole("OWNER")
+					.antMatchers("/owner/**").hasAnyRole("OWNER", "ADMIN")
 
 					// ADMIN권한 전용 페이지
 					.antMatchers("/admin/**").hasAnyRole("ADMIN")

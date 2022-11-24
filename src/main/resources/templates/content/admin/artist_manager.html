@@ -42,14 +42,16 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 					<div class="col-12">
 					
-						<table class="table text-center table-hover align-middle">
+						<table class="table text-center table-hover align-middle"
+						style="margin: auto; width: 60%; background:rgba(0,0,0,0.2);">
 						
-							<thead>
+							<thead class="aaa">
 								<tr>
 									<th class="col-1" scope="col">No.</th>
-									<th class="col-6" colspan="2" scope="col">아티스트 정보</th>
+									<th class="col-2" scope="col">아티스트 정보</th>
+									<th class="col-3" scope="col">아티스트 정보</th>
 									<th class="col-3" scope="col">유저이름</th>
-									<th class="col-2" scope="col">아티스트?</th>
+									<th class="col-3" scope="col">아티스트?</th>
 								</tr>
 							</thead>
 							
@@ -57,7 +59,7 @@
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 
-							<tbody>
+							<tbody class="bbb">
 								<tr th:each="artist, iterState : ${artistList}">
 									<th scope="row" th:text="${iterState.count}"></th>
 									<td>

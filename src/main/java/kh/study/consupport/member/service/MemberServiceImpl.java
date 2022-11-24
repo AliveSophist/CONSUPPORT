@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.insert("memberMapper.insertArtistImgs", artistVO);
 	}
 	
-	// 재 정보 수정 화면 이동
+	// 내 정보 수정 화면 이동
 	@Override
 	public UsersVO editInfoForm(String userId) {
 		return sqlSession.selectOne("memberMapper.editInfoForm", userId);
