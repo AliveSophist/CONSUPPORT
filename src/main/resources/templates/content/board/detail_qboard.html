@@ -30,12 +30,20 @@
 		</tbody>
 	</table>
 
-	<input type="button" class="btn btn-primary mb-3" value="수정" 
-	th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
-
-	<input type="button" class="btn btn-primary mb-3" value="삭제" 
-	th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
-
+		<div class="d-flex" style="float: right;">
+			<th:block th:if="${qboard.userId == #authentication.name}">
+				<input type="button" class="btn btn-primary mb-3" value="수정" 
+				th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
+			</th:block>
+			
+			<th:block th:if="${qboard.userId == #authentication.name or
+								#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+				<input type="button" class="btn btn-primary mb-3" value="삭제" 
+				th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
+			</th:block>
+		</div>
+		
+		
 	</div>
 
 

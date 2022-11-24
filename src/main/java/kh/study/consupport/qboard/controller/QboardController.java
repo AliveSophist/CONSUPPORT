@@ -92,7 +92,7 @@ public class QboardController {
 	public String detailBoard(
 			@RequestParam(required = false
 						, defaultValue = "10"
-						, name = "num") int qboardNum, Model model) {
+						, name = "num") int qboardNum, Model model, Authentication authentication) {
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
 		return "content/board/detail_qboard";
 	}
