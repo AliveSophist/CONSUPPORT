@@ -176,49 +176,27 @@
 <!-- ================================================================================================================================================================================================================================================================================ -->
 	<!-- 따라지 -->
 	<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
-	<ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
-		<li class="mfb-component__wrap">
-			<a href="#" class="mfb-component__button--main">
-				<i class="mfb-component__main-icon--resting ion-plus-round"></i> 
-				<i class="mfb-component__main-icon--active ion-close-round"></i>
-			</a>
-			<ul class="mfb-component__list">
-			
-				<li>
-					<a href="/logout" data-mfb-label="로그아웃" class="mfb-component__button--child" > 
-						<i class="mfb-component__child-icon ion-social-github"></i>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-mfb-label="오너신청" class="mfb-component__button--child"> 
-						<i class="mfb-component__child-icon ion-social-octocat"> </i>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-mfb-label="아티스트 신청" class="mfb-component__button--child"> 
-						<i class="mfb-component__child-icon ion-social-twitter"> </i>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-mfb-label="1:1 상담" class="mfb-component__button--child"> 
-						<i class="mfb-component__child-icon ion-social-twitter"> </i>
-					</a>
-				</li>
+		<input type="checkbox" id="menuicon">
+		<ul>
+			<li>
+				<label for="menuicon">
+					<span></span><span></span><span></span>
+				</label>
+			</li>
+		</ul>
+		
+		<div class="sidebar">
+			<div class="accordion mt-2 text-center" id="accordionExample">
+				<h3>콘시</h3>
 				
-			</ul>
-		</li>
-	</ul>
+			</div>
+		</div>
 	</th:block>
+
+
 <!-- ================================================================================================================================================================================================================================================================================ -->
 
 
-
-
-
-
-
-
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 	<!-- Login a태그 클릭 시 실행되는 Modal -->
@@ -457,8 +435,7 @@
 			showModal(modalLogin);
 	</script>
 	
-	<link href="/css/common/mfb.css" rel="stylesheet">
-	<script type="text/javascript" src="/js/common/mfb.js"></script>
+	<link href="/css/common/top.css" rel="stylesheet">
 
 </th:block>
 </html>

@@ -1,5 +1,5 @@
 // 테스트시 SALES 코드 중첩이 발생하기 쉬우므로 덧붙이는 문자열 필요..
-let append_id = 'au91_';
+let append_id = 'aaaa_';
 
 var refreshByForce = false;
 window.addEventListener('beforeunload', (event) => {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.SalesVO;
 import kh.study.consupport.common.vo.TicketVO;
@@ -112,5 +113,18 @@ public class CommonServiceImpl implements CommonService{
 	public ConcertVO selectConcertDetail(ConcertVO concertVO) {
 		return sqlSession.selectOne("commonMapper.selectConcertDetail", concertVO);
 	}
+	
+	// 아티스트 상세 조회
+	@Override
+	public ArtistVO selectArtistDetail(ArtistVO artistVO) {
+		return sqlSession.selectOne("adminMapper.selectArtistDetail", artistVO);
+	}
+	
+	
+	
+	
+	
+	
+	
 }
 
