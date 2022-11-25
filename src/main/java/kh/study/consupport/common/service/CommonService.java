@@ -3,6 +3,7 @@ package kh.study.consupport.common.service;
 import java.util.List;
 
 import kh.study.consupport.common.vo.ConcertPriceVO;
+import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.common.vo.ConcertVO;
 import kh.study.consupport.common.vo.SalesVO;
 import kh.study.consupport.common.vo.TicketVO;
@@ -30,4 +31,32 @@ public interface CommonService {
 	
 	// 콘서트 상세 조회
 	ConcertVO selectConcertDetail(ConcertVO concertVO);
+	
+	// 아티스트 상세 조회
+	ArtistVO selectArtistDetail(ArtistVO artistVO); 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

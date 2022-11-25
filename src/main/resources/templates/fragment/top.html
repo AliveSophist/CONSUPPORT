@@ -177,49 +177,50 @@
 <!-- ================================================================================================================================================================================================================================================================================ -->
 	<!-- 따라지 -->
 	<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
-	<ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
-		<li class="mfb-component__wrap">
-			<a href="#" class="mfb-component__button--main">
-				<i class="mfb-component__main-icon--resting ion-plus-round"></i> 
-				<i class="mfb-component__main-icon--active ion-close-round"></i>
-			</a>
-			<ul class="mfb-component__list">
+		<input type="checkbox" id="menuicon">
+		<ul>
+			<li>
+				<label for="menuicon">
+					<span></span><span></span><span></span>
+				</label>
+			</li>
+		</ul>
+		
+		<div class="sidebar">
+			<div class="text-center" style="background-color: black;">
+				<h3>CONSI</h3>
+				<hr>
+			</div>
+			<div>
 			
-				<li>
-					<a href="/logout" data-mfb-label="로그아웃" class="mfb-component__button--child" > 
-						<i class="mfb-component__child-icon ion-social-github"></i>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-mfb-label="오너신청" class="mfb-component__button--child"> 
-						<i class="mfb-component__child-icon ion-social-octocat"> </i>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-mfb-label="아티스트 신청" class="mfb-component__button--child"> 
-						<i class="mfb-component__child-icon ion-social-twitter"> </i>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-mfb-label="1:1 상담" class="mfb-component__button--child"> 
-						<i class="mfb-component__child-icon ion-social-twitter"> </i>
-					</a>
-				</li>
+				<div class="accordion" id="accordionExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="headingThree">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse" data-bs-target="#collapseThree"
+								aria-expanded="false" aria-controls="collapseThree">
+								Accordion Item #3</button>
+						</h2>
+						<div id="collapseThree" class="accordion-collapse collapse"
+							aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<strong>aaaaa</strong>
+								<code>aaaa</code>
+								
+							</div>
+						</div>
+					</div>
+				</div>
 				
-			</ul>
-		</li>
-	</ul>
+			</div>
+				
+		</div>
 	</th:block>
+
+
 <!-- ================================================================================================================================================================================================================================================================================ -->
 
 
-
-
-
-
-
-
-<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
 	<!-- Login a태그 클릭 시 실행되는 Modal -->
@@ -458,8 +459,7 @@
 			showModal(modalLogin);
 	</script>
 	
-	<link href="/css/common/mfb.css" rel="stylesheet">
-	<script type="text/javascript" src="/js/common/mfb.js"></script>
+	<link href="/css/common/top.css" rel="stylesheet">
 
 </th:block>
 </html>

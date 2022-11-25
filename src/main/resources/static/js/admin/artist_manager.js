@@ -60,15 +60,12 @@ function artistDetailModal(userId){
 		str +=					`<h3 class="card-title">${artist.artistName}</h3>`;
 		str +=					`<hr>`;
 		str +=					`<p class="card-text">${artist.artistDetail}</p>`;
-		str +=					`<p class="card-text">`;
-		str +=						`<small class="text-muted">Last updated 3 mins ago</small>`;
-		str +=					`</p>`;
 		str +=				`</div>`;
 		str +=			`</div>`;
 		str +=		`</div>`;
 		str +=		`<hr>`;
 		
-		str +=`<ul class="gallery zoom text-center">`
+		str +=`<ul class="gallery zoom">`
 		
 			for(const artistImg of artist.artistImgList){
 				if(artistImg.artistImgIsMain == 'N'){

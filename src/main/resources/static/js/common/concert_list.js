@@ -29,6 +29,7 @@ function concertDetailModal(concertCode){
 		str +=			`</div>`;		
 		str +=			`<div class="col-md-8">`;		
 		str +=				`<div class="card-body">`;			
+		str +=				`<small>연령제한 | (${concert.concertRated})</small>`
 		str +=					`<h2 class="card-title">${concert.concertName}</h2>`;
 		str +=					`<hr>`;
 		
@@ -82,9 +83,9 @@ function concertDetailModal(concertCode){
 		for (const concertImg of concert.concertImgList) {
 			if (concertImg.concertImgIsMain == 'N') {
 		str += 		`<div class="row g-0">`;
-		str += 			`<div class="col-md-4" style="margin-top:15px; margin: auto; width: 1000px; height: 1000px;" >`;
+		str += 			`<div class="col-md-4 text-center" style="margin-top:15px; margin: auto; width: 1000px; height: 100%;" >`;
 		str += 				`<img src="/img/concert/${concertImg.concertImgNameAttached}" class="img-fluid rounded-start" 
-									style="width: 100%; height: 100%; object-fit: contain;">`;
+									style="width: 80%; height: 80%; object-fit: contain;">`;
 		str += 			`</div>`;
 		str += 		`</div>`;
 			}
@@ -111,10 +112,12 @@ function concertDetailModal(concertCode){
 } 
 
 
+//=======================================================================================================================================================================================
 
 // 아티스트 상세보기 모달 띄우기
 function artistDetailModal(userId){
-	alert(userId)
+	showModal(document.querySelector('#artistDetailModal'));
+	
 	
 	//ajax start
 	$.ajax({
@@ -153,7 +156,7 @@ function artistDetailModal(userId){
 		str +=		`</div>`;
 		str +=		`<hr>`;
 		
-		str +=`<ul class="gallery zoom text-center">`
+		str +=`<ul class="gallery zoom">`
 		
 			for(const artistImg of artist.artistImgList){
 				if(artistImg.artistImgIsMain == 'N'){

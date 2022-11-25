@@ -61,8 +61,9 @@
 									<td>
 										<a data-bs-toggle="modal" data-bs-target="#concertDetailModal" style="cursor: pointer">
 											<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
-												 
-												 style="height: 120px; width: 100px">
+												 th:onclick="concertDetailModal([[${concert.concertCode}]])"
+												 style="height: 120px; width: 100px"
+												 >
 										</a>
 									</td>
 									<td>[[${concert.concertName}]]</td>
@@ -107,34 +108,7 @@
 
 
 
-	<!-- 아티스트 상세 보기 모달 -->
-	<div class="modal fade" id="concertDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
-				<div class="modal-header" >
-					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-				
-				<div id="concertDetailAjax" class="modal-body">
-					<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%;">
-
-						<!-- 아티스트 상세 보기 영역 -->
-
-					</div>
-				</div>
-				
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-				
-				
-					<div class="modal-footer">
-						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					</div>
-			</div>
-		</div>
-	</div>
+	
 
 
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -148,18 +122,6 @@
 					<h3>콘서트 허가 목록</h3>
 				</div>
 
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-				<!-- <div class="col-12 mb-3">
-						<div class="col-9">
-							<input type="text" class="form-control" placeholder="-- Input CategoryName --">
-						</div>
-						<div class="col-3">
-							<button type="submit" class="btn btn-dark">
-							몰라
-							</button>
-						</div>
-					</div> -->
 
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 				<div class="col-12">
@@ -188,7 +150,9 @@
 									data-bs-target="#concertDetailModal" style="cursor: pointer">
 										<img
 										th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
-										style="height: 120px; width: 100px">
+										style="height: 120px; width: 100px"
+										th:onclick="concertDetailModal([[${concert.concertCode}]])"
+										>
 								</a></td>
 								<td>[[${concert.concertName}]]</td>
 								<td>[[${concert.artist.artistName}]]</td>
@@ -215,8 +179,36 @@
 		</div>
 	</div>
 
+	<!-- 콘서트 상세 보기 모달 -->
+	<div class="modal fade" id="concertDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="concertDetailAjax" class="modal-body">
+					<div id="cardForConcertDetail" class="card mb-3" style="max-width: 100%;">
 
+						<!-- 콘서트 상세 보기 영역 -->
 
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 
 
@@ -233,7 +225,7 @@
 
 
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-
+	<script type="text/javascript" src="/js/admin/concert_manager.js"></script>
 	</div>
 	
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------->

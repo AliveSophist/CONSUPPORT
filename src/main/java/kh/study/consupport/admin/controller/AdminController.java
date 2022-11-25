@@ -97,7 +97,15 @@ public class AdminController {
 		return "redirect:/admin/concertManager";
 	}
 	
+//==================================================================================================================
 	
+	// 콘서트 상세 조회
+	@ResponseBody
+	@PostMapping("selectConcertDetail")
+	public ConcertVO selectConcertDetail(ConcertVO concertVO) {
+		return commonService.selectConcertDetail(concertVO);
+	}
+
 	
 	
 	

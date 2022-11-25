@@ -22,6 +22,9 @@
 			<link href="/bootstrap/css/stackedCards2.css" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 			<link href="/bootstrap/css/highlight.css" rel="stylesheet">
+			
+			<!-- 아티스트 상세보기 모달에 적용되는 css -->
+			<link href="/css/common/concert_list.css" rel="stylesheet"/>
 		</th:block>
 		
 
@@ -91,14 +94,13 @@
 							
 								<img class="card-img-top"
 									th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
-									
 									style="width: 350px; height: 430px;">
 									
 								<div class="card-body" style="padding-top: 20px; padding-bottom: 20px;">
 									<!-- <div class="badge bg-primary bg-gradient rounded-pill mt-1">NEW</div> -->
 									
 									<div>
-										<small>([[${concert.artist.artistName}]])</small>
+										<small>([[${concert.artist.artistName}]]) | [[${concert.concertRated}]]</small>
 									</div>
 									
 									<a class="text-decoration-none link-dark stretched-link" href="#!">
@@ -106,6 +108,9 @@
 											[[${concert.concertName}]]
 										</h5>
 									</a>
+									<div class="text-center">
+										<small>공연시작 | [[${concert.concertDate}]]</small>
+									</div>
 									 
 								</div>
 								
@@ -220,7 +225,7 @@
 
 	<!-- 아티스트 상세 보기 모달 -->
 	<div class="modal fade" id="artistDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header" >
 					<h1 class="modal-title fs-5" id="exampleModalLabel">ARTIST</h1>
