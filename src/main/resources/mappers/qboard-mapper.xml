@@ -92,6 +92,7 @@
 			QBOARD_TITLE = #{qboardTitle}
 			, USER_ID = #{userId}
 			, QBOARD_CONTENT = #{qboardContent}
+			, Q_SECRET = #{qsecret}
 		WHERE QBOARD_NUM = #{qboardNum}
 	</update>
 
