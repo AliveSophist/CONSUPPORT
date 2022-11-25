@@ -1,22 +1,90 @@
 <!DOCTYPE html>
-<html	xmlns:th="http://www.thymeleaf.org"
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		layout:decorate="~{layout/member_layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}">
 
 <div layout:fragment="content">
 
+
+	<th:block>
+		<!-- datepicker 관련..! -->
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+		<!-- <link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css"> -->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+		<style>
+			.datepicker {
+				padding-top: 0.75rem;
+				padding-bottom: 0.75rem;
+				text-align: center;
+			}
+			
+			.datepicker-dropdown {
+				top: 0;
+				left: 0
+			}
+			
+			.datepicker table tr td.today, span.focused {
+				border-radius: 50% !important
+			}
+			
+			thead tr:nth-child(2) {
+				background-color: #FF80AB !important
+			}
+			
+			thead tr:nth-child(3) th {
+				color: #FF80AB !important;
+				padding-top: 20px;
+				padding-bottom: 10px
+			}
+			
+			.dow, .old-day, .day, .new-day {
+				width: 40px !important;
+				height: 40px !important;
+				border-radius: 0px !important
+			}
+			
+			.old-day:hover, .day:hover, .new-day:hover, .month:hover, .year:hover,
+				.decade:hover, .century:hover {
+				border-radius: 50% !important;
+				background-color: #eee
+			}
+			
+			.active {
+				border-radius: 50% !important;
+				background-image: linear-gradient(#90CAF9, #64B5F6) !important;
+				color: #fff !important
+			}
+			
+			.prev, .next, .datepicker-switch {
+				border-radius: 0 !important;
+				padding: 20px 10px !important;
+				text-transform: uppercase;
+				font-size: 20px;
+				color: #fff;
+				opacity: 0.8
+			}
+			
+			.prev:hover, .next:hover, .datepicker-switch:hover {
+				background-color: inherit !important;
+				opacity: 1
+			}
+		</style>
+	</th:block>
+	
+	
+	
 	<div class="container-fluid row">
 	
 	
-		<th:block>
-			<!-- datepicker -->
-			<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-			<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-			<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-			<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-		</th:block>
-		
 <!-- ============================================================================================================================================================================================================= -->
 		
 		<div class="col-2">
@@ -35,7 +103,7 @@
 		
 			<div style="margin: 15px auto 0;">
 				<h2>콘서트 등록</h2>
-				<hr>
+				<hr class="myHr">
 			</div>
 	
 			<form id="regConcert">
@@ -68,14 +136,29 @@
 				<div class="row myFormRow">
 					<div class="col-6" >
 						<label for="" class="form-label">콘서트 홀 및 콘서트 날짜</label>
-						<input type="button" class="form-control btn btn-primary" id="btnHallInfo" data-bs-toggle="modal" data-bs-target="#exampleModal" value="콘서트홀 목록">
+						<input type="button" class="form-control btn btn-primary text-center" id="btnHallInfo" data-bs-toggle="modal" data-bs-target="#exampleModal" value="콘서트홀 목록" style="--bs-btn-padding-x: 0;">
 					</div>
 					
 					<div class="col-6" >
 						<label for="" class="form-label">티켓팅 일</label>
-						<input class="form-control pull-right" type="text" name="concertTicketingDate" id="datepicker">
+						
+<!-- 						<div class="form-group row"> -->
+							<input type="text" id="dp1" class="form-control datepicker" placeholder="Select Date" name="concertTicketingDate" readonly>
+<!-- 						</div> -->
+						
+						
+						
+						<!-- <div class="input-datepicker">
+							<input class="form-control" type="text" name="concertTicketingDate" readonly>
+						</div> -->
 					</div>
+					
+					
 				</div>
+					
+					
+					
+					
 
 	
 				<div class="row myFormRow">
@@ -182,9 +265,6 @@
 				</div>
 			</div>
 	
-	
-	
-			<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 			<script type="text/javascript" th:src="@{/js/artist/reg_concert.js}"></script>
 		
 		</div>
@@ -200,7 +280,6 @@
 	
 	</div>
 	
-
 
 </div>
 </html>

@@ -101,18 +101,23 @@ public class CommonController {
 	}
 	
 	// 현재 접속 아이디가 모임?
+//	@GetMapping("test")
+//	public String authenticationTest(HttpServletRequest request, HttpSession session, Authentication authentication, Model model) {
+//		
+//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
+//		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
+//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//
+//		
+//		return "redirect:/concertList";
+//	}
+	//test
 	@GetMapping("test")
-	public String authenticationTest(HttpServletRequest request, HttpSession session, Authentication authentication, Model model) {
-		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
-		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	public String test() {
 
-		
-		return "redirect:/concertList";
+		return "/content/common/test";
 	}
-	
 
 	
 //==================================================================================================================================================================================================================
@@ -166,13 +171,7 @@ public class CommonController {
 	
 	
 	
-	//test
-	@ResponseBody
-	@PostMapping("hello")
-	public String hello(SalesVO sales, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {
-
-		return "hello";
-	}
+	
 	@ResponseBody
 	@PostMapping("getSalesCode")
 	public String insertSalesAndGetBuyCode(SalesVO sales, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {

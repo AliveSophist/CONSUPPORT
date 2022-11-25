@@ -2,13 +2,19 @@
 	margin-top: 2rem;
 }
 
+.myHr{
+	margin-top: 1.5rem;
+	margin-bottom: -0.5rem;
+}
+
+/* 
 .aaa{
 	font-size: 1.5rem;
 }
 
 .bbb{
 	font-size: 1.2rem;
-}
+} */
 
 .transparentDivL{
 	border-radius: 2% 0 0 2%;
@@ -25,7 +31,6 @@
 .artistMainImgOfRegArtistForm {
 	width: 100%;
 }
-
 
 
 

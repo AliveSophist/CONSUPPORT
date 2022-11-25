@@ -157,16 +157,13 @@ function changeBtnHallInfoValue(){
 	document.querySelector('#btnHallInfo').classList.add('btn-outline-light');
 	
 	
-//	$('#datepicker').daterangepicker({
-//		"singleDatePicker": true,
-//		"endDate": $('#selectHallDateCode option:checked').text().substring(0, $('#selectHallDateCode option:checked').text().indexOf(' ')),
-//		"opens": "center",
-//		locale: {
-//			format: 'YYYY-MM-DD'
-//		}
-//	}, function(start, end, label) {
-//		console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-//	});
+	$('.datepicker').datepicker({
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		startDate: '0d',
+		endDate: $('#selectHallDateCode option:checked').text().substring(0, $('#selectHallDateCode option:checked').text().indexOf(' ')),
+		autoclose: true
+	});
 }
 
 
@@ -175,22 +172,6 @@ function changeBtnHallInfoValue(){
 
 
 
-
-
-$(document).ready(function() {
-
-
-	$('#datepicker').daterangepicker({
-		"startDate": "2022-11-18",
-		"endDate": "2022-11-24",
-		"opens": "center",
-		locale: {
-			format: 'YYYY-MM-DD'
-		}
-	}, function(start, end, label) {
-		console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-	});
-	
 	
 //	$('#datepicker').daterangepicker({
 //		"singleDatePicker": true,
@@ -226,5 +207,3 @@ $(document).ready(function() {
 //		toggleActive: true,	//이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
 //		weekStart: 0,//달력 시작 요일 선택하는 것 기본값은 0인 일요일 
 //		language: "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-//	});
-});
