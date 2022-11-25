@@ -10,6 +10,7 @@
 		<result column="QBOARD_CONTENT" 	property="qboardContent"/>
 		<result column="USER_ID" 			property="userId"/>
 		<result column="QBOARD_CREATE_DATE" property="qboardCreateDate"/>
+		<result column="Q_SECRET" 			property="qsecret"/>
 	
 	</resultMap>
 

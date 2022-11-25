@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,8 +93,18 @@ public class QboardController {
 	public String detailBoard(
 			@RequestParam(required = false
 						, defaultValue = "10"
-						, name = "num") int qboardNum, Model model) {
+						, name = "num") int qboardNum, Model model
+						, Authentication authentication) {
+		
+		QboardVO qboard = new QboardVO();
+		qboard = qboardService.selectDetailQboard(qboardNum);
+		
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
+
+//		if(qboard.getQsecret() eq '1') {
+//			
+//		}
+
 		return "content/board/detail_qboard";
 	}
 	
@@ -102,7 +113,9 @@ public class QboardController {
 	public String boardUpdate(@RequestParam(required = false
 								, defaultValue = "10"
 								, name = "num") int qboardNum, Model model) {
+		
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
+		
 		return "content/board/qboard_update";
 	}
 	
