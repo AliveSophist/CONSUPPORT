@@ -1,5 +1,7 @@
 package kh.study.consupport.qboard.controller;
 
+import java.security.Principal;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,6 +77,10 @@ public class QboardController {
 	//문의사항 등록
 	@PostMapping("/regQboard")
 	public String regQboard(QboardVO qboard) {
+		
+		if(qboard.getQsecret() == null)
+			qboard.setQsecret("F");
+		
 		qboardService.insertQboard(qboard);
 		return "content/board/regQboard_result";
 	}
@@ -98,12 +104,9 @@ public class QboardController {
 		
 		QboardVO qboard = new QboardVO();
 		qboard = qboardService.selectDetailQboard(qboardNum);
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
 		
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
-
-//		if(qboard.getQsecret() eq '1') {
-//			
-//		}
 
 		return "content/board/detail_qboard";
 	}

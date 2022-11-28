@@ -5,8 +5,14 @@
 		layout:decorate="~{layout/base_layout}">
 
 
+<p th:text="${#authentication.name}"></p>
+<p th:text="${#authentication.authenticated}"></p>
 
 <div layout:fragment="content">
+
+
+
+<input id="authorities" type="hidden" th:value="${#authentication.authorities}">
 	<div align="center">
 		<div class="col-6" style="margin: 10px;">
 			<form action="/board/qboardList" method="post">
@@ -44,7 +50,14 @@
 			<th:block th:unless="${#lists.size(qboardList) == 0}">
 				<tr th:each="qboard : ${qboardList}">
 					<td th:text="${qboard.qboardNum}"></td>
-					<td> <a th:href="@{/board/detailQboard(num = ${qboard.qboardNum})}" th:text="${qboard.qboardTitle}"></a> </td>
+					<td> 
+						<th:block th:if="${qboard.qsecret eq 'T'}">
+							<a href="" th:text="${qboard.qboardTitle}" th:onclick="goDetail([[${qboard}]], [[${#authentication.name}]]);"></a>
+						</th:block> 
+						<th:block th:if="${qboard.qsecret eq 'F'}">
+							<a th:href="@{/board/detailQboard(num=${qboard.qboardNum})}" th:text="${qboard.qboardTitle}"></a>
+						</th:block> 
+					</td>
 					<td th:text="${qboard.userId}"></td>
 					<td th:text="${qboard.qboardCreateDate}"></td>
 				</tr>
@@ -68,6 +81,8 @@
 	<input type="button" class="btn btn-primary" value="문의작성" 
 	style="margin: 10px;" onclick="location.href='/board/regQboard';">
 	</div>
+	
+	<script type="text/javascript" th:src="@{/js/board/qBoardList.js}"></script>
 	
 </div>
 

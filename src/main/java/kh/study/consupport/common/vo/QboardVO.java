@@ -20,7 +20,7 @@ public class QboardVO extends PageVO{
 	private String qboardContent;
 	private String userId;
 	private String qboardCreateDate;
-	private String qsecret;
+	private String qsecret;		// 'T', 'F'
 	
 	
 }
