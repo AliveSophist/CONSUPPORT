@@ -7,10 +7,173 @@
 
 
 <div layout:fragment="content" style="margin: 30px auto 0;">
-	<div style="text-align : center;">
-		<span th:text="${#authentication.name}"></span> 님의 페이지 입니다.
-	</div>
 
+	<div class="row">
+		<div class="col-2">　<!-- 건드리지 마 --></div>
+<!-- ============================================================================================================================================================ -->
+		
+		
+		<div class="col-8">
+			<h3>MY PAGE</h3>
+			<hr>
+			
+			<div class="accordion" id="accordionExample" >
+				<div class="accordion-item" th:each="salesInfo : ${salesInfoList}">
+					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+
+
+						
+						<button class="accordion-button collapsed align-middle mb-2" type="button"
+								data-bs-toggle="collapse" 
+								th:data-bs-target="|#panelsStayOpen-collapseOne${salesInfoStat.count}|" 
+								aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
+								style="font-size: 1.5rem;"
+								>
+								
+								<div class="row" style="width:100%; margin-left: 1.5rem;">
+									
+									<div class="col-2">
+											<img th:src="|@{/img/concert/}${salesInfo.concert.concertImgList[0].concertImgNameAttached}|"
+												 th:onclick=""
+												 style="height: 160px; width: 130px">
+									</div>
+									
+									<div class="col-9 " style="margin-left: -20px; padding-top: 2rem;">	
+										<span style="font-weight: bold; font-size: 1.5rem">
+											[ [[${salesInfo.salesDate}]] ]<br>
+										</span>
+										
+										<span style="font-weight: bold; font-size: 1.5rem">
+											[[${salesInfo.salesAmount}]]
+										</span>매의 티켓을
+										
+										<span style="font-weight: bold; font-size: 1.5rem">
+											[[${salesInfo.salesTotalPrice}]] 
+										</span>원에 구매하였습니다.<br>
+										
+										<span style="color: aqua;"><br>
+											( [[${salesInfo.isExpired}]] )
+										</span>
+									</div>
+									
+								</div>
+								
+								
+								
+								<!-- <div class="row" style="margin-left: 2rem;">
+						
+						 		</div> -->
+								
+								
+								
+						</button>
+						
+						
+						
+						
+					</h2>
+					<div th:id="|panelsStayOpen-collapseOne${salesInfoStat.count}|" class="accordion-collapse collapse"
+						 aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+						<div class="accordion-body mb-2">
+							
+							
+							
+							<table class="table text-center table-hover align-middle" 
+							  	   style=" background:rgba(0,0,0,0.2);">
+						
+						
+							<thead>
+								<tr>
+									<th class="col-1" scope="col">No.</th>
+									<th class="col-2" scope="col">공연 이름</th>
+									<th class="col-2" scope="col">좌석 번호</th>
+									<th class="col-2" scope="col">가격</th>
+								</tr>
+							</thead>
+							
+							
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+							<tbody th:each="salesInfoDetail, iterState: ${salesInfo.salesDetailList}">
+								<tr>
+									<th scope="row" th:text="${iterState.count}"></th>
+									<td>
+										<a data-bs-toggle="modal" data-bs-target="#concertDetailModal" style="cursor: pointer"
+										   th:onclick="concertDetailModal([[${salesInfo.concertCode}]])">
+											[[${salesInfo.concert.concertName}]]
+										</a>
+									</td>
+									<td>[[${salesInfoDetail.seatCode}]]</td>
+									<td>₩[[${salesInfoDetail.concertPrice}]]</td>
+									
+									
+									
+									
+									
+									
+								</tr>
+							</tbody>
+						</table>
+							
+							
+							
+							
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+<!-- ============================================================================================================================================================ -->
+		<div class="col-2">　<!-- 건드리지 마 --></div>
+	</div>
+	
+	
+	
+<!-- ============================================================================================================================================================ -->
+	<!-- 콘서트 상세 보기 모달 -->
+	<div class="modal fade" id="concertDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="concertDetailAjax" class="modal-body">
+					<div id="cardForConcertDetail" class="card mb-3" style="max-width: 100%;">
+
+						<!-- 콘서트 상세 보기 영역 -->
+
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="/js/member/my_page.js"></script>
 
 
 </div>

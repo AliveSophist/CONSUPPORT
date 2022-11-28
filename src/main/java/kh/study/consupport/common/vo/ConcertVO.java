@@ -35,6 +35,8 @@ public class ConcertVO {
 	private String hallCode;
 	private String userId;
 	private String hallDateCode;
+	
+	private String isSpecial;		// SPECIAL
 
 	
 	

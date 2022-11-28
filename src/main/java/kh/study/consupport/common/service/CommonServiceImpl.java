@@ -130,6 +130,12 @@ public class CommonServiceImpl implements CommonService{
 	public ArtistVO selectArtistDetail(ArtistVO artistVO) {
 		return sqlSession.selectOne("adminMapper.selectArtistDetail", artistVO);
 	}
+
+	// 메인화면 스페셜콘서트 목록 조회
+	@Override
+	public List<String> selectSpecialConcertListOfCommon() {
+		return sqlSession.selectList("commonMapper.selectSpecialConcertListOfCommon");
+	}
 	
 	
 	

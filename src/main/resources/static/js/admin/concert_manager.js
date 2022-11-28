@@ -1,7 +1,5 @@
 // 콘서트 상세보기 모달 띄우기
 function concertDetailModal(concertCode){
-	alert(concertCode)
-	showModal(document.querySelector('#concertDetailModal'));
 	
 	//ajax start
 	$.ajax({
@@ -99,4 +97,98 @@ function concertDetailModal(concertCode){
 		}
 	});
 	//ajax end
+	
 } 
+
+//=======================================================================================================================================================================================
+
+// 스페셜콘서트 등록 & 폐기
+function setIsSpecial(concertCode, chkTag){
+	
+	
+	
+	if(chkTag.checked){
+		
+		if(confirm('스페셜콘서트로 변경 하시겠습니까?')){
+			//ajax start
+			$.ajax({
+				url: '/admin/insertSpecialConcert', //요청경로
+				type: 'post',
+				data: {'concertCode' : concertCode}, //필요한 데이터
+				success: function(result) {
+					alert('변경이 완료 되었습니다.');
+				},
+				error: function() {
+					alert('실패');
+				}
+			});
+			//ajax end
+		}
+		else{
+			event.preventDefault();
+		}
+		
+	}
+	else{
+		
+		if(confirm('일반콘서트로 변경 하시겠습니까?')){
+			//ajax start
+			$.ajax({
+				url: '/admin/deleteSpecialConcert', //요청경로
+				type: 'post',
+				data: {'concertCode' : concertCode}, //필요한 데이터
+				success: function(result) {
+					alert('변경이 완료 되었습니다.');
+				},
+				error: function() {
+					alert('실패');
+				}
+			});
+			//ajax end
+		}
+		else{
+			event.preventDefault();
+		}
+			
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

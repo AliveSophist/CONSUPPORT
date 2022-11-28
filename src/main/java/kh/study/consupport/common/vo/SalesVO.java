@@ -32,7 +32,19 @@ public class SalesVO {
 	private String userId;
 	private String hallCode;
 	private String concertCode;
+	
+	private String concertDate;
+	
+	
+	private String isExpired;
+	
+//----------------------------------------------
 
+	private ConcertVO concert;
+	private List<SalesDetailVO> salesDetailList;
+
+//----------------------------------------------
+	
 	private List<String> ticketCodeList;
 	
 	private HallSeatVO hallseat;

@@ -4,6 +4,7 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="memberMapper">
 	
+	<!-- 유저 -->
 	<resultMap type="kh.study.consupport.common.vo.UsersVO" id="user">
 		<id column="USER_ID"		 		property="userId"/>
 		<result column="USER_PW" 			property="userPw"/>
@@ -18,6 +19,35 @@
 		<result column="USER_STATUS" 		property="userStatus"/>
 	</resultMap>
 
+	<!-- 세일즈 -->
+	<resultMap type="kh.study.consupport.common.vo.SalesVO" id="sales">
+		<id column="SALES_CODE" 				property="salesCode"/>
+		<result column="SALES_AMOUNT" 			property="salesAmount"/>
+		<result column="SALES_TOTAL_PRICE"		property="salesTotalPrice"/>
+		<result column="SALES_DATE" 			property="salesDate"/>
+		<result column="SALES_STATUS" 			property="salesStatus"/>
+		<result column="USER_ID" 				property="userId"/>
+		<result column="HALL_CODE" 				property="hallCode"/>
+		
+		<result column="CONCERT_CODE" 			property="concertCode"/>
+		
+		<result column="IS_EXPIRED" 			property="isExpired"/>
+		
+		<association property="concert" 		resultMap="commonMapper.concert"/>
+		<collection property="salesDetailList"	resultMap="salesDetail"/>
+	</resultMap>
+
+	<!-- 세일즈 디테일 -->
+	<resultMap type="kh.study.consupport.common.vo.SalesDetailVO" id="salesDetail">
+		<id column="SALES_DETAIL_CODE" 		property="salesDetailCode"/>
+		<result column="SALES_CODE" 		property="salesCode"/>
+		<result column="TICKET_CODE" 		property="ticketCode"/>
+		
+		<result column="SEAT_CODE" 			property="seatCode"/>
+		<result column="CONCERT_PRICE" 		property="concertPrice"/>
+	</resultMap>
+	
+	
 	<!-- <resultMap type="kh.study.consupport.common.vo.ArtistImgVO" id="artistImg">
 		<id column="ARTIST_IMG_CODE"		 		property="artistImgCode"/>
 		<result column="ARTIST_IMG_NAME_ORIGIN" 	property="artistImgNameOrigin"/>
@@ -80,7 +110,7 @@
 		WHERE USER_ID = #{userId}
 	</select>
 
-<!-- ============================= -->
+<!--========================================================================================================================================================================================-->
 	
 	<select id="enterEditInfoForm" resultMap="user">
 		SELECT USER_ID
@@ -88,22 +118,63 @@
 		WHERE USER_PW = #{userPw} 
 	</select>
 
+<!--========================================================================================================================================================================================-->
 
-<!-- ============================= -->
-	
-	<!-- <update id="editInfo">
-		UPDATE USERS
-			SET
-			USER_NAME = #{userName}
-			, USER_ADDR = #{userAddr}
-			, USER_ADDR_DETAIL = #{userAddrDetail}
-			, USER_TELL = #{userTell}
-		WHERE USER_ID = #{userId}
-	</update> -->
-	
-	
-	
-	
+	<!-- 마이페이지 구매 정보 조회 -->
+	<select id="selectMypageSalesInfo" resultMap="sales">
+	SELECT SEAT_CODE
+		, CONCERT_NAME
+		
+		, CASE
+			WHEN SEAT_CODE LIKE 'R_%' THEN
+				(SELECT CONCERT_PRICE_R 
+				 FROM CONCERT_PRICE 
+				 WHERE CONCERT_CODE = SALES.CONCERT_CODE)
+			WHEN SEAT_CODE LIKE 'S_%' THEN
+				(SELECT CONCERT_PRICE_S 
+				 FROM CONCERT_PRICE 
+				 WHERE CONCERT_CODE = SALES.CONCERT_CODE)
+			ELSE
+				(SELECT CONCERT_PRICE_A 
+				 FROM CONCERT_PRICE 
+				 WHERE CONCERT_CODE = SALES.CONCERT_CODE)
+			
+			END AS CONCERT_PRICE
+			
+		, SALES_DETAIL_CODE
+		, SALES.SALES_CODE
+
+		, SALES.CONCERT_CODE
+		, SALES.HALL_CODE
+		, HALL_RENT_DATE AS CONCERT_DATE
+		
+		, CASE
+			WHEN HALL_RENT_DATE >= (SELECT SYSDATE FROM DUAL) THEN
+                TO_CHAR('공연까지 ' || TRUNC(HALL_RENT_DATE - (SELECT SYSDATE FROM DUAL)) || '일 남았습니다.')
+            ELSE
+                '만료된 공연입니다.'
+            END AS IS_EXPIRED
+		 
+		, CONI.CONCERT_IMG_NAME_ATTACHED
+        , CONCERT_IMG_IS_MAIN
+		
+		, SALES.SALES_CODE
+		, SALES_TOTAL_PRICE
+		, SALES_AMOUNT
+		, SALES_DATE
+		, SALES.USER_ID
+	FROM SALES, SALES_DETAIL, CONCERT, CONCERT_PRICE, HALL_DATE, TICKET, CONCERT_IMG CONI
+	WHERE SALES.SALES_CODE = SALES_DETAIL.SALES_CODE
+	AND SALES.CONCERT_CODE = CONCERT_PRICE.CONCERT_CODE
+	AND SALES.CONCERT_CODE = CONCERT.CONCERT_CODE
+	AND CONCERT.HALL_DATE_CODE = HALL_DATE.HALL_DATE_CODE
+	AND SALES_DETAIL.TICKET_CODE = TICKET.TICKET_CODE
+	AND CONI.CONCERT_CODE = CONCERT.CONCERT_CODE
+	AND SALES_STATUS = 'PAID'
+	AND SALES.USER_ID = #{userId}
+	AND CONCERT_IMG_IS_MAIN = 'Y'
+	ORDER BY SALES.SALES_CODE DESC
+	</select>
 	
 	
 	
