@@ -59,6 +59,27 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 //==================================================================================================================
+
+	// 스페셜콘서트 조회
+	@Override
+	public List<String> selectSpecialConcert() {
+		return sqlSession.selectList("adminMapper.selectSpecialConcert");
+	}
+	
+	// 스페셜콘서트 등록
+	@Override
+	public void insertSpecialConcert(ConcertVO concertVO) {
+		sqlSession.insert("adminMapper.insertSpecialConcert", concertVO);
+	}
+	
+	// 스페셜콘서트 폐기
+	@Override
+	public void deleteSpecialConcert(ConcertVO concertVO) {
+		sqlSession.insert("adminMapper.deleteSpecialConcert", concertVO);
+	}
+	
+	
+//==================================================================================================================
 	
 	// 콘서트 허가
 	@Override
@@ -150,6 +171,9 @@ public class AdminServiceImpl implements AdminService{
 		
 		sqlSession.insert("adminMapper.insertTickets", ticket);
 	}
+
+	
+	
 
 	
 	

@@ -60,8 +60,9 @@ public class MemberController {
 	// 마이 페이지
 	@GetMapping("/myPage")
 	public String myPage(Authentication authentication, Model model) {
-		//model.addAttribute("userId", ((UserDetails)authentication.getPrincipal()).getUsername());
-		
+		UsersVO users = new UsersVO();
+		users.setUserId(  ((UserDetails)authentication.getPrincipal()).getUsername()  );
+		model.addAttribute("salesInfoList", memberService.selectMypageSalesInfo(users));
 		return "content/member/my_page";
 	}
 	
@@ -72,6 +73,13 @@ public class MemberController {
 	public String regArtistForm() {
 		return "content/member/reg_artist_form";
 	}
+	
+//===========================================================================================================================================================================================================================
+	
+	
+	
+	
+	
 	
 //===========================================================================================================================================================================================================================
 	

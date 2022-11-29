@@ -84,9 +84,41 @@ public class AdminController {
 	@GetMapping("/concertManager")
 	public String concertManager(Model model) {
 		model.addAttribute("concertListDEACT", adminService.selectConcertListDEACT());
-		model.addAttribute("concertListACT", adminService.selectConcertListACT());
+		
+		List<ConcertVO> concertListACT = adminService.selectConcertListACT();
+		List<String> specialConcerList = adminService.selectSpecialConcert();
+		
+		// 스페셜콘서트 조회. 개빡세네;
+		for(ConcertVO concertVO : concertListACT) {
+			for(String concertCode : specialConcerList) {
+				if(concertVO.getConcertCode().equals(concertCode)) {
+					concertVO.setIsSpecial("SPECIAL");
+				}
+			}
+		}
+		
+		model.addAttribute("concertListACT", concertListACT);
+		
 		return "content/admin/concert_manager";
 	}
+	
+//==================================================================================================================
+	
+	// 스페셜콘서트 등록
+	@ResponseBody
+	@PostMapping("/insertSpecialConcert")
+	public void insertSpecialConcert(ConcertVO concertVO) {
+		adminService.insertSpecialConcert(concertVO);
+	}
+	
+	// 스페셜콘서트 폐기
+	@ResponseBody
+	@PostMapping("/deleteSpecialConcert")
+	public void deleteSpecialConcert(ConcertVO concertVO) {
+		adminService.deleteSpecialConcert(concertVO);
+	}
+	
+	
 	
 //==================================================================================================================
 	

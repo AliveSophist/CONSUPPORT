@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.consupport.common.vo.ArtistVO;
+import kh.study.consupport.common.vo.SalesVO;
 import kh.study.consupport.common.vo.UsersVO;
 
 @Service("memberService")
@@ -31,7 +32,57 @@ public class MemberServiceImpl implements MemberService{
 	public UsersVO editInfoForm(String userId) {
 		return sqlSession.selectOne("memberMapper.editInfoForm", userId);
 	}
+	
+//===============================================================================================================================================================
 
+	// 마이페이지 구매정보 조회
+	@Override
+	public List<SalesVO> selectMypageSalesInfo(UsersVO users) {
+		return sqlSession.selectList("memberMapper.selectMypageSalesInfo", users);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

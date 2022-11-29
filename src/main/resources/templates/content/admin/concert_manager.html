@@ -9,7 +9,9 @@
 <!----------------------------------------------------------- ---------------------------------------------------------------------------------------------->
 
 	<div layout:fragment="content" class="col text-start">
-	
+		<th:block>
+			<link href="/css/admin/concert_manager.css" rel="stylesheet"/>
+		</th:block>
 	
 	
 	
@@ -136,6 +138,7 @@
 								<th class="col-2" scope="col">콘서트 이름</th>
 								<th class="col-2" scope="col">아티스트 이름</th>
 								<th class="col-2" scope="col">연령등급</th>
+								<th class="col-2" scope="col">밀어주까?</th>
 							</tr>
 						</thead>
 
@@ -157,6 +160,18 @@
 								<td>[[${concert.concertName}]]</td>
 								<td>[[${concert.artist.artistName}]]</td>
 								<td>[[${concert.concertRated}]]</td>
+								<td>
+									<div class="center">
+										<label class="check"> 
+											<input type="checkbox" 
+												   th:checked="${concert.isSpecial eq 'SPECIAL'}"
+												   th:onclick="setIsSpecial([[${concert.concertCode}]], this)"
+												   >
+											<span class="icon"></span> 
+											<span class="text"></span>
+										</label>
+									</div>
+								</td>
 
 
 

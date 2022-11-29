@@ -19,4 +19,10 @@ public class SalesDetailVO {
 	
 	private String salesCode;
 	private String ticketCode;
+	
+	// 좌석 정보
+	private String seatCode;	
+
+	// 티켓 가격
+	private int concertPrice;
 }

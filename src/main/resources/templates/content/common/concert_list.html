@@ -34,27 +34,14 @@
 			<div style="background-color: rgba(192,192,192, 0.3); margin: 60px 0px 10% 10%; padding-top: 60px; width:80%; border-radius: 2%">
 				<div class="container-fixed stacked-cards stacked-cards-slide " style="margin-top: -60px; height:590px;">
 					<ul>
-						<li style="border-radius: 5%">
-							<img src="/img/MIYAVI.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
-						<li style="border-radius: 5%">
-							<img src="/img/10cm.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
-						<li style="border-radius: 5%">
-							<img src="/img/아이유.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
-						<li style="border-radius: 5%">
-							<img src="/img/p마루사마.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
-						<li style="border-radius: 5%">
-							<img src="/img/손오빠.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
-						<li style="border-radius: 5%">
-							<img src="/img/다프트펑크.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
-						<li style="border-radius: 5%">
-							<img src="/img/이디오테잎.jpg" alt="Stacked Cards" style="border-radius: 5%">
-						</li>
+						<th:block th:each=" concert: ${specialList}">
+						
+							<li style="border-radius: 5%">
+								<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
+									 alt="Stacked Cards" style="border-radius: 5%">
+							</li>
+						
+						</th:block>
 					</ul>
 				</div>
 			</div>

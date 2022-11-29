@@ -38,8 +38,14 @@ public interface AdminService {
 	
 //==================================================================================================================
 	
+	// 스페셜콘서트 조회
+	List<String> selectSpecialConcert();
 	
+	// 스페셜콘서트 등록
+	void insertSpecialConcert(ConcertVO concertVO);
 	
+	// 스페셜콘서트 폐기
+	void deleteSpecialConcert(ConcertVO concertVO);
 	
 	
 	

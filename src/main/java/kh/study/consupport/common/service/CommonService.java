@@ -35,6 +35,9 @@ public interface CommonService {
 	// 아티스트 상세 조회
 	ArtistVO selectArtistDetail(ArtistVO artistVO); 
 	
+	// 메인화면 스페셜콘서트 목록 조회
+	List<String> selectSpecialConcertListOfCommon();
+	
 	
 	
 	

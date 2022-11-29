@@ -193,6 +193,29 @@
 
 <!--========================================================================================================================================================================================-->
 
+	<!-- 스페셜콘서트 조회 -->
+	<select id="selectSpecialConcert" resultType="String">
+		SELECT CONCERT_CODE
+		FROM SPECIAL_CONCERT
+		ORDER BY REG_DATE
+	</select>
+
+	<!-- 스페셜콘서트 등록 -->
+	<insert id="insertSpecialConcert">
+		INSERT INTO SPECIAL_CONCERT (
+			CONCERT_CODE
+		) VALUES (
+			#{concertCode}
+		)
+	</insert>
+	
+	<!-- 스페셜콘서트 폐기 -->
+	<delete id="deleteSpecialConcert">
+		DELETE SPECIAL_CONCERT
+		WHERE CONCERT_CODE = #{concertCode}
+	</delete>
+<!--========================================================================================================================================================================================-->
+
 	<!-- 콘서트 허가 후 티켓들 생성 -->
 	<insert id="insertTickets">
 		INSERT INTO TICKET(
