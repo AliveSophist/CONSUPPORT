@@ -114,8 +114,8 @@ public class CommonServiceImpl implements CommonService{
 
 	// 메인화면 콘서트 목록 조회
 	@Override
-	public List<ConcertVO> selectConcertListOfCommon() {
-		return sqlSession.selectList("commonMapper.selectConcertListOfCommon");
+	public List<ConcertVO> selectConcertListOfCommon(int pageNum) {
+		return sqlSession.selectList("commonMapper.selectConcertListOfCommon", pageNum);
 	}
 	
 	
