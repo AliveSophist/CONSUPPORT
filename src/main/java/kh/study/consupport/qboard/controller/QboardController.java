@@ -1,9 +1,12 @@
 package kh.study.consupport.qboard.controller;
 
+import java.security.Principal;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.AboardVO;
 import kh.study.consupport.common.vo.QboardVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -74,6 +78,10 @@ public class QboardController {
 	//문의사항 등록
 	@PostMapping("/regQboard")
 	public String regQboard(QboardVO qboard) {
+		
+		if(qboard.getQsecret() == null)
+			qboard.setQsecret("F");
+		
 		qboardService.insertQboard(qboard);
 		return "content/board/regQboard_result";
 	}
@@ -92,8 +100,13 @@ public class QboardController {
 	public String detailBoard(
 			@RequestParam(required = false
 						, defaultValue = "10"
-						, name = "num") int qboardNum, Model model) {
+						, name = "num") int qboardNum, Model model
+						, Authentication authentication) {
+		
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
+		model.addAttribute("aboardList", qboardService.selectAboardList(qboardNum));
 		return "content/board/detail_qboard";
 	}
 	
@@ -102,7 +115,9 @@ public class QboardController {
 	public String boardUpdate(@RequestParam(required = false
 								, defaultValue = "10"
 								, name = "num") int qboardNum, Model model) {
+		
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
+		
 		return "content/board/qboard_update";
 	}
 	
@@ -122,6 +137,12 @@ public class QboardController {
 		return "redirect:/board/qboardList";
 	}
 	
+	//문의 답글 작성
+	@PostMapping("/aboardInsert")
+	public String insertAboard(AboardVO aboard) {
+		qboardService.insertAboard(aboard);
+		return "redirect:/board/detailQboard?num=" + aboard.getQboardNum();
+	}
 	
 	
 }

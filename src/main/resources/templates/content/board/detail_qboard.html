@@ -5,40 +5,124 @@
 		layout:decorate="~{layout/base_layout}">
 
 <div layout:fragment="content">
-	<div class="mb-3" style="margin: 10px;">
+
+<th:block>
+<style>
+table > thead > tr, table > thead > tr > td{
+	border: 1px solid ;
+}	
+table > tbody > tr, table > tbody > tr > td{
+	border: 1px solid ;
+}	
+
+</style>
+</th:block>
+
+
+<div align="center">
+	<div class="col-8" align="center">
 	
-	<table border="1" class="table table-hover">
-		<thead class="table-danger">
-			<tr>
-				<td>문의번호</td> 
-				<td>제목</td> 
-				<td>작성자</td> 
-				<td>작성일</td> 
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td th:text="${qboard.qboardNum}"></td> 
-				<td th:text="${qboard.qboardTitle}"></td> 
-				<td th:text="${qboard.userId}"></td> 
-				<td th:text="${qboard.qboardCreateDate}"></td> 
-			</tr>
-			<tr>
-				<td colspan="2">내용</td> 
-				<td colspan="2" rowspan="3" th:text="${qboard.qboardContent}"></td> 
-			</tr>
-		</tbody>
-	</table>
+		<div style="margin: 20px 0px;">
+		
+			<table border="1" class="table table-hover" style="margin-bottom: 20px;">
+				<colgroup>
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+					</colgroup>
+				<thead class="table-danger">
+					<tr class="text-center">
+						<td>문의번호</td> 
+						<td>제목</td> 
+						<td>작성자</td> 
+						<td>작성일</td> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="text-center">
+						<td th:text="${qboard.qboardNum}"></td> 
+						<td th:text="${qboard.qboardTitle}"></td> 
+						<td th:text="${qboard.userId}"></td> 
+						<td th:text="${qboard.qboardCreateDate}"></td> 
+					</tr>
+					<tr>
+						<td class="align-middle text-center"  colspan="1">문의</td> 
+						<td colspan="3" rowspan="3" th:text="${qboard.qboardContent}" style="height: 200px;"></td> 
+					</tr>
+				</tbody>
+			</table>
+	
+			<div class="d-flex" style="float: right; margin: 0px 5px;">
+				<th:block th:if="${qboard.userId == #authentication.name}">
+					<input type="button" class="btn btn-primary mb-5" value="수정" style="margin: 5px;"
+					th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
+				</th:block>
+				
+				<th:block th:if="${qboard.userId == #authentication.name or
+									#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+					<input type="button" class="btn btn-primary mb-5" value="삭제" style="margin: 5px;"
+					th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
+				</th:block>
+			</div>
+		</div>
+		
+		
+ 		
+			
+		<div style="margin: 20px 0px;" th:if="${qboard.userId == #authentication.name or
+									#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+			
+			<table border="1" class="table table-hover col-6">
+				<colgroup>
+						<col width="15%">
+						<col width="15%">
+						<col width="70%">
+				</colgroup>
+				<thead class="table-success">
+					<tr class="text-center">
+						<td>작성자</td> 
+						<td>작성일</td> 
+						<td>응답</td> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="aboard : ${aboardList}" class="text-center">
+						<td th:text="${aboard.userId}"></td>
+						<td th:text="${aboard.answerDate}"></td>
+						<td th:text="${aboard.answer}"></td>
+					</tr>
+				
+				
+				</tbody>
+			</table> 
+			
+			<hr>
+			<form action="/board/aboardInsert" method="post">
+				<input type="hidden" id="qboardNum" name="qboardNum" th:value="${qboard.qboardNum}">
+				<div class="input-group mb-2" style="margin: 15px auto 0;">
+					<input type="hidden" id="userId" name="userId" th:value="${#authentication.name}">
+					<span class="input-group-text">작성자</span> 
+					<span class="input-group-text" th:text="${#authentication.name}"></span>
+			    </div>
+				<p>
+					<textarea class="form-control" id="answer" rows="5" cols="30" name="answer"></textarea>
+				</p>
+				<p>
+					<button class="btn btn-primary" type="submit">응답</button>
+				</p>
+				
+			</form>
+			
+		</div>
 
-	<input type="button" class="btn btn-primary mb-3" value="수정" 
-	th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
 
-	<input type="button" class="btn btn-primary mb-3" value="삭제" 
-	th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
+
+
+
 
 	</div>
-
-
-
+</div>	
+	<script type="text/javascript" th:src="@{/js/board/detail_qboard.js}"></script>
 </div>
 </html>	

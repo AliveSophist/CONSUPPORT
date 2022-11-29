@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.study.consupport.common.vo.AboardVO;
 import kh.study.consupport.common.vo.QboardVO;
 
 @Service("qboardService")
@@ -48,6 +49,18 @@ public class QboardServiceImpl implements QboardService{
 	@Override
 	public void deleteQboard(int qboardNum) {
 		sqlSession.delete("qboardMapper.deleteQboard", qboardNum);
+	}
+
+	//문의 응답
+	@Override
+	public void insertAboard(AboardVO aboard) {
+		sqlSession.insert("qboardMapper.insertAboard", aboard);
+	}
+
+	//응답 조회
+	@Override
+	public List<AboardVO> selectAboardList(int qboardNum) {
+		return sqlSession.selectList("qboardMapper.selectAboard", qboardNum);
 	}
 
 	

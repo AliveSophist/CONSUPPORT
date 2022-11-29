@@ -31,7 +31,7 @@
 	
 	<div class="input-group" style="margin: 15px auto 0;">
 		<span class="input-group-text">내용</span> 	
-		<textarea rows="6" cols="140" name="qboardContent">[[${qboard.qboardContent}]]
+		<textarea rows="6" class="form-control" cols="140" name="qboardContent">[[${qboard.qboardContent}]]
 		</textarea>
 	</div>
 	
@@ -42,8 +42,20 @@
 	
 	
 	
-	 
-<input class="btn btn-primary" style="margin: 10px;" type="submit" value="수정하기">
+<div class="d-flex" style="float: right;">
+		<div class="form-check me-sm-2">
+			
+			<input class="form-check-input" type="checkbox"
+				th:checked="${qboard.qsecret eq 'T'}"
+			    name="qsecret" id="qsecret" value="T">
+			
+		    <label class="form-check-label" for="flexCheckChecked">
+		      비밀글
+		    </label>
+	  	 </div>	 
+		<input class="btn btn-primary" style="margin: 10px;" type="submit" value="수정하기">
+</div>
+
 </form>
 
 </div>

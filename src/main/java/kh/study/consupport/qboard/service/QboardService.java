@@ -2,6 +2,7 @@ package kh.study.consupport.qboard.service;
 
 import java.util.List;
 
+import kh.study.consupport.common.vo.AboardVO;
 import kh.study.consupport.common.vo.QboardVO;
 
 public interface QboardService {
@@ -24,5 +25,10 @@ public interface QboardService {
 	//문의 삭제
 	void deleteQboard(int qboardNum);
 	
+	//문의 응답
+	void insertAboard(AboardVO aboard);
+
+	//응답 조회
+	List<AboardVO> selectAboardList(int qboardNum);
 	
 }
