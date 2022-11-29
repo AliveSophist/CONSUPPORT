@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.vo.AboardVO;
 import kh.study.consupport.common.vo.QboardVO;
 import kh.study.consupport.member.service.MemberService;
 import kh.study.consupport.owner.service.OwnerService;
@@ -102,12 +103,10 @@ public class QboardController {
 						, name = "num") int qboardNum, Model model
 						, Authentication authentication) {
 		
-		QboardVO qboard = new QboardVO();
-		qboard = qboardService.selectDetailQboard(qboardNum);
 		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
 		
 		model.addAttribute("qboard", qboardService.selectDetailQboard(qboardNum));
-
+		model.addAttribute("aboardList", qboardService.selectAboardList(qboardNum));
 		return "content/board/detail_qboard";
 	}
 	
@@ -138,6 +137,12 @@ public class QboardController {
 		return "redirect:/board/qboardList";
 	}
 	
+	//문의 답글 작성
+	@PostMapping("/aboardInsert")
+	public String insertAboard(AboardVO aboard) {
+		qboardService.insertAboard(aboard);
+		return "redirect:/board/detailQboard?num=" + aboard.getQboardNum();
+	}
 	
 	
 }

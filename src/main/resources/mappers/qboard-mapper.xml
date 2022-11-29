@@ -13,7 +13,14 @@
 		<result column="Q_SECRET" 			property="qsecret"/>
 	
 	</resultMap>
-
+	
+	<resultMap type="kh.study.consupport.common.vo.AboardVO" id="aboard">
+		<result column="QBOARD_NUM" 			property="qboardNum"/>
+		<result column="ANSWER" 			property="answer"/>
+		<result column="USER_ID" 			property="userId"/>
+		<result column="ANSWER_DATE" 			property="answerDate"/>
+	</resultMap>
+	
 
 	<!-- 문의 입력 -->
 	<insert id="insertQboard">
@@ -102,9 +109,25 @@
 		WHERE  QBOARD_NUM = #{qboardNum}
 	</delete>
 
+	<insert id="insertAboard">
+		INSERT INTO ABOARD
+			(QBOARD_NUM
+			, ANSWER
+			, USER_ID
+			) VALUES (
+			#{qboardNum}
+			, #{answer}
+			, #{userId}
+			)
+	</insert>
 
-
-
+	<select id="selectAboard" resultMap="aboard">
+		SELECT ANSWER
+			,USER_ID
+			,ANSWER_DATE
+		FROM ABOARD
+		WHERE QBOARD_NUM = #{qboardNum}
+	</select>
 
 
 

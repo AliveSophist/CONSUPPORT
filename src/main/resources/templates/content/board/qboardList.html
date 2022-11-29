@@ -8,11 +8,12 @@
 <p th:text="${#authentication.name}"></p>
 <p th:text="${#authentication.authenticated}"></p>
 
+
 <div layout:fragment="content">
 
 
 
-<input id="authorities" type="hidden" th:value="${#authentication.authorities}">
+<input id="authorities" name="authorities" type="hidden" th:value="${#authentication.authorities}">
 	<div align="center">
 		<div class="col-6" style="margin: 10px;">
 			<form action="/board/qboardList" method="post">
@@ -52,7 +53,7 @@
 					<td th:text="${qboard.qboardNum}"></td>
 					<td> 
 						<th:block th:if="${qboard.qsecret eq 'T'}">
-							<a href="" th:text="${qboard.qboardTitle}" th:onclick="goDetail([[${qboard}]], [[${#authentication.name}]]);"></a>
+							<a href="#" th:text="${qboard.qboardTitle}" th:onclick="goDetail([[${qboard.userId}]], [[${qboard.qboardNum}]], [[${#authentication.name}]]);"></a>
 						</th:block> 
 						<th:block th:if="${qboard.qsecret eq 'F'}">
 							<a th:href="@{/board/detailQboard(num=${qboard.qboardNum})}" th:text="${qboard.qboardTitle}"></a>
