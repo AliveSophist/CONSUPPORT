@@ -67,44 +67,54 @@ function loadHallInfo() {
 
 			//상세정보 태그들.
 			str += `<div id="hallDetail" class="card mb-3" style="max-width: 100%; ">`
-			str += `	<div class="row g-0">`;
-			str += `		<div class="col-6">`;
+			str += `	<div class="row g-0 text-center">`;
+			str += `		<div class="col-5" style="margin-top:15px">`;
 			for (const hallImg of hallInfo.hallImgList) {
 				if (hallImg.hallImgIsMain == "Y") {
-					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}" width="100%;" height="100%;" class="">			`;
+					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}"
+									 style="width: 100%; height: 400px; object-fit: contain;"
+									 class="img-fluid rounded-start">			`;
 				}
 			}
 			str += `		</div>`;
-		str += `			<div class="col-6">`;
-			str += `				<div>무대정보</div>`;
-			str += `			<div>${hallInfo.hallName}</div>		`;
-			str +=					`<hr>`;
-			str += `				<div>대여료</div>`;
-			str += `			<div>${hallInfo.hallRentPrice}</div>		`;
-			str +=					`<hr>`;
-			str += `				<div>좌석 정보</div>`;
-			str += `			<div>${hallInfo.hallSeat.hallSeatRCnt}</div>		`;
-			str += `			<div>${hallInfo.hallSeat.hallSeatSCnt}</div>		`;
-			str += `			<div>${hallInfo.hallSeat.hallSeatACnt}</div>		`;
-			str +=					`<hr>`;
-			str += `				<div>소유주</div>`;
-			str += `			<div>${hallInfo.userId}</div>		`;
-			str +=					`<hr>`;
+		str += `			<div class="col-md-6" style="margin-top:20px">`;
+			str += `			<h2 class="card-title text-start">${hallInfo.hallName}</h2>		`;
+			str += `				<hr>`;
+			str +=				`<table class="table text-center"style="margin-top:-30px">`
+			str += `				<tr>`;
+			str += `					<td>대여료</td>`;
+			str += `					<td colspan='2'>좌석 정보</td>`;
+		str += `					</tr>`;
+			str += `				<tr>`;
+			str += `					<td>${hallInfo.hallRentPrice} ￦</td>		`;
+			str += `					<td>R석</td>		`;
+			str += `					<td>${hallInfo.hallSeat.hallSeatRCnt}석</td>		`;
+		str += `					</tr>`;
+			str += `				<tr>`;
+			str += `					<td>소유주</td>`;
+			str += `					<td>S석</td>		`;
+			str += `					<td>${hallInfo.hallSeat.hallSeatSCnt}석</td>		`;
+		str += `					</tr>`;
+			str += `				<tr>`;
+			str += `					<td>${hallInfo.userId} 님</td>		`;
+			str += `					<td>A석</td>		`;
+			str += `					<td>${hallInfo.hallSeat.hallSeatACnt}석</td>		`;
+		str += `					</tr>`;
+		str += `				</table>					`
+		str += `				<h4 class="card-title text-start">Hall 상세</h4>`;
+			str += `				<hr>					`
+			str += `			<div class="text-start">${hallInfo.hallDetail}</div>	`;
 		str += `			</div>`;
 			str += `	</div>`;
 			str +=					`<hr>`;
 			str += `	<div class="row mb-3">	`;
-		str += `				<div>Hall 상세</div>`;
-			str += `			<div>${hallInfo.hallDetail}</div>	`;
-			str += `	</div>`;
-			str +=					`<hr>`;
-			str += `	<div class="row mb-3">	`;
 			str += `		<div class="col-12">`;
-			str += `			<div class="col-3">이미지 영역</div>`;
-			str += `				<div class="col-12">`;
+			str += `				<div class="col-12 text-center">`;
 			for (const hallImg of hallInfo.hallImgList) {
 				if (hallImg.hallImgIsMain == "N") {
-					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}"  width="100%;" height="100%;">			`;
+					str += `		<img src="/img/hall/${hallImg.hallImgNameAttached}"  
+									class="img-fluid rounded-start"
+									style="width: 80%; height: 80%; object-fit: contain;">			`;
 				}
 			}
 			str += `				</div>`;
