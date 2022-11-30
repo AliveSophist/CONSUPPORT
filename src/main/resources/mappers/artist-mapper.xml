@@ -3,7 +3,8 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="artistMapper">
-
+	
+	<!-- 홀 검색 -->
 	<resultMap type="kh.study.consupport.common.vo.HallVO" id="hall">
 		<id property="hallCode" column="HALL_CODE"/>
 		<result property="hallName" column="HALL_NAME"/>
@@ -16,14 +17,16 @@
 		<collection property="hallImgList" resultMap="hallImg"/>
 		<collection property="hallSeat" resultMap="hallSeat"/>
 	</resultMap>
-
+	
+	<!-- 홀 날짜 -->
 	<resultMap type="kh.study.consupport.common.vo.HallDateVO" id="hallDate">
 		<id column="HALL_DATE_CODE" property="hallDateCode" />
 		<result column="HALL_RENT_DATE" property="hallRentDate" />
 		<result column="HALL_STATUS" property="hallStatus" />
 		<result column="HALL_CODE" property="hallCode" />
 	</resultMap>
-
+	
+	<!-- 홀 이미지 -->
 	<resultMap type="kh.study.consupport.common.vo.HallImgVO" id="hallImg">
 		<id column="HALL_IMG_CODE" property="hallImgCode" />
 		<result column="HALL_IMG_NAME_ORIGIN" property="hallImgNameOrigin" />
@@ -32,13 +35,15 @@
 		<result column="HALL_CODE" property="hallCode" />
 	</resultMap>
 
+	<!-- 홀 시트 -->
 	<resultMap id="hallSeat" type="kh.study.consupport.common.vo.HallSeatVO">
 		<result property="hallCode" column="HALL_CODE"/>
 		<result property="hallSeatRCnt" column="HALL_SEAT_R_CNT"/>
 		<result property="hallSeatSCnt" column="HALL_SEAT_S_CNT"/>
 		<result property="hallSeatACnt" column="HALL_SEAT_A_CNT"/>
 	</resultMap>
-
+	
+	<!-- 장르 -->
 	<resultMap id="genre" type="kh.study.consupport.common.vo.GenreVO">
 		<id property="genreCode" column="GENRE_CODE"/>
 		<result property="genreName" column="GENRE_NAME"/>

@@ -8,15 +8,30 @@
 
 <div layout:fragment="content" style="width: 80%; margin: 15px  0 auto;">
 
-	<form action="/board/regQboard" method="post">
+	<form name="regQboardForm">
 
-		<input type="hidden" th:value="${#authentication.name}" id="userId"
-			name="userId">
+		<input type="hidden" th:value="${#authentication.name}" 
+		 id="userId" name="userId">
 
-		<div class="mb-3">
-			<label for="qTItle" class="form-label">제목</label> <input type="text"
-				class="form-control" id="qboardTitle" name="qboardTitle">
-			<!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+		<div class="row mb-3">
+			
+			<label for="qTItle" class="form-label">문의 사항</label> 
+			
+			<div class="col-4">
+				<select class="form-select mb-1" id="selbox" name="selbox">
+					<option value="분실물 문의" selected>분실물 문의</option>
+					<option value="티켓 오류 문의">티켓 오류 문의</option>
+					<option value="공연 취소 문의">공연 취소 문의</option>
+					<option value="홀 계약 중단 문의">홀 계약 중단 문의</option>
+					<option value="1">직접입력</option>
+				</select>
+			</div>
+			<div class="col-8">
+				<input type="text" class="form-control mb-1" readonly
+				 value="분실물 문의" id="qboardTitle" name="qboardTitle"/>
+			</div>
+			
+			
 		</div>
 		<div class="mb-3">
 			<label for="exampleInputPassword1" class="form-label">문의 내용</label>
@@ -31,13 +46,13 @@
 					for="flexCheckChecked"> 비밀글 </label>
 			</div>
 
-			<button type="submit" class="btn btn-primary">등록</button>
+			<button type="button" onclick="regQboard()" class="btn btn-primary">등록</button>
 
 		</div>
 	</form>
 
-
-
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" th:src="@{/js/board/regQboard.js}"></script>
 
 </div>
 </html>	

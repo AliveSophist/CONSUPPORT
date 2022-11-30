@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,7 +78,7 @@ public class QboardController {
 	
 	//문의사항 등록
 	@PostMapping("/regQboard")
-	public String regQboard(QboardVO qboard) {
+	public String regQboard(@Validated QboardVO qboard) {
 		
 		if(qboard.getQsecret() == null)
 			qboard.setQsecret("F");
