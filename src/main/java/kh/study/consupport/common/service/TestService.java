@@ -12,8 +12,5 @@ import kh.study.consupport.common.vo.UsersVO;
 
 public interface TestService {
 	
-	List<ConcertVO> selectConcertListForCalendar();
-	
-	
 	
 }

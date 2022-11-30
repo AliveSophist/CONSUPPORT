@@ -42,7 +42,7 @@
 					
 				<div class="form-group">
 					<label for="userAddr" class="form-label mt-2">USER_ADDR</label>
-      				<input type="text" class="form-control" name="userAddr" th:value="${user.userAddr}" >
+      				<input type="text" class="form-control" name="userAddr" onclick="searchAddr();" th:value="${user.userAddr}" readonly>
 					<label for="userAddrDetail" class="form-label mt-2">USER_ADDR_DETAIL</label>
       				<input type="text" class="form-control" name="userAddrDetail" th:value="${user.userAddrDetail}" >
 				</div>

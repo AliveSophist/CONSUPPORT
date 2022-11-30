@@ -20,12 +20,20 @@ function regHall(){
 		success: function(result) {
 			
 			if(result>0){
-				alert('일단 성공?');
-				formTag.reset();
 				
-				
-				//href
-				//어디로 날릴까
+				Swal.fire('공연장 등록을 완료했습니다.', '', 'success').then((result) => {
+					
+					
+					//alert('공연장 등록을 완료했습니다.');
+					formTag.reset();
+					
+					
+					location.href = '/concertList';	
+					
+					
+					
+					
+				})
 			}
 			else
 				alert('작성 하지 않은 항목이 있습니다.');

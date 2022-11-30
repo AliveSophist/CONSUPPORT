@@ -540,6 +540,35 @@
 
 
 
+	
+	<!-- 캘린더 내용 조회 -->
+	<select id="selectConcertListForCalendar" resultMap="concert">
+		SELECT CON.CONCERT_CODE
+			, CONCERT_NAME
+			, CONCERT_IMG_CODE
+			, CONCERT_RATED
+			, (SELECT HALL_RENT_DATE
+                FROM HALL_DATE
+                WHERE HALL_DATE_CODE = CON.HALL_DATE_CODE) AS CONCERT_DATE
+			
+			, CONCERT_IMG_NAME_ATTACHED
+            , CONCERT_IMG_IS_MAIN
+            
+            , CON.USER_ID
+            , ART.ARTIST_NAME
+            , ARTIST_IMG_NAME_ATTACHED
+            , ARTIST_IMG_IS_MAIN
+            
+		FROM CONCERT CON, CONCERT_IMG CONI, ARTIST ART, ARTIST_IMG ARTI
+        WHERE CON.CONCERT_CODE = CONI.CONCERT_CODE
+        AND CON.USER_ID = ART.USER_ID
+        AND ART.USER_ID = ARTI.USER_ID
+        AND CONCERT_IMG_IS_MAIN = 'Y'
+        AND ARTIST_IMG_IS_MAIN = 'Y'
+        
+		AND CONCERT_STATUS = 'ACT'
+	</select>
+	
 
 	
 </mapper>

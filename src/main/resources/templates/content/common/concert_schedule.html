@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
+	layout:decorate="layout/base_layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<th:block layout:fragment="content">
+
+
+
+
+
+	<link href='/fullcalendar/main.css' rel='stylesheet' />
+	<script src='/fullcalendar/main.js'></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView : 'dayGridMonth'
+			});
+			calendar.render();
+		});
+	</script>
+    
+    
+    <div class="container-fluid row justify-content-center">
+
+		<div class="col-12" id="calendar"
+			style="margin-top: 30px; width: 70%;"></div>
+
+	</div>
+
+	<script src='/js/common/concert_schedule.js'></script>
+
+
+
+
+
+
+
+
+
+	
+	<link href="/css/common/concert_list.css" rel="stylesheet"/>
+	<script src='/js/common/concert_list.js'></script>
+
+
+
+	
+</th:block>
+</html>

@@ -46,6 +46,9 @@ public interface CommonService {
 	
 	
 	
+	List<ConcertVO> selectConcertListForCalendar();
+	
+	
 	
 	
 	

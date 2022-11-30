@@ -68,35 +68,7 @@ public class TestController {
 	
 	
 	
-	
-	@GetMapping("test")
-	public String nowTesting() {
-		return "/content/common/test";
-	}
-	
-	@ResponseBody
-	@PostMapping("selectConcertListForCalendar")
-	public Map<String, Object> selectConcertListForCalendar(){
-			
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			System.out.println("가긴가냐?");
-//			
-//			
-			
-			
-			Map<String, Object> result = new HashMap<>();
-			result.put("concertList", testService.selectConcertListForCalendar());
-			
-			
-			return result;
-		}
-	
+
 	
 	
 	

@@ -122,41 +122,27 @@ public class MemberController {
 				imgList.add(artistImg);
 			}
 			/************** 메인이미지와 서브이미지를 모두 imgList에 넣는다 **************/
-			
 
 			artist.setArtistImgList(imgList);
 			memberService.insertArtist(artist);
-			
-			
-			return "content/member/reg_artist_form";
+		
+			return "redirect:/concertList";
 		}
 	
 //===========================================================================================================================================================================================================================
-	// 내 정보 수정
 	
-	
-	
-	
-//===========================================================================================================================================================================================================================
-	
-	
-	
-	//내 정보 상세보기(일반회원)
+	// 내 정보 수정 페이지
 	@GetMapping("/editInfoForm")
 	public String editInfoForm(Model model, Authentication authentication, UsersVO users) {
 		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
 		model.addAttribute("user", memberService.editInfoForm(userId));
 		
-		
 		return "content/member/edit_info_form";
 	}
 	
-	
-//===========================================================================================================================================================================================================================
 	// 내 정보 수정
 	@PostMapping("/editInfo")
 	public String editInfo(UsersVO users) {
-		
 		
 		return "content/concertList";
 	}

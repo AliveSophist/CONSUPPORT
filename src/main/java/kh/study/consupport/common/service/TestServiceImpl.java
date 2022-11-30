@@ -21,12 +21,7 @@ public class TestServiceImpl implements TestService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	@Override
-	public List<ConcertVO> selectConcertListForCalendar() {
-		return sqlSession.selectList("testMapper.selectConcertListForCalendar");
-	}
 	
-
 
 	
 }

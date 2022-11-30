@@ -44,8 +44,6 @@
 	</ul>
 
 
-	<div></div>
-	
 
 	<div class="container">
 		<div class="screen"></div>
@@ -318,19 +316,18 @@
 		
 	</div>
 	
-	<br>
-	<br>
-	<br>
+	
+	
 	
 	<form id="reserveSeatForm" name="reserveSeatForm">
-		<input type="number" 	name="hallSeatRCnt" id="hallSeatRCnt" value="0" readonly>
+		<input type="hidden" 	name="hallSeatRCnt" id="hallSeatRCnt" value="0" readonly>
 		<br>
-		<input type="number" 	name="hallSeatSCnt" id="hallSeatSCnt" value="0" readonly>
+		<input type="hidden" 	name="hallSeatSCnt" id="hallSeatSCnt" value="0" readonly>
 		<br>
-		<input type="number" 	name="hallSeatACnt" id="hallSeatACnt" value="0" readonly>
+		<input type="hidden" 	name="hallSeatACnt" id="hallSeatACnt" value="0" readonly>
 		<br>
 		<br>
-		<input type="number" 	name="salesTotalPrice" id="salesTotalPrice" readonly>
+		<input type="hidden" 	name="salesTotalPrice" id="salesTotalPrice" readonly>
 		<br>
 		
 		<input type="hidden"	name="hallCode" th:value="${concert.hallCode}">
@@ -343,16 +340,21 @@
 	</form>
 	
 	
-	<div>
-		<h2>IAMPORT 결제 테스트</h2> 
-		<button type="button" onclick="tryPay(false);">지금 바로 결제</button>
-	</div>
+	
+	
+	
 	<br>
+	
+	<div>
+		<button type="button" onclick="tryPay(false);" style="height: 50px; font-size: 1.2rem;">지금 바로 결제</button>
+	</div>
+
+<!-- 
 	<div>
 		<h2>IAMPORT 환불 테스트</h2> 
 		<button type="button" onclick="tryPay(true);">환불test용 결제</button>
 		<button type="button" onclick="cancelPay();">지금 바로 환불</button>
-	</div>
+	</div> -->
 	
 	
 	<br>

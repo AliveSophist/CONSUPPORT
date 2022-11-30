@@ -300,15 +300,21 @@ public class CommonController {
 	
 	
 	
+	@GetMapping("concertSchedule")
+	public String loadConcertSchedule() {
+		
+		return "/content/common/concert_schedule";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@ResponseBody
+	@PostMapping("selectConcertListForCalendar")
+	public Map<String, Object> selectConcertListForCalendar(){
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("concertList", commonService.selectConcertListForCalendar());
+		
+		return result;
+	}
 	
 	
 	

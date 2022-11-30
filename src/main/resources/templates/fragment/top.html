@@ -179,10 +179,20 @@
 								
 									<a class="dropdown-item" href="/member/myPage">예매목록</a>
 									
-									<a class="dropdown-item" href="#">내 정보 수정</a>
+									<a class="dropdown-item" href="/member/editInfoForm">내 정보 수정</a>
 									
-									<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_OWNER')">
+									
+									
+									<th:block sec:authorize="hasAnyRole('ROLE_MEMBER')">
 										<a class="dropdown-item" href="/member/regArtistForm">아티스트 등록</a> 
+									</th:block>
+									
+									<th:block sec:authorize="hasAnyRole('ROLE_OWNER')">
+										<a class="dropdown-item" href="/owner/regHallForm">공연장 등록</a>
+									</th:block>
+									
+									<th:block sec:authorize="hasAnyRole('ROLE_ARTIST')">
+										<a class="dropdown-item" href="/artist/regConcertForm">공연 등록</a>
 									</th:block>
 									
 									<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST')">
@@ -191,9 +201,6 @@
 										
 									<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
 										<a class="dropdown-item" href="/admin/artistManager">아티스트 관리</a>
-									</th:block>
-										
-									<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
 										<a class="dropdown-item" href="/admin/concertManager">콘서트 관리</a>
 									</th:block><hr style="margin: 3px 0;">
 										
@@ -317,6 +324,118 @@
 
 
 	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================================================================================================================== -->
+
+	<!-- 콘서트 상세 보기 모달 -->
+	<div class="modal fade" id="concertDetailModalForReserve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="concertDetailForReserveAjax" class="modal-body">
+					<div id="cardForConcertDetailForReserve" class="card mb-3" style="max-width: 100%;">
+
+						<!-- 콘서트 상세 보기 영역 -->
+
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- ========================================================================================================================================================== -->
+
+
+	<!-- 아티스트 상세 보기 모달 -->
+	<div class="modal fade" id="artistDetailModalForReserve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">ARTIST</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="artistDetailForReserveAjax" class="modal-body">
+					<div id="cardForArtistDetailForReserve" class="card mb-3" style="max-width: 100%;">
+
+						<!-- 아티스트 상세 보기 영역 -->
+
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+<!-- ========================================================================================================================================================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
