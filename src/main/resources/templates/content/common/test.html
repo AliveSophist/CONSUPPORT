@@ -1,42 +1,37 @@
 <!DOCTYPE html>
-<html	lang="en" xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
-		layout:decorate="layout/base_layout"
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
+	layout:decorate="layout/base_layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
-	<th:block layout:fragment="content">
-	
-	
-	
-	
-<link href='/fullcalendar/main.css' rel='stylesheet' />
-    <script src='/fullcalendar/main.js'></script>
-    <script>
+<th:block layout:fragment="content">
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
 
-    </script>
+
+
+
+	<link href='/fullcalendar/main.css' rel='stylesheet' />
+	<script src='/fullcalendar/main.js'></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView : 'dayGridMonth'
+			});
+			calendar.render();
+		});
+	</script>
     
-    
-    test.
     
     <div class="container-fluid row justify-content-center">
-    
-    	<div class="col-12" id="calendar" style="margin-top: 20px; width:70%;"></div>
-    
-    </div>
-    	
 
-	<div style="height:20px;"></div>
+		<div class="col-12" id="calendar"
+			style="margin-top: 30px; width: 70%;"></div>
 
+	</div>
 
+	<script src='/js/common/test.js'></script>
 
 
 
@@ -49,5 +44,96 @@
 
 
 
-	</th:block>
+
+
+
+
+
+
+	
+<!-- ========================================================================================================================================================== -->
+
+	<!-- 콘서트 상세 보기 모달 -->
+	<div class="modal fade" id="concertDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="concertDetailAjax" class="modal-body">
+					<div id="cardForConcertDetail" class="card mb-3" style="max-width: 100%;">
+
+						<!-- 콘서트 상세 보기 영역 -->
+
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- ========================================================================================================================================================== -->
+
+
+	<!-- 아티스트 상세 보기 모달 -->
+	<div class="modal fade" id="artistDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<h1 class="modal-title fs-5" id="exampleModalLabel">ARTIST</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				<div id="artistDetailAjax" class="modal-body">
+					<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%;">
+
+						<!-- 아티스트 상세 보기 영역 -->
+
+					</div>
+				</div>
+				
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+				
+				
+					<div class="modal-footer">
+						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+<!-- ========================================================================================================================================================== -->
+	
+	<link href="/css/common/concert_list.css" rel="stylesheet"/>
+	<script src='/js/common/concert_list.js'></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+</th:block>
 </html>

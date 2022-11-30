@@ -268,10 +268,10 @@ public class CommonController {
 			// 환불이 완료되면 티켓 원상복구 + 해당 SALES_STATUS는 'REFUNDED'로 변경
 			commonService.refundAll(sales);
 			
-			return "와! 환불!?";
+			return "환불되었습니다.";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "ㅠㅠ";
+			return "환불오류..";
 		}
 	}
 	
