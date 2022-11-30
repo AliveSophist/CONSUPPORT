@@ -97,5 +97,78 @@ function concertDetailModal(concertCode){
 		}
 	});
 	//ajax end
-	
 } 
+
+//=======================================================================================================================================================================================
+
+function cancelPay(salesCode, cancel_request_amount) {
+
+	const resultConfirm = confirm('정말 환불 하시겠습니까?')
+	
+	if(resultConfirm){
+	
+	const merchant_uid = f_append_id + salesCode + b_append_id;
+	
+	//ajax start
+	$.ajax({
+		url: '/canclePay', //요청경로
+		type: 'post',
+		data: {	"salesCode" : salesCode
+				, "merchant_uid" : merchant_uid
+				, "cancel_request_amount" : cancel_request_amount
+				//, "cancel_request_amount" : 100
+		},
+		success: function(result) {
+			alert('환불이 완료 되었습니다.')
+			location.href = '/member/myPage';			
+		},
+		error: function() {
+			alert('ㅠㅠ');
+		}
+	});
+	//ajax end
+	}
+	
+	else{
+		alert('취소 되었습니다.')
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

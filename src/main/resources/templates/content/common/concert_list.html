@@ -36,9 +36,9 @@
 					<ul>
 						<th:block th:each=" concert: ${specialList}">
 						
-							<li style="border-radius: 5%; ">
+							<li style="border-radius: 5%;">
 								<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
-									 alt="Stacked Cards" style="border-radius: 5%; ">
+									 alt="Stacked Cards" style="border-radius: 5%;">
 							</li>
 						
 						</th:block>
@@ -76,13 +76,10 @@
 			
 				<div class="boxMom" style="margin-left: 10%; margin-right: 10%;">
 					
-					
-					
-					<!-- boxSon 계속 붙음 -->
-					
+					<!-- 콘서트 목록 -->
 					
 				</div>
-<hr id="importantFucker">
+<hr>
 <!-- ========================================================================================================================================================== -->
 <!-- 카드 테스트 /* */    -->
 
@@ -197,7 +194,11 @@
 <!-- ========================================================================================================================================================== -->
 
 
-
+		
+		<a onclick="window.scrollTo(0,0);"
+           style="display:scroll; position:fixed; bottom:30px; right:30px;"
+           target="quests">
+		<img alt="BackToTop" src="https://imgur.com/hB23NWs.png" /> </a>
 
 
 

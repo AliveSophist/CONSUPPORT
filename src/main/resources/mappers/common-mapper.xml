@@ -374,7 +374,7 @@
 		AND HALL_RENT_DATE >= (SELECT SYSDATE FROM DUAL)
 		AND CONCERT_STATUS = 'ACT')
 		
-	WHERE ROW_NUM BETWEEN  (4 * (${pageNum}-1) + 1) AND (4 * ${pageNum})
+	WHERE ROW_NUM BETWEEN  (8 * (${pageNum}-1) + 1) AND (8 * ${pageNum})
 	</select>
 	
 	
