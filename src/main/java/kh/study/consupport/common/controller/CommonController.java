@@ -135,10 +135,22 @@ public class CommonController {
 	// 메인화면 콘서트 목록 조회
 	@GetMapping("concertList")
 	public String selectConcertListOfCommon(Model model) {
-		model.addAttribute("concertList", commonService.selectConcertListOfCommon());
+		//model.addAttribute("concertList", commonService.selectConcertListOfCommon(1));
 		model.addAttribute("specialList", commonService.selectSpecialConcertListOfCommon());
 		return "/content/common/concert_list";
 	}
+	
+	// 무한스크롤
+	@ResponseBody
+	@PostMapping("loadPage")
+	public List<ConcertVO> loadPage(int pageNum){
+		return commonService.selectConcertListOfCommon(pageNum);
+	}
+	
+	
+	
+	
+	
 	
 	// 콘서트 상세 조회
 	@ResponseBody

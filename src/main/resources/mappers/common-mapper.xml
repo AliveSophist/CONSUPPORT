@@ -304,7 +304,7 @@
 
 	<!-- 메인화면 콘서트 목록 조회 -->
 	<select id="selectConcertListOfCommon" resultMap="concert">
-         SELECT CON.CONCERT_CODE
+        <!--  SELECT CON.CONCERT_CODE
 			, CONCERT_NAME
 			, CONCERT_IMG_CODE
 			, CONCERT_RATED
@@ -329,8 +329,68 @@
         
 		AND CONCERT_STATUS = 'ACT'
         
-        ORDER BY CONCERT_CODE DESC
+        ORDER BY CONCERT_CODE DESC -->
+
+	SELECT ROW_NUM
+		, CONCERT_CODE
+		, CONCERT_NAME
+		, CONCERT_IMG_CODE
+		, CONCERT_RATED
+		, CONCERT_DATE
+	
+		, CONCERT_IMG_NAME_ATTACHED
+		, CONCERT_IMG_IS_MAIN
+	
+		, USER_ID
+		, ARTIST_NAME
+		, ARTIST_IMG_NAME_ATTACHED
+		, ARTIST_IMG_IS_MAIN
+	FROM
+		(SELECT CON.CONCERT_CODE
+			, CONCERT_NAME
+			, CONCERT_IMG_CODE
+			, CONCERT_RATED
+			, HALL_RENT_DATE AS CONCERT_DATE
+		
+			, CONCERT_IMG_NAME_ATTACHED
+			, CONCERT_IMG_IS_MAIN
+		
+			, CON.USER_ID
+			, ART.ARTIST_NAME
+			, ARTIST_IMG_NAME_ATTACHED
+			, ARTIST_IMG_IS_MAIN
+		
+			, ROW_NUMBER() OVER (ORDER BY CON.CONCERT_CODE DESC) ROW_NUM
+
+		FROM CONCERT CON, CONCERT_IMG CONI, HALL_DATE HDATE, ARTIST ART, ARTIST_IMG
+		ARTI
+		WHERE CON.CONCERT_CODE = CONI.CONCERT_CODE
+		AND CON.USER_ID = ART.USER_ID
+		AND ART.USER_ID = ARTI.USER_ID
+		AND HDATE.HALL_DATE_CODE = CON.HALL_DATE_CODE
+	
+		AND CONCERT_IMG_IS_MAIN = 'Y'
+		AND ARTIST_IMG_IS_MAIN = 'Y'
+		AND HALL_RENT_DATE >= (SELECT SYSDATE FROM DUAL)
+		AND CONCERT_STATUS = 'ACT')
+		
+	WHERE ROW_NUM BETWEEN  (8 * (${pageNum}-1) + 1) AND (8 * ${pageNum})
 	</select>
+	
+	
+	
+	<!-- ======================================================================================================================================================================================================================== -->
+	
+	
+	
+	
+	<!-- ======================================================================================================================================================================================================================== -->
+	
+	
+	
+	
+	
+	
 	
 	<!-- 메인화면 스페셜콘서트 목록 조회 -->
 	<select id="selectSpecialConcertListOfCommon" resultMap="concert">

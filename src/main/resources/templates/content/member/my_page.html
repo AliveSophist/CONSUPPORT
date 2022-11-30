@@ -56,6 +56,7 @@
 										</span>
 									</div>
 									
+									
 								</div>
 								
 								
@@ -115,8 +116,14 @@
 								</tr>
 							</tbody>
 						</table>
-							
-							
+						
+						<th:block th:if="${#strings.contains(salesInfo.isExpired,'남았습니다')}">
+							<div class="text-end">
+								<a class="btn btn-primary" th:onclick="cancelPay([[${salesInfo.salesCode}]], [[${salesInfo.salesTotalPrice}]])">	<!-- cancelPay(salesCode, cancel_request_amount) -->
+									환 불
+								</a>
+							</div>
+						</th:block>
 							
 							
 							

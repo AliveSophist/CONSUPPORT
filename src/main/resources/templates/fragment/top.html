@@ -159,7 +159,7 @@
 					</th:block>
 
 					<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
-						<a class="nav-link" href="/member/myPage">My Page</a>
+						<a class="nav-link" href="/member/myPage">My Page</a> 
 						<li class="nav-item">
 							<a class="nav-link" href="/logout">LOGOUT</a>
 						</li>
@@ -176,46 +176,7 @@
 
 <!-- ================================================================================================================================================================================================================================================================================ -->
 	<!-- 따라지 -->
-	<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST', 'ROLE_OWNER', 'ROLE_ADMIN')">
-		<input type="checkbox" id="menuicon">
-		<ul>
-			<li>
-				<label for="menuicon">
-					<span></span><span></span><span></span>
-				</label>
-			</li>
-		</ul>
-		
-		<div class="sidebar">
-			<div class="text-center" style="background-color: black;">
-				<h3>CONSI</h3>
-				<hr>
-			</div>
-			<div>
-			
-				<div class="accordion" id="accordionExample">
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="headingThree">
-							<button class="accordion-button collapsed" type="button"
-								data-bs-toggle="collapse" data-bs-target="#collapseThree"
-								aria-expanded="false" aria-controls="collapseThree">
-								Accordion Item #3</button>
-						</h2>
-						<div id="collapseThree" class="accordion-collapse collapse"
-							aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-							<div class="accordion-body">
-								<strong>aaaaa</strong>
-								<code>aaaa</code>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-				
-		</div>
-	</th:block>
+	
 
 
 <!-- ================================================================================================================================================================================================================================================================================ -->
@@ -241,36 +202,39 @@
 							<form class="register-form" name="registerForm"
 								autocomplete="off">
 								<!-- 자동완성 방지용 더미태그 -->
-								<input name="username_dummy" type="text" style="display: none"
-									aria-hidden="true"> <input name="password_dummy"
-									type="password" style="display: none" aria-hidden="true">
+								<input name="username_dummy" type="text" style="display: none" aria-hidden="true"> 
+								
+								<input name="password_dummy" type="password" style="display: none" aria-hidden="true">
 
-								<input name="userId" type="email" placeholder="ID (email)"
-									autocomplete="off" required /> <input name="userPw"
-									type="password" placeholder="Password" autocomplete="off"
-									required /> <input name="userPwChecker" type="password"
-									placeholder="Password" autocomplete="off" required /> <input
-									name="userName" type="text" placeholder="userName" required />
+								<input name="userId" type="email" placeholder="ID (email)" autocomplete="off" required /> 
+								
+								<input name="userPw" type="password" placeholder="비밀번호" autocomplete="off" required /> 
+								
+								<input name="userPwChecker" type="password" placeholder="비밀번호 확인" autocomplete="off" required /> 
+								
+								<input name="userName" type="text" placeholder="별명" required />
 
-								<input name="userAddr" type="text" placeholder="userAddr"
-									required /> <input name="userAddrDetail" type="text"
-									placeholder="userAddrDetail" /> <input name="userBirth"
-									type="text" placeholder="userBirth" required /> <input
-									name="userTell" type="text" placeholder="userTell" required />
+								<input name="userAddr" onclick="searchAddr();" type="text" placeholder="주소" required readonly/> 
+								
+								<input name="userAddrDetail" type="text" placeholder="상세주소" />
+								
+								<input name="userBirth" type="text" placeholder="생년월일" required />
+								
+								<input name="userTell" type="text" placeholder="연락처" required />
 
 								<button type="button" onclick="join()">create</button>
 								<p class="message">
-									Already registered? <a>Sign In</a>
+									<a style="cursor: pointer;">로그인 화면으로</a>
 								</p>
 							</form>
 
 							<form class="login-form" name="loginForm">
-								<input name="userId" type="text" placeholder="ID (email)" /> <input
-									name="userPw" type="password" placeholder="Password" />
+								<input name="userId" type="text" placeholder="ID (email)" /> 
+								<input name="userPw" type="password" placeholder="Password" />
 
 								<button type="button" onclick="login()">login</button>
 								<p class="message">
-									Not registered? <a>Create an account</a>
+									회원이 아니신가요?　<a style="cursor: pointer;">가입하러가기</a>
 								</p>
 							</form>
 
@@ -307,9 +271,19 @@
 	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
+	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 	<script th:inline="javascript">
-		//$('.modal-content').css('background-image', 'url("")');
 	
+		// 회원가입시 주소
+		function searchAddr() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+					// 도로명 주소
+					const rodeAddr = data.roadAddress;
+					$("input[name=userAddr]").val(rodeAddr);
+				}
+			}).open();
+		}
 
 		//bootstrap Modal 좀 더 편하게 다루기
 		let bootstrapModal;

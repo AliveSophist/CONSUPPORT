@@ -27,7 +27,7 @@ public interface CommonService {
 	
 
 	// 메인화면 콘서트 목록 조회
-	List<ConcertVO> selectConcertListOfCommon();
+	List<ConcertVO> selectConcertListOfCommon(int pageNum);
 	
 	// 콘서트 상세 조회
 	ConcertVO selectConcertDetail(ConcertVO concertVO);
