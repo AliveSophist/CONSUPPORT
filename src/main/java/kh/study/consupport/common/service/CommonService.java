@@ -1,6 +1,7 @@
 package kh.study.consupport.common.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ArtistVO;
@@ -38,7 +39,9 @@ public interface CommonService {
 	// 메인화면 스페셜콘서트 목록 조회
 	List<String> selectSpecialConcertListOfCommon();
 	
-	
+	// 콘서트 검색
+	List<ConcertVO> serchConcert(Map<String, String> map);
+
 	
 	
 	

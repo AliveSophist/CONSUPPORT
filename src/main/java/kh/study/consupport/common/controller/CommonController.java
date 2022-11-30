@@ -166,11 +166,22 @@ public class CommonController {
 		return adminService.selectArtistDetail(artistVO);
 	}
 	
+//==================================================================================================================================================================================================================
 	
+	// 콘서트 검색 페이지
+	@RequestMapping("searchForm")
+	public String searchForm(@RequestParam Map<String, String> paramMap, Model model) {
+		model.addAttribute("concertListMap", commonService.serchConcert(paramMap));
+		
+		// 검색회면 키테고리 목록 띄우기
+		model.addAttribute("genreList", artistService.genreList());
+		
+		model.addAttribute("paramMap", paramMap);
+		
+		return "/content/common/search_form";
+	}
 	
 //==================================================================================================================================================================================================================
-
-	
 	
 	@GetMapping("reserveSeatForm")
 	public String loadReserveSeatForm(ConcertVO concert, Model model) {

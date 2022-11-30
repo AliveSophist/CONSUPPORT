@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz./thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  layout:decorate="~{layout/base_layout}">
+	  
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+	<div layout:fragment="content">
+		<th:block>
+			<!-- datepicker 관련..! -->
+			<!-- <link	rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css"> -->
+			<link	rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+			<link href="/bootstrap/css/datepicker.css"  rel="stylesheet" />
+			
+			<script	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+			<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+		</th:block>
+		
+		
+		
+		
+		<div class="row text-center">
+			<div class="col-2">　<!-- 건들지마 --></div>
+			
+			<div class="col-8">
+			<h3 class="mt-4 text-start">조건별로 원하는 공연을 검색해 보세요!</h3>
+			<hr>
+			
+			<form action="/searchForm" method="post">
+				<table class="table align-middle table-bordered text-center test mt-3">
+					<!-- table-borderless -->
+					<colgroup>
+						<col width="8%">
+						<col width="8%">
+						<col width="15%">
+						<col width="8%">
+						<col width="19%">
+						<col width="8%">
+						<col width="8%">
+						<!-- 재고 -->
+						<col width="18%">
+						<col width="8%">
+					</colgroup>
+					<tr>
+						<td rowspan="2">
+							<div class="row">
+								<div class="col-12">공 연</div>
+								<div class="col-12">검 색</div>
+							</div>
+						</td>
+						<td class="searchTitle">장르</td>
+						<td>
+							<select class="form-select" name="genreCode" aria-label="Default select example">
+								<option value="" selected>전체</option>
+								<th:block th:each="genre:${genreList}">
+									<option th:value="${genre.genreCode}">[[${genre.genreName}]]</option>
+								</th:block>
+						</select>
+						</td>
+						<td class="searchTitle">공연명</td>
+						<td colspan="2">
+							<input class="form-control" type="text" name="concertName">
+						</td>
+						<td class="searchTitle">아티스트</td>
+						<td>
+							<input class="form-control" type="text" name="artistName">
+						</td>
+						<td rowspan="2">
+							<button type="submit" class="btn btn-primary" style="height: 90px;">Search</button>
+						</td>
+					</tr>
+					<tr>
+					
+					
+						<td class="searchTitle">
+							날짜 선택
+						</td>
+						<td colspan="3" class="align-middle">
+							<div id="daterangepicker" class="row">
+								<div class="col-12 text-center">
+									<div class="input-group input-daterange" >
+										<input name="fromDate" type="text" class="form-control text-center" placeholder="시작 날짜" style="cursor: pointer;" readonly>
+										<input name="toDate" type="text" class="form-control text-center" placeholder="끝 날짜" style="cursor: pointer;" readonly>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td class="searchTitle">상태</td>
+						<td colspan="2">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="itemStatus">
+								<label class="form-check-label" for="">전체</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="itemStatus">
+								<label class="form-check-label" for="">판매중</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="itemStatus"> 
+								<label class="form-check-label" for="">판매예정</label>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+			
+<!-- ============================================================================================================================================================================================================ -->
+
+			<table class="table text-center table-hover align-middle">
+				<thead style="font-size: 1.1rem">
+					<tr>
+						<th scope="col">No</th>
+						<th scope="col">카테고리</th>
+						<th scope="col">이미지</th>
+						<th scope="col">상품명</th>
+						<th scope="col">공연일</th>
+						<th scope="col">판매상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="concert, iterState : ${concertListMap}">
+						<th scope="row" th:text="${iterState.count}"></th>
+						<td>[[${concert.genreName}]]</td>
+						<td>
+							<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
+								 style="height: 120px; width: 100px"
+								 >
+						</td>
+						<td>
+							([[${concert.artist.artistName}]])<br>
+							[[${concert.concertName}]]
+						</td>
+						<td>
+							<!-- 시간을 오전 or 오후 라는 문자열로 변경 -->
+							<th:block th:if="${#strings.contains(concert.concertDate,'12:00')}">
+								[[${#strings.replace(concert.concertDate, '12:00:00', '오후')}]]
+							</th:block>
+							
+							<th:block th:unless="${#strings.contains(concert.concertDate,'12:00')}">
+								[[${#strings.replace(concert.concertDate, '00:00:00', '오전')}]]
+							</th:block>
+						</td>
+
+						<td>판매중</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+
+
+
+		</div>
+			
+			
+			
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<div class="col-2">　<!-- 건들지마 --></div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+	<script type="text/javascript" src="/js/common/search_form.js"></script>
+		
+		
+	</div>
+	
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+	
+</html>

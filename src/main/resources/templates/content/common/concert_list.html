@@ -71,6 +71,8 @@
 							<hr>
 							<h3 class="mb-3"></h3>
 				</div>
+				
+				
 <!-- ========================================================================================================================================================== -->
 			
 			
@@ -194,11 +196,20 @@
 <!-- ========================================================================================================================================================== -->
 
 
-		
-		<a onclick="window.scrollTo(0,0);"
-           style="display:scroll; position:fixed; bottom:30px; right:30px;"
+		<!-- 검색 페이지로 이동 -->
+		<a onclick="location.href='/searchForm';"
+           style="display:scroll; position:fixed; bottom:120px; right:30px; cursor: pointer;"
            target="quests">
-		<img alt="BackToTop" src="https://imgur.com/hB23NWs.png" /> </a>
+		<img alt="BackToTop" src="/img/search.svg" style="width: 50px; height: 50px;"/>
+		</a>
+		
+		
+		<!-- 화면 제일 위로 이동 -->
+		<a onclick="window.scrollTo(0,0);"
+           style="display:scroll; position:fixed; bottom:30px; right:30px; cursor: pointer;"
+           target="quests">
+		<img alt="BackToTop" src="/img/arrow-up-circle.svg" style="width: 50px; height: 50px;"/>
+		</a>
 
 
 
