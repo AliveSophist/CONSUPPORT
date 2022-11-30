@@ -32,13 +32,13 @@
 			
 			
 			<div style="background-color: rgba(192,192,192, 0.3); margin: 60px 0px 10% 10%; padding-top: 60px; width:80%; border-radius: 2%">
-				<div class="container-fixed stacked-cards stacked-cards-slide " style="margin-top: -60px; height:590px;">
+				<div class="container-fixed stacked-cards stacked-cards-slide " style="margin-top: -60px; height:700px;">
 					<ul>
 						<th:block th:each=" concert: ${specialList}">
 						
-							<li style="border-radius: 5%;">
+							<li style="border-radius: 5%; width: 450px; height: 600px;">
 								<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
-									 alt="Stacked Cards" style="border-radius: 5%;">
+									 alt="Stacked Cards" style="border-radius: 5%; width: 100%; height: 100%;">
 							</li>
 						
 						</th:block>
