@@ -9,19 +9,27 @@
 <div layout:fragment="content">
 
 
-	<div class="col-12">
-		<h4 >내 정보 수정</h4>
-		<hr>
-		<div class="col-6 mb-1">
+<th:block>
+	<style>
+		.span {
+			justify-content: center;
+		    align-items: center;
+		    display: flex;
+		}
+	</style>
+</th:block>
+
+
+	<div class="col-12 mt-2" align="center">
+
+		<div class="col-4 mb-3" >
+		<h4 >[[${user.UserId}]]님의 정보</h4>
 		
 			<form action="/member/editInfo" method="post">
 		
+						<input type="hidden" th:value="${user.UserId}" name="userId">
 <!-- ----------------------------------------------------------------------- -->
 				<fieldset>
-					<div class="form-group row col-6">
-						<th:block class="col-sm-2 col-form-label">[[${user.UserId}]] 님의 정보입니다.</th:block>
-						<input type="hidden" th:value="${user.UserId}" name="userId">
-					</div>
 					<div class="form-group row">
 					
 <!-- ----------------------------------------------------------------------- -->
@@ -32,36 +40,44 @@
 				</div> -->
 				
 <!-- ----------------------------------------------------------------------- -->
-
-				<div class="form-group">
-				      <label for="userName" class="form-label mt-2">USER_NAME</label>
+			<!-- 닉네임 -->
+			<div >
+			
+				<div class="row myFormRow mb-3">
+				      <label style="text-align: left;" for="userName" class="form-label"> 이름</label>
 				      <input type="text" class="form-control" name="userName" th:value="${user.userName}">
 				</div>
-					
+				
+				
 <!-- ----------------------------------------------------------------------- -->
-					
-				<div class="form-group">
-					<label for="userAddr" class="form-label mt-2">USER_ADDR</label>
+				<!-- 주소 -->
+				<div class="row myFormRow mb-3">
+					<label style="text-align: left;" for="userAddr" class="form-label">주소</label>
       				<input type="text" class="form-control" name="userAddr" onclick="searchAddr();" th:value="${user.userAddr}" readonly>
-					<label for="userAddrDetail" class="form-label mt-2">USER_ADDR_DETAIL</label>
+				</div>
+
+				<div class="row myFormRow mb-3">
+					<label style="text-align: left;" for="userAddrDetail" class="form-label">상세주소</label>
       				<input type="text" class="form-control" name="userAddrDetail" th:value="${user.userAddrDetail}" >
 				</div>
 					
 <!-- ----------------------------------------------------------------------- -->
-			
-				<div class="form-group">
-					<label for="userTell" class="form-label mt-2">USER_TELL</label>
+			<!-- 전화번호 -->
+				<div class="row myFormRow mb-3">
+					<label style="text-align: left;" for="userTell" class="form-label">연락처</label>
       				<input type="text" class="form-control" name="userTell" th:value="${user.userTell}" >
 				</div>
-				
+			</div>	
 <!-- ----------------------------------------------------------------------- -->
 				
 			</div>	
 			<br>
 			
 <!-- ----------------------------------------------------------------------- -->
-
-			<input class="btn btn-primary btn-lg btn-block" type="submit" value="수정하기">
+			<div style="float: right;">
+				<input class="btn btn-primary btn-lg btn-block" type="submit" 
+				value="수정하기">
+			</div>
 
 
 <!-- ----------------------------------------------------------------------- -->
