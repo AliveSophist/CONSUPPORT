@@ -136,23 +136,35 @@ public class MemberController {
 	
 //===========================================================================================================================================================================================================================
 	
+	// 패스워드 체크
+	@GetMapping("/pwCheckForm")
+	public String pwCheck() {
+		return "content/member/pwCheckForm";
+	}
+	
 	// 패스워드 맞는지 체크
 	@ResponseBody
-	@PostMapping(" 너가 원하는 주소 ")
-	public String ssdfsdf(UsersVO users) {
+	@PostMapping("/pwCheck")
+	public boolean pwCheck(UsersVO users, Authentication authentication) {
 		
+		
+		String userId = ((User) authentication.getPrincipal()).getUsername();
 		// DB에서 받아온 패스워드   %UKWKQ~%@%@#@#!%#@!@#!$!%
-		// String selectedPw = memberService.selectPw(users);				<<<<<<<< memberServiceImpl에 작성해줘
+		
+		String selectedPw = memberService.selectPw(userId);
 		
 		
 		// 방금 유저로부터 input 태그로 받은 패스워드 123  =  user.getUserPw()
 		
 		// 방금 받은 패스워드와,  DB에서 받은 패스워드를 비교.
 		// 그 후 맞으면 true 전송, 틀리면 false 전송.
-		//return securityConfig.passwordEncoder().matches(users.getUserPw(), selectedPw);
+		return securityConfig.passwordEncoder().matches(users.getUserPw(), selectedPw);
+	
 		
-		return null;
 	}
+	
+//===========================================================================================================================================================================================================================
+	
 	
 	// 내 정보 수정 페이지
 	@GetMapping("/editInfoForm")

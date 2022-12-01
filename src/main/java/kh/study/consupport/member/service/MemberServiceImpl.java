@@ -27,6 +27,16 @@ public class MemberServiceImpl implements MemberService{
 		sqlSession.insert("memberMapper.insertArtistImgs", artistVO);
 	}
 	
+//===============================================================================================================================================================
+
+	// 비밀번호 확인
+	@Override
+	public String selectPw(String userId) {
+		return sqlSession.selectOne("memberMapper.selectPw"	, userId);
+	}
+
+//===============================================================================================================================================================
+
 	// 내 정보 수정 화면 이동
 	@Override
 	public UsersVO editInfoForm(String userId) {
@@ -46,6 +56,9 @@ public class MemberServiceImpl implements MemberService{
 	public List<SalesVO> selectMypageSalesInfo(UsersVO users) {
 		return sqlSession.selectList("memberMapper.selectMypageSalesInfo", users);
 	}
+
+	
+	
 
 	
 	
