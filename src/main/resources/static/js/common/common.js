@@ -79,42 +79,62 @@ function concertDetailModalForReserve(concertCode){
 			str +=			`</div>`;
 			str +=		`</div>`;
 			
-			
-			//sub ajax start  : 나이 정보 가져오기.
-			let gotAge = 0;
-			$.ajax({
-				url: '/getAge', //요청경로
-				type: 'post',
-				data: {}, //필요한 데이터
-				async: false,
-				success: function(result) {
-					gotAge = result
-				},
-				error: function() {
-					alert('실패');
+			//예매버튼 관련
+			{
+				//티켓팅 시작일이 되지 않았다면 예매 불가.
+				const today = new Date();
+				let todayY = today.getFullYear(); 	// 년도
+				let todayM = today.getMonth() + 1;	// 월
+				let todayD = today.getDate();  		// 날짜
+				
+				const ticketDate = concert.concertTicketingDate;
+				var ticketY = parseInt(ticketDate.substring(0, 4));
+				var ticketM = parseInt(ticketDate.substring(5, 7));
+				var ticketD = parseInt(ticketDate.substring(8, 10));
+	
+				if(ticketY>=todayY && ticketM>=todayM && ticketD>todayD){
+					str +=	`	<div style="margin: auto; margin-top: 30px">
+									<button style="width: 1000px;" type="button" class="btn btn-dark" disabled>아직 티켓 예매일이 아닙니다.</button>
+								</div>`
 				}
-			});
-			
-			// 어쩌구 저쩌구 해서 구해온 나이로 예매버튼 바꿔버리기
-			let isUserAgeAvailable = false;
-			if(concert.concertRated=='All') isUserAgeAvailable=true;
-			if(concert.concertRated=='15+')
-				if(gotAge >= 15) isUserAgeAvailable=true;
-			if(concert.concertRated=='19+')
-				if(gotAge >= 19) isUserAgeAvailable=true;
-			
-			if( isUserAgeAvailable )
-				str +=	`	<div style="margin: auto; margin-top: 30px">
-								<button style="width: 1000px;" type="button" class="btn btn-dark" onclick="openReserveSeatForm('${concert.concertCode}', '${concert.hallCode}')">예매하러 가기</button>
-							</div>`
-			else if( gotAge == 0 )
-				str +=	`	<div style="margin: auto; margin-top: 30px">
-								<button style="width: 1000px;" type="button" class="btn btn-dark" disabled>비회원 계정은 연령제한 공연 예매는 불가능합니다</button>
-							</div>`
-			else
-				str +=	`	<div style="margin: auto; margin-top: 30px">
-								<button style="width: 1000px;" type="button" class="btn btn-dark" disabled>연령제한 공연입니다</button>
-							</div>`
+				else{
+					//sub ajax start  : 나이 정보 가져오기.
+					let gotAge = 0;
+					$.ajax({
+						url: '/getAge', //요청경로
+						type: 'post',
+						data: {}, //필요한 데이터
+						async: false,
+						success: function(result) {
+							gotAge = result
+						},
+						error: function() {
+							alert('실패');
+						}
+					});
+					
+					// 어쩌구 저쩌구 해서 구해온 나이로 예매버튼 바꿔버리기
+					let isUserAgeAvailable = false;
+					if(concert.concertRated=='All') isUserAgeAvailable=true;
+					if(concert.concertRated=='15+')
+						if(gotAge >= 15) isUserAgeAvailable=true;
+					if(concert.concertRated=='19+')
+						if(gotAge >= 19) isUserAgeAvailable=true;
+					
+					if( isUserAgeAvailable )
+						str +=	`	<div style="margin: auto; margin-top: 30px">
+										<button style="width: 1000px;" type="button" class="btn btn-dark" onclick="openReserveSeatForm('${concert.concertCode}', '${concert.hallCode}')">예매하러 가기</button>
+									</div>`
+					else if( gotAge == 0 )
+						str +=	`	<div style="margin: auto; margin-top: 30px">
+										<button style="width: 1000px;" type="button" class="btn btn-dark" disabled>비회원 계정은 연령제한 공연 예매는 불가능합니다</button>
+									</div>`
+					else
+						str +=	`	<div style="margin: auto; margin-top: 30px">
+										<button style="width: 1000px;" type="button" class="btn btn-dark" disabled>연령제한 공연입니다</button>
+									</div>`
+				}
+			}
 			
 			
 			str +=		`<hr>`;
