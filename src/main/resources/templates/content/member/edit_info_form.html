@@ -14,7 +14,7 @@
 		<hr>
 		<div class="col-6 mb-1">
 		
-			<form action="/member/editInfo" method="post" enctype="multipart/form-data">
+			<form action="/member/editInfo" method="post">
 		
 <!-- ----------------------------------------------------------------------- -->
 				<fieldset>
@@ -55,13 +55,10 @@
 				</div>
 				
 <!-- ----------------------------------------------------------------------- -->
-					
-				<div class="form-group">
-					<label for="userMileage" class="form-label mt-2">USER_MILEAGE</label>
-      				<input type="hidden" class="form-control" name="userMileage" th:value="${user.userMileage}" >
-					<div> [[${user.userMileage}]]</div>
-				</div>
+				
 			</div>	
+			<br>
+			
 <!-- ----------------------------------------------------------------------- -->
 
 			<input class="btn btn-primary btn-lg btn-block" type="submit" value="수정하기">

@@ -33,6 +33,12 @@ public class MemberServiceImpl implements MemberService{
 		return sqlSession.selectOne("memberMapper.editInfoForm", userId);
 	}
 	
+	// 내 정보 수정
+	@Override
+	public void updateEditInfo(UsersVO users) {
+		sqlSession.update("memberMapper.updateEditInfo", users);
+	}
+	
 //===============================================================================================================================================================
 
 	// 마이페이지 구매정보 조회

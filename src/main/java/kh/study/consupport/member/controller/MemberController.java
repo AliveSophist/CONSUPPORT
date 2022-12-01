@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
+import kh.study.consupport.common.config.SecurityConfig;
 import kh.study.consupport.common.service.CommonService;
 import kh.study.consupport.common.vo.ArtistImgVO;
 import kh.study.consupport.common.vo.ArtistVO;
@@ -34,6 +36,9 @@ import kh.study.consupport.owner.service.OwnerService;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	
+	@Autowired
+	private SecurityConfig securityConfig;
 
 	@Resource(name = "adminService")
 	private AdminService adminService;
@@ -131,6 +136,24 @@ public class MemberController {
 	
 //===========================================================================================================================================================================================================================
 	
+	// 패스워드 맞는지 체크
+	@ResponseBody
+	@PostMapping(" 너가 원하는 주소 ")
+	public String ssdfsdf(UsersVO users) {
+		
+		// DB에서 받아온 패스워드   %UKWKQ~%@%@#@#!%#@!@#!$!%
+		// String selectedPw = memberService.selectPw(users);				<<<<<<<< memberServiceImpl에 작성해줘
+		
+		
+		// 방금 유저로부터 input 태그로 받은 패스워드 123  =  user.getUserPw()
+		
+		// 방금 받은 패스워드와,  DB에서 받은 패스워드를 비교.
+		// 그 후 맞으면 true 전송, 틀리면 false 전송.
+		//return securityConfig.passwordEncoder().matches(users.getUserPw(), selectedPw);
+		
+		return null;
+	}
+	
 	// 내 정보 수정 페이지
 	@GetMapping("/editInfoForm")
 	public String editInfoForm(Model model, Authentication authentication, UsersVO users) {
@@ -144,7 +167,9 @@ public class MemberController {
 	@PostMapping("/editInfo")
 	public String editInfo(UsersVO users) {
 		
-		return "content/concertList";
+		memberService.updateEditInfo(users);
+		
+		return "redirect:/concertList";
 	}
 	
 	
@@ -152,6 +177,7 @@ public class MemberController {
 	
 	
 	
+
 	
 	
 	
