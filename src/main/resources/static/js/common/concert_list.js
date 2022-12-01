@@ -1,6 +1,32 @@
 
 //=======================================================================================================================================================================================
 
+//스페셜 콘서트 클릭이벤트 할당
+specialCardList = document.querySelectorAll('.specialCard');
+for(specialCard of specialCardList){
+	specialCard.addEventListener("click", function() {
+		
+		// 여기서 this를 쓸 경우. addEventListener function을 실행시킨 '주체'(해당 태그) 그 자체가 바로 반환!
+		if(this.classList.contains('active')){
+			
+			concertDetailModalForReserve(this.dataset.concertCode);
+			//alert(this.dataset.concertCode)
+			
+		}
+		
+	})
+	
+}
+
+
+
+
+
+
+
+
+
+
 let pageNum = 1;
 let isPageEnd = false;
 

@@ -30,7 +30,7 @@
 			<h3 class="mt-4 text-start">조건별로 원하는 공연을 검색해 보세요!</h3>
 			<hr>
 			
-			<form action="/searchForm" method="post">
+			<form action="/searchForm" method="get">
 				<table class="table align-middle table-bordered text-center test mt-3">
 					<!-- table-borderless -->
 					<colgroup>
@@ -55,19 +55,28 @@
 						<td class="searchTitle">장르</td>
 						<td>
 							<select class="form-select" name="genreCode" aria-label="Default select example">
-								<option value="" selected>전체</option>
+								
+								<option value="" 
+										th:selected="${paramMap.get('genreCode') == null} or ${paramMap.get('genreCode') eq ''}">
+										전체
+								</option>
+								
 								<th:block th:each="genre:${genreList}">
-									<option th:value="${genre.genreCode}">[[${genre.genreName}]]</option>
+									<option	th:value="${genre.genreCode}"
+										th:selected="${paramMap.get('genreCode') eq genre.genreCode}">
+										[[${genre.genreName}]]
+									</option>
 								</th:block>
+								
 						</select>
 						</td>
 						<td class="searchTitle">공연명</td>
 						<td colspan="2">
-							<input class="form-control" type="text" name="concertName">
+							<input class="form-control" type="text" name="concertName" th:value="${paramMap['concertName']}">
 						</td>
 						<td class="searchTitle">아티스트</td>
 						<td>
-							<input class="form-control" type="text" name="artistName">
+							<input class="form-control" type="text" name="artistName" th:value="${paramMap['artistName']}">
 						</td>
 						<td rowspan="2">
 							<button type="submit" class="btn btn-primary" style="height: 90px;">Search</button>
@@ -83,8 +92,20 @@
 							<div id="daterangepicker" class="row">
 								<div class="col-12 text-center">
 									<div class="input-group input-daterange" >
-										<input name="fromDate" type="text" class="form-control text-center" placeholder="시작 날짜" style="cursor: pointer;" readonly>
-										<input name="toDate" type="text" class="form-control text-center" placeholder="끝 날짜" style="cursor: pointer;" readonly>
+										<input	name="fromDate"
+												type="text" 
+												class="form-control text-center" 
+												placeholder="시작 날짜" 
+												style="cursor: pointer;" 
+												th:value="${paramMap['fromDate']}"
+												readonly>
+										<input 	name="toDate" 
+												type="text" 
+												class="form-control text-center" 
+												placeholder="끝 날짜" 
+												style="cursor: pointer;" 
+												th:value="${paramMap['toDate']}"
+												readonly>
 									</div>
 								</div>
 							</div>

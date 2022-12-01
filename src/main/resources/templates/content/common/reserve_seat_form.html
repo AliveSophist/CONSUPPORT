@@ -367,6 +367,7 @@
 		const seats = document.querySelectorAll(".row .seat");
 	
 		const ticketList = /*[[${ticketList}]]*/[];	// 대괄호 안넣으면 오류는 안나는데 빨간줄뜸 거지같은 타임리프 문법 수준...
+		window.resizeTo(750, 700+(ticketList.length*2))
 		console.log(ticketList)
 ///////////////////////////////////////////////////// 넣자.
 		let concertPriceR = /*[[${concert.concertPrice.concertPriceR}]]*/[];

@@ -1,5 +1,6 @@
 package kh.study.consupport.common.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -107,6 +108,42 @@ public class CommonServiceImpl implements CommonService{
 		sqlSession.update("commonMapper.refundAll", sales);
 		
 	}
+
+	@Override
+	public int getUserAge(String userId) {
+		
+		int userBirth = sqlSession.selectOne("commonMapper.getUserAge", userId);
+		
+		int birthY = userBirth/10000;
+		int birthM = (userBirth%10000)/100;
+		int birthD = userBirth%100;
+		
+		//어쩌구저쩌구 날짜계산
+		LocalDate today = LocalDate.now();
+		int todayYear = today.getYear();
+		int todayMonth = today.getMonthValue();
+		int todayDay = today.getDayOfMonth();
+
+		// 올해 - 태어난년도
+		int americanAge = todayYear - birthY;
+
+		// 생일이 안지났으면 - 1
+		if (birthM > todayMonth) {
+			americanAge--;
+		} else if (birthM == todayMonth) {
+			if (birthD > todayDay) {
+				americanAge--;
+			}
+		}
+
+		return americanAge;
+	}
+	
+	
+	
+	
+	
+	
 	
 //===================================================================================================================================================================================================================
 
@@ -154,7 +191,7 @@ public class CommonServiceImpl implements CommonService{
 	public List<ConcertVO> selectConcertListForCalendar() {
 		return sqlSession.selectList("commonMapper.selectConcertListForCalendar");
 	}
-	
+
 
 	
 	

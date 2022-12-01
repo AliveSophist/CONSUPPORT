@@ -197,31 +197,10 @@ public class CommonController {
 		return "/content/common/reserve_seat_form";
 	}
 	
-	
-	
-	
-	
 	@ResponseBody
 	@PostMapping("getSalesCode")
 	public String insertSalesAndGetBuyCode(SalesVO sales, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {
 
-		System.out.println(hallSeat);
-		System.out.println();
-		System.out.println();
-		System.out.println(hallSeat);
-		System.out.println();
-		System.out.println();
-		System.out.println(hallSeat);
-		System.out.println();
-		System.out.println();
-		
-		
-		
-		
-		
-		
-		
-		
 		if(request.isUserInRole("ROLE_ANONYMOUS"))
 			sales.setUserId("ANONYMOUS");
 		else
@@ -290,7 +269,19 @@ public class CommonController {
 	
 	
 	
-	
+
+	@ResponseBody
+	@PostMapping("getAge")
+	public int getAge(HttpServletRequest request, Authentication authentication) {
+		
+		if(request.isUserInRole("ROLE_ANONYMOUS"))
+			return 0;
+		
+		
+		String userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+		
+		return commonService.getUserAge(userId);
+	}
 	
 	
 	
@@ -369,8 +360,11 @@ public class CommonController {
 		user.setUserStatus	( UserStatus.ACT.toString() );
 		user.setUserRole	( UserRole.MEMBER.toString() );
 		
+		// 생년월일은 -빼고 넣자
+		user.setUserBirth	( user.getUserBirth().replaceAll("-", "") );
 		
-		// 가입 중복! 오류뱉자!
+		
+		// 아이디 중복 가입! 오류뱉자!
 		try {
 			commonService.insertUser(user);
 		} catch (Exception e2) {

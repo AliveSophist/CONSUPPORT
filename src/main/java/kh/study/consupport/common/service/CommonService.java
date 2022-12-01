@@ -26,6 +26,8 @@ public interface CommonService {
 	void cancelWhenPaying(SalesVO sales);
 	void refundAll(SalesVO sales);
 	
+	int getUserAge(String userId);
+	
 
 	// 메인화면 콘서트 목록 조회
 	List<ConcertVO> selectConcertListOfCommon(int pageNum);
@@ -42,10 +44,7 @@ public interface CommonService {
 	// 콘서트 검색
 	List<ConcertVO> serchConcert(Map<String, String> map);
 
-	
-	
-	
-	
+	// 캘린더 조회
 	List<ConcertVO> selectConcertListForCalendar();
 	
 	

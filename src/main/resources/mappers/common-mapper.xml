@@ -147,6 +147,18 @@
 		WHERE
 			USER_ID = #{userId}
 	</select>
+	
+	
+	<!-- get Birth -->
+	<select id="getUserAge" resultType="INTEGER">
+		SELECT
+			TO_NUMBER( USER_BIRTH )
+		FROM USERS
+		WHERE
+			USER_ID = #{userId}
+	</select>
+	
+	
 
 
 	<select id="selectTicketList" resultMap="ticket">
@@ -512,7 +524,7 @@
 	      	
 	      	<!-- 날짜 사이 검색 끝 -->
 	      	<if test="toDate != null and !toDate.equals('')">
-	      	AND TO_DATE(#{toDate}, 'YYYY-MM-DD') &gt;= HALL_RENT_DATE
+	      	AND HALL_RENT_DATE &lt;= (TO_DATE(#{toDate}, 'YYYY-MM-DD')+1) -(INTERVAL '1' HOUR)
 	      	</if>
 	</select>
 <!-- ======================================================================================================================================================================================================================== -->
