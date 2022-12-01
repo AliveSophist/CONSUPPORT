@@ -22,12 +22,12 @@ table > tbody > tr, table > tbody > tr > td{
 <div align="center">
 	<div class="col-8" align="center">
 	
-		<div style="margin: 20px 0px;">
+		<div style="margin: 30px 0px;">
 		
 			<table border="1" class="table table-hover" style="margin-bottom: 20px;">
 				<colgroup>
-						<col width="25%">
-						<col width="25%">
+						<col width="10%">
+						<col width="40%">
 						<col width="25%">
 						<col width="25%">
 					</colgroup>
@@ -47,7 +47,7 @@ table > tbody > tr, table > tbody > tr > td{
 						<td th:text="${qboard.qboardCreateDate}"></td> 
 					</tr>
 					<tr>
-						<td class="align-middle text-center"  colspan="1">문의</td> 
+						<td class="align-middle text-center"  colspan="1">문의내용</td> 
 						<td colspan="3" rowspan="3" th:text="${qboard.qboardContent}" style="height: 200px;"></td> 
 					</tr>
 				</tbody>
@@ -97,7 +97,10 @@ table > tbody > tr, table > tbody > tr > td{
 				</tbody>
 			</table> 
 			
+			<small id="Explanation" class="form-text text-muted">응답창은 작성자, 운영자에게만 공개됩니다.</small>
+			
 			<hr>
+			
 			<form action="/board/aboardInsert" method="post">
 				<input type="hidden" id="qboardNum" name="qboardNum" th:value="${qboard.qboardNum}">
 				<div class="input-group mb-2" style="margin: 15px auto 0;">

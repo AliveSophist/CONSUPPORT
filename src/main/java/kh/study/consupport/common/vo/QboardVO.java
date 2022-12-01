@@ -1,5 +1,7 @@
 package kh.study.consupport.common.vo;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +18,9 @@ public class QboardVO extends PageVO{
 //    , Q_SECRET VARCHAR2(50)
 	
 	private int qboardNum;
+	@NotBlank(message = "제목은 필수 입력 사항입니다.")
 	private String qboardTitle;
+	@NotBlank(message = "문의 내용은 필수 입력 사항입니다.")
 	private String qboardContent;
 	private String userId;
 	private String qboardCreateDate;
