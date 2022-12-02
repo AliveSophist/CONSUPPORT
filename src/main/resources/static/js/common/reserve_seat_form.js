@@ -206,3 +206,64 @@ function cancelPay() {
 	});
 }
 */
+
+
+
+
+
+function loadCoupon() {
+	const couponCode = document.querySelector('#couponCode').value;
+	
+	//ajax start
+	$.ajax({
+		url: '/selectCoupon', //요청경로
+		type: 'post',
+		data: {	"couponCode" : couponCode },
+		async: false,
+		success: function(coupon) {
+			if(coupon.couponCode == null){
+				Swal.fire({
+					icon: 'warning'
+					, title: `유효하지 않은 쿠폰입니다`
+					//, text: `CLEARED LINES : ${numClearedLine}　SCORE : ${score}`
+					}).then((result) => {
+					
+				});
+				return;
+			}
+			else{
+				Swal.fire({
+					icon: 'success'
+					, title: `사용 가능한 쿠폰입니다`
+					, text: `할인율 : ${coupon.couponValue}%`});
+			}
+		},
+		error: function() {
+			alert('ㅠㅠ');
+		}
+	});
+	//ajax end
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

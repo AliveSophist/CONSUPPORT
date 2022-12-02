@@ -113,16 +113,23 @@
 						<td class="searchTitle">상태</td>
 						<td colspan="2">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="itemStatus">
+								<input class="form-check-input" type="radio" name="nowStatus" th:checked="${paramMap['nowStatus'] == null or paramMap['nowStatus'] eq ''}">
 								<label class="form-check-label" for="">전체</label>
 							</div>
+							
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="itemStatus">
-								<label class="form-check-label" for="">판매중</label>
+								<input class="form-check-input" type="radio" name="nowStatus" value="SOLDOUT" th:checked="${paramMap['nowStatus'] eq 'SOLDOUT'}"> 
+								<label class="form-check-label" for="">매진</label>
+							</div><br>
+						
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nowStatus" value="ONSALE" th:checked="${paramMap['nowStatus'] eq 'ONSALE'}">
+								<label class="form-check-label" for="">티켓팅 중</label>
 							</div>
+							
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="itemStatus"> 
-								<label class="form-check-label" for="">판매예정</label>
+								<input class="form-check-input" type="radio" name="nowStatus" value="SCHEDULED" th:checked="${paramMap['nowStatus'] eq 'SCHEDULED'}">
+								<label class="form-check-label" for="">티켓팅 예정</label>
 							</div>
 						</td>
 					</tr>
@@ -149,7 +156,7 @@
 						<td>
 							<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
 								 style="height: 120px; width: 100px"
-								 >
+								 th:onclick="concertDetailModalForReserve([[${concert.concertCode}]]);">
 						</td>
 						<td>
 							([[${concert.artist.artistName}]])<br>
@@ -165,9 +172,23 @@
 								[[${#strings.replace(concert.concertDate, '00:00:00', '오전')}]]
 							</th:block>
 						</td>
-
-						<td>판매중</td>
-
+						<td>
+							<th:block th:if="${concert.isScheduled eq 'Y'}">
+								<span>티켓팅 예정</span>
+							</th:block>
+							
+							<th:block th:if="${concert.isScheduled eq 'N'}">
+							
+								<th:block th:if="${concert.isSoldout eq 'Y'}">
+									<span>매진</span>
+								</th:block>
+								
+								<th:block th:if="${concert.isSoldout eq 'N'}">
+									<span>예매가능</span>
+								</th:block>
+								
+							</th:block>
+						</td>
 					</tr>
 
 				</tbody>
@@ -200,6 +221,18 @@
 		</div>
 		
 		
+		
+		
+		<!-- 화면 제일 위로 이동 -->
+		<img 	src="/img/arrow-up-circle.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:30px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="window.scrollTo(0,0);"/>
 		
 		
 		

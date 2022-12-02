@@ -14,10 +14,13 @@
 
 <th:block layout:fragment="content">
 
-
 	<th:block>
 		<link rel="stylesheet" href="/css/common/reserve_seat_form.css" />
 	</th:block>
+	
+	<!-- swal -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 	
 	<!-- jQuery  -->
 	<script	src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -29,11 +32,10 @@
 
 	<ul class="showcase">
 		<li>
-			<span></span>
-						<div class="seat seatR">R</div>
-						<div class="seat seatS">S</div>
-						<div class="seat">A</div>
-				<div class="col"> <small>Available</small> </div>
+			<div class="seat seatR">R</div>
+			<div class="seat seatS">S</div>
+			<div class="seat">A</div>
+			<div class="col"> <small>Available</small> </div>
 		</li>
 		<li>
 			<div class="seat selected"></div> <small>Selected</small>
@@ -318,36 +320,50 @@
 	
 	
 	
+	<br>
 	
 	<form id="reserveSeatForm" name="reserveSeatForm">
 		<input type="hidden" 	name="hallSeatRCnt" id="hallSeatRCnt" value="0" readonly>
-		<br>
 		<input type="hidden" 	name="hallSeatSCnt" id="hallSeatSCnt" value="0" readonly>
-		<br>
 		<input type="hidden" 	name="hallSeatACnt" id="hallSeatACnt" value="0" readonly>
-		<br>
-		<br>
-		<input type="hidden" 	name="salesTotalPrice" id="salesTotalPrice" readonly>
-		<br>
 		
 		<input type="hidden"	name="hallCode" th:value="${concert.hallCode}">
 		<input type="hidden"	name="concertCode" th:value="${concert.concertCode}">
-		
 		<input type="hidden"	name="ticketCodeList" id="ticketCodeList">
-		<input type="hidden"	name="salesAmount" id="salesAmount">
-
 		<input type="hidden"	name="salesCode" id="salesCode">
+		
+		<input type="number"	name="salesAmount" id="salesAmount" style="width:60px; text-align:right;" readonly> 매　　　
+		<input type="number" 	name="salesTotalPrice" id="salesTotalPrice" style="width:100px; text-align:right;" readonly> 원
+		
+		<br>
+		
+		<input type="hidden" 	name="couponValue" id="couponValue" value="0" readonly>
+		
+		<br>
+		<br>
+		
+		<input type="text" 	name="couponCode" id="couponCode" style="width:170px;" placeholder="여기에 쿠폰 코드 입력">　
+		<button type="button" onclick="loadCoupon();" style="width:60px;">조회</button>
+		
 	</form>
 	
 	
+	<div id="isExistCoupon" style="margin-top: 10px; color:red">아직 등록된 쿠폰이 없습니다.</div>
 	
 	
 	
 	<br>
+	<br>
 	
-	<div>
-		<button type="button" onclick="tryPay(false);" style="height: 50px; font-size: 1.2rem;">지금 바로 결제</button>
+	
+	<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+		<div>
+			<input type="email" name="anonymousEmail" id="anonymousEmail" placeholder="여기에 발송 Email 주소 입력" style="width:230px;">
+		</div>
+		<br>
 	</div>
+	
+	<button type="button" onclick="tryPay(false);" style="height: 50px; font-size: 1.2rem;">지금 바로 결제</button>
 
 <!-- 
 	<div>

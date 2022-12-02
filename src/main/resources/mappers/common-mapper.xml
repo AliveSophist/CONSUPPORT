@@ -39,7 +39,9 @@
 		<result column="GENRE_CODE"					property="genreCode"/>
 		<result column="HALL_CODE" 					property="hallCode"/>
 		<result column="USER_ID" 					property="userId"/>
-		<result column="HALL_DATE_CODDE" 			property="userId"/>
+		
+		<result column="IS_SCHEDULED" 				property="isScheduled"/>	
+		<result column="IS_SOLDOUT" 				property="isSoldout"/>
 		
 		<result column="GENRE_NAME" 				property="genreName"/>
 		<result column="CONCERT_DATE" 				property="concertDate"/>
@@ -98,6 +100,19 @@
 		<id column="GENRE_CODE"						property="genreCode"/>
 		<result column="GENRE_NAME" 				property="genreName"/>
 	</resultMap>
+	
+	
+	
+	
+	<!-- 쿠폰 -->
+	<resultMap type="kh.study.consupport.common.vo.CouponVO" id="coupon">
+		<id column="COUPON_CODE"					property="couponCode"/>
+		<result column="COUPON_VALUE" 				property="couponValue"/>
+		<result column="COUPON_STATUS" 				property="couponStatus"/>
+		<result column="USER_ID" 					property="userId"/>
+		<result column="SALES_CODE" 				property="salesCode"/>
+	</resultMap>
+	
 <!-- ======================================================================================================================================================================================================================== -->
 	
 	
@@ -302,6 +317,18 @@
 				SALES_CODE = #{salesCode}
 		)
 	</update>
+	
+	
+	<select id="selectCoupon" resultMap="coupon">
+		SELECT
+			COUPON_CODE
+			, COUPON_VALUE
+		FROM COUPON
+		WHERE
+			COUPON_CODE = #{couponCode}
+		AND COUPON_STATUS = 'UNUSED'
+	</select>
+	
 
 
 
@@ -487,46 +514,100 @@
 		    
 		    , GEN.GENRE_CODE
        	 	, GENRE_NAME
+       	 	
+       	 	, IS_SOLDOUT
+       	 	, IS_SCHEDULED
 			
-		FROM CONCERT CON, CONCERT_IMG CONI, HALL_DATE HDATE, ARTIST ART, ARTIST_IMG ARTI, GENRE GEN
+		FROM 	CONCERT CON
+				, CONCERT_IMG CONI
+				, HALL_DATE HDATE
+				, ARTIST ART
+				, ARTIST_IMG ARTI
+				, GENRE GEN
+				, ( SELECT
+			            CONCERT_CODE
+			            , DECODE( (TOTAL_SEAT_CNT - SOLD_SEAT_CNT), 0, 'Y', 'N' ) AS IS_SOLDOUT
+					FROM(SELECT 
+							CONCERT_CODE
+							, (	SELECT
+									COUNT(USER_ID)
+								FROM TICKET
+								WHERE CONCERT_CODE = C.CONCERT_CODE) AS SOLD_SEAT_CNT
+							, ( SELECT
+									HALL_SEAT_CNT
+									FROM HALL
+								WHERE HALL_CODE = C.HALL_CODE) AS TOTAL_SEAT_CNT
+						FROM CONCERT C )) CON_SOLDOUT
+				, (	SELECT
+						CONCERT_CODE
+						, (CASE
+							WHEN CONCERT_TICKETING_DATE >= (SELECT SYSDATE FROM DUAL) THEN 'Y'
+							ELSE 'N'
+							END) AS IS_SCHEDULED
+					FROM CONCERT ) CON_SCHEDULED
+		
 		WHERE CON.CONCERT_CODE = CONI.CONCERT_CODE
-			AND CON.USER_ID = ART.USER_ID
-			AND ART.USER_ID = ARTI.USER_ID
-			AND HDATE.HALL_DATE_CODE = CON.HALL_DATE_CODE
-			AND CON.GENRE_CODE = GEN.GENRE_CODE
+		AND CON.USER_ID = ART.USER_ID
+		AND ART.USER_ID = ARTI.USER_ID
+		AND HDATE.HALL_DATE_CODE = CON.HALL_DATE_CODE
+		AND CON.GENRE_CODE = GEN.GENRE_CODE
+		AND CON.CONCERT_CODE = CON_SOLDOUT.CONCERT_CODE
+		AND CON.CONCERT_CODE = CON_SCHEDULED.CONCERT_CODE
+		
+		AND CONCERT_IMG_IS_MAIN = 'Y'
+		AND ARTIST_IMG_IS_MAIN = 'Y'
+		AND CONCERT_STATUS = 'ACT'
+					
+		<!-- 검색기능 추가 -->
+		
+		<!-- 장르 -->
+		<if test="genreCode != null and !genreCode.equals('')">
+		AND CON.GENRE_CODE = #{genreCode}
+		</if>
+		  	
+		<!-- 아티스트 이름 -->
+		<if test="artistName != null and !artistName.equals('')">
+		AND UPPER(ARTIST_NAME) LIKE UPPER('%'||#{artistName}||'%')
+		</if>
+		
+		<!-- 콘서트 이름 -->
+		<if test="concertName != null and !concertName.equals('')">
+		AND UPPER(CONCERT_NAME) LIKE UPPER('%'||#{concertName}||'%')
+		</if>      
+		      
+		<!-- 날짜 사이 검색 시작 -->
+		<if test="fromDate != null and !fromDate.equals('')">
+		AND TO_DATE(#{fromDate}, 'YYYY-MM-DD') &lt;= HALL_RENT_DATE
+		</if>
+		
+		<!-- 시작 날짜 제한이 없다면 기한 만료된 공연도 표시 -->
+		<if test="fromDate == null or fromDate.equals('')">
+		AND HALL_RENT_DATE >= (SELECT SYSDATE FROM DUAL)
+		</if>
+		    	
+		<!-- 날짜 사이 검색 끝 -->
+		<if test="toDate != null and !toDate.equals('')">
+		AND HALL_RENT_DATE &lt;= (TO_DATE(#{toDate}, 'YYYY-MM-DD')+1) -(INTERVAL '1' HOUR)
+		</if>
+		
+		<!-- 판매상태? -->
+		<if test="nowStatus != null and !nowStatus.equals('')">
+		   		
+			<if test="nowStatus.equals('ONSALE')">
+			AND IS_SOLDOUT = 'N'
+			AND IS_SCHEDULED = 'N'
+			</if>
 			
-			AND CONCERT_IMG_IS_MAIN = 'Y'
-			AND ARTIST_IMG_IS_MAIN = 'Y'
-			AND HALL_RENT_DATE >= (SELECT SYSDATE FROM DUAL)
-			AND CONCERT_STATUS = 'ACT'
-						
-			<!-- 검색기능 추가 -->
+			<if test="nowStatus.equals('SOLDOUT')">
+			AND IS_SOLDOUT = 'Y'
+			</if>
 			
-			<!-- 장르 -->
-			<if test="genreCode != null and !genreCode.equals('')">
-	    	AND CON.GENRE_CODE = #{genreCode}
-	    	</if>
-	    	
-	    	<!-- 아티스트 이름 -->
-	    	<if test="artistName != null and !artistName.equals('')">
-	    	AND UPPER(ARTIST_NAME) LIKE UPPER('%'||#{artistName}||'%')
-	    	</if>
-	    	
-	    	<!-- 콘서트 이름 -->
-	      	<if test="concertName != null and !concertName.equals('')">
-	      	AND UPPER(CONCERT_NAME) LIKE UPPER('%'||#{concertName}||'%')
-	      	</if>      
-	      	      
-	      	<!-- 날짜 사이 검색 시작 -->
-	      	<if test="fromDate != null and !fromDate.equals('')">
-	      	AND TO_DATE(#{fromDate}, 'YYYY-MM-DD') &lt;= HALL_RENT_DATE
-	      	</if>
-	      	
-	      	<!-- 날짜 사이 검색 끝 -->
-	      	<if test="toDate != null and !toDate.equals('')">
-	      	AND HALL_RENT_DATE &lt;= (TO_DATE(#{toDate}, 'YYYY-MM-DD')+1) -(INTERVAL '1' HOUR)
-	      	</if>
-	</select>
+			<if test="nowStatus.equals('SCHEDULED')">
+			AND IS_SCHEDULED = 'Y'
+			</if>
+		
+		</if>
+		</select>
 <!-- ======================================================================================================================================================================================================================== -->
 
 	<!-- 아티스트 상세 조회 -->

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.CouponVO;
 import kh.study.consupport.common.vo.SalesVO;
 import kh.study.consupport.common.vo.TicketVO;
 import kh.study.consupport.common.vo.UsersVO;
@@ -107,6 +108,11 @@ public class CommonServiceImpl implements CommonService{
 		
 		sqlSession.update("commonMapper.refundAll", sales);
 		
+	}
+
+	@Override
+	public CouponVO selectCoupon(String couponCode) {
+		return sqlSession.selectOne("commonMapper.selectCoupon", couponCode);
 	}
 
 	@Override

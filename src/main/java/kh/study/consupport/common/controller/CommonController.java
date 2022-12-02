@@ -41,10 +41,12 @@ import kh.study.consupport.common.config.SecurityConfig;
 import kh.study.consupport.common.constant.UserRole;
 import kh.study.consupport.common.constant.UserStatus;
 import kh.study.consupport.common.service.CommonService;
+import kh.study.consupport.common.service.MailService;
 import kh.study.consupport.common.service.PaymentService;
 import kh.study.consupport.common.vo.ArtistVO;
 import kh.study.consupport.common.vo.ConcertPriceVO;
 import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.CouponVO;
 import kh.study.consupport.common.vo.HallSeatVO;
 import kh.study.consupport.common.vo.HallVO;
 import kh.study.consupport.common.vo.SalesVO;
@@ -79,7 +81,12 @@ public class CommonController {
 	
 	@Resource(name = "paymentService")
 	private PaymentService paymentService;
-
+	
+	@Resource(name = "mailService")
+	private MailService mailService;
+	
+	
+	
 	
 	
 	@Data
@@ -102,22 +109,16 @@ public class CommonController {
 	}
 	
 	// 현재 접속 아이디가 모임?
-//	@GetMapping("test")
-//	public String authenticationTest(HttpServletRequest request, HttpSession session, Authentication authentication, Model model) {
-//		
-//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
-//		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
-//		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//
-//		
-//		return "redirect:/concertList";
-//	}
-	//test
 	@GetMapping("test")
-	public String test() {
+	public String authenticationTest(HttpServletRequest request, HttpSession session, Authentication authentication, Model model) {
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("현재 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
+		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 		return "/content/common/test";
+		//return "redirect:/concertList";
 	}
 
 	
@@ -265,7 +266,11 @@ public class CommonController {
 		}
 	}
 	
-	
+	@ResponseBody
+	@PostMapping("selectCoupon")
+	public CouponVO selectCoupon(String couponCode) {
+		return commonService.selectCoupon(couponCode);
+	}
 	
 	
 	

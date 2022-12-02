@@ -1,9 +1,12 @@
 package kh.study.consupport.common.config;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -65,29 +68,31 @@ public class SecurityConfig {
 				
 				String username = null;
 				
-//				// 익명계정 접속기록이 쿠키에 남아 있다면 해당 아이디를 불러온다.
-//				{
-//					List<Cookie> cookies = Arrays.asList(request.getCookies());
-//					if(cookies.size()>0) {
-//						for(Cookie ck : cookies)
-//							if(ck.getName().equals("ANONYMOUS_UUID")) {
-//								username = ck.getValue();
-//								
-//								System.out.println("### 쿠키 있음. 해당 쿠키로 로그인.");
-//							}
-//					}
-//				}
+				// 익명계정 접속기록이 쿠키에 남아 있다면 해당 아이디를 불러온다.
+				{
+					List<Cookie> cookies = Arrays.asList(request.getCookies());
+					if(cookies.size()>0) {
+						for(Cookie ck : cookies)
+							if(ck.getName().equals("ANONYMOUS_UUID")) {
+								username = ck.getValue();
+								
+								System.out.println("### 쿠키 있음. 해당 쿠키로 로그인.");
+							}
+					}
+				}
 				
 				// 쿠키에 없다면 신규 UUID를 발급한다.
 				if(username == null) {
+					System.out.println("###");
 					System.out.println("### 쿠키 없음. 신규 익명 아이디 발급필요.");
+					
 					username = UUID.randomUUID().toString();
 					
-					// ------------------ 쿠키에 username 담기 ------------------
+					System.out.println("###");
+					System.out.println("### 신규 UUID 발급 ! !");
+					System.out.println("###");
 					
 				}
-				
-				
 				
 				System.out.println("### userId : "+username);
 				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");

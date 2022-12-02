@@ -22,9 +22,6 @@
 			<link href="/bootstrap/css/stackedCards2.css" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 			<link href="/bootstrap/css/highlight.css" rel="stylesheet">
-			
-			<!-- 아티스트 상세보기 모달에 적용되는 css -->
-			<link href="/css/common/concert_list.css" rel="stylesheet"/>
 		</th:block>
 		
 
@@ -45,6 +42,26 @@
 					</ul>
 				</div>
 			</div>
+			
+			
+			<img 	class="mainArrowL"
+					src="/img/main_arrow_L.png" 
+					style="	position:absolute; 
+							top:450px; 
+							left:12%; 
+							cursor: pointer;
+							width: 70px; 
+							height: 70px;"
+							onclick="specialCard_MoveL();"/>
+			<img 	class="mainArrowR"
+					src="/img/main_arrow_R.png" 
+					style="	position:absolute; 
+							top:450px; 
+							right:12%; 
+							cursor: pointer;
+							width: 70px; 
+							height: 70px;"
+							onclick="specialCard_MoveR();"/>
 			
 			
 <!-- ========================================================================================================================================================== -->
@@ -82,18 +99,6 @@
 					
 				</div>
 <hr>
-<!-- ========================================================================================================================================================== -->
-<!-- 카드 테스트 /* */    -->
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -130,21 +135,40 @@
 		<!-- </div> -->
 		
 
+		<!-- 캘린더 페이지로 이동 -->
+		<img 	src="/img/calendar.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:210px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="location.href='/concertSchedule';"/>
+
 
 		<!-- 검색 페이지로 이동 -->
-		<a onclick="location.href='/searchForm';"
-           style="display:scroll; position:fixed; bottom:120px; right:30px; cursor: pointer;"
-           target="quests">
-		<img alt="BackToTop" src="/img/search.svg" style="width: 50px; height: 50px;"/>
-		</a>
+		<img 	src="/img/search.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:120px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="location.href='/searchForm';"/>
 		
 		
 		<!-- 화면 제일 위로 이동 -->
-		<a onclick="window.scrollTo(0,0);"
-           style="display:scroll; position:fixed; bottom:30px; right:30px; cursor: pointer;"
-           target="quests">
-		<img alt="BackToTop" src="/img/arrow-up-circle.svg" style="width: 50px; height: 50px;"/>
-		</a>
+		<img 	src="/img/arrow-up-circle.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:30px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="window.scrollTo(0,0);"/>
 
 
 
