@@ -33,13 +33,6 @@
 					<div class="form-group row">
 					
 <!-- ----------------------------------------------------------------------- -->
-
-				<!-- <div class="col-6">
-					USER_PW<input type="text" class="form-control" 
-					name="artistName" th:value="${user.userPw}">
-				</div> -->
-				
-<!-- ----------------------------------------------------------------------- -->
 			<!-- 닉네임 -->
 			<div >
 			
@@ -47,6 +40,21 @@
 				      <label style="text-align: left;" for="userName" class="form-label"> 이름</label>
 				      <input type="text" class="form-control" name="userName" th:value="${user.userName}">
 				</div>
+				
+<!-- ----------------------------------------------------------------------- -->
+
+				<!-- <div class="row myFormRow mb-3">
+					<label style="text-align: left;" for="userName" class="form-label"> 비밀번호 </label>
+					<input 	name="userPw"
+							class="form-control mb-1"
+							type="password"
+							placeholder="비밀번호"
+							autocomplete="off"
+							title="영문 대소문자, 숫자를 포함한 6~16자리"
+							required/> 
+					
+					<input name="userPwChecker" class="form-control" type="password" placeholder="비밀번호 확인" autocomplete="off" required /> 
+				</div> -->
 				
 				
 <!-- ----------------------------------------------------------------------- -->

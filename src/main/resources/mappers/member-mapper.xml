@@ -126,6 +126,7 @@
 		UPDATE USERS
 			SET
 			USER_NAME = #{userName}
+			, USER_PW = #{userPw}
 			, USER_ADDR = #{userAddr}
 			, USER_ADDR_DETAIL = #{userAddrDetail}
 			, USER_TELL = #{userTell}
