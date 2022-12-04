@@ -114,7 +114,7 @@ function infinityScroll(){
 						
 							<img class="card-img-top"
 								src="/img/concert/${concert.concertImgList[0].concertImgNameAttached}"
-								style="width: 350px; height: 430px;">
+								style="width: 350px; height: 430px; object-fit: cover;">
 								
 							<div class="card-body" style="padding-top: 20px; padding-bottom: 20px;">
 								<!-- <div class="badge bg-primary bg-gradient rounded-pill mt-1">NEW</div> -->
