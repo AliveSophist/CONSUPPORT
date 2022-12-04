@@ -34,6 +34,8 @@
 		<result column="IS_EXPIRED" 			property="isExpired"/>
 		
 		<association property="concert" 		resultMap="commonMapper.concert"/>
+		<association property="coupon" 			resultMap="coupon"/>
+		
 		<collection property="salesDetailList"	resultMap="salesDetail"/>
 	</resultMap>
 
@@ -46,18 +48,16 @@
 		<result column="SEAT_CODE" 			property="seatCode"/>
 		<result column="CONCERT_PRICE" 		property="concertPrice"/>
 	</resultMap>
-	
-	
-	<!-- <resultMap type="kh.study.consupport.common.vo.ArtistImgVO" id="artistImg">
-		<id column="ARTIST_IMG_CODE"		 		property="artistImgCode"/>
-		<result column="ARTIST_IMG_NAME_ORIGIN" 	property="artistImgNameOrigin"/>
-		<result column="ARTIST_IMG_NAME_ATTACHED" 	property="artistImgNameAttached"/>
-		<result column="ARTIST_IMG_IS_MAIN" 		property="artistImgIsMain"/>
-		<result column="USER_ID" 					property="userId"/>
-	</resultMap> -->
 
-
-
+	<!-- 쿠폰 -->
+	<resultMap type="kh.study.consupport.common.vo.CouponVO" id="coupon">
+		<id column="COUPON_CODE" 			property="couponCode"/>
+		<result column="COUPON_VALUE" 		property="couponValue"/>
+		<result column="COUPON_STATUS" 		property="couponStatus"/>
+		
+		<result column="USER_ID" 			property="userId"/>
+		<result column="SALES_CODE" 		property="salesCode"/>
+	</resultMap>
 
 
 <!--========================================================================================================================================================================================-->
@@ -166,6 +166,9 @@
 			, SALES_DETAIL_CODE
 			, SALES.SALES_CODE
 	
+			, COUPON_CODE
+			, COUPON_VALUE
+			
 			, SALES.CONCERT_CODE
 			, SALES.HALL_CODE
 			, HALL_RENT_DATE AS CONCERT_DATE
@@ -185,13 +188,16 @@
 			, SALES_AMOUNT
 			, SALES_DATE
 			, SALES.USER_ID
-		FROM SALES, SALES_DETAIL, CONCERT, CONCERT_PRICE, HALL_DATE, TICKET, CONCERT_IMG CONI
+
+		FROM SALES, SALES_DETAIL, COUPON CP, CONCERT, CONCERT_PRICE, HALL_DATE, TICKET, CONCERT_IMG CONI
 		WHERE SALES.SALES_CODE = SALES_DETAIL.SALES_CODE
+		AND SALES.SALES_CODE = CP.SALES_CODE(+)
 		AND SALES.CONCERT_CODE = CONCERT_PRICE.CONCERT_CODE
 		AND SALES.CONCERT_CODE = CONCERT.CONCERT_CODE
 		AND CONCERT.HALL_DATE_CODE = HALL_DATE.HALL_DATE_CODE
 		AND SALES_DETAIL.TICKET_CODE = TICKET.TICKET_CODE
 		AND CONI.CONCERT_CODE = CONCERT.CONCERT_CODE
+		
 		AND SALES_STATUS = 'PAID'
 		AND SALES.USER_ID = #{userId}
 		AND CONCERT_IMG_IS_MAIN = 'Y'

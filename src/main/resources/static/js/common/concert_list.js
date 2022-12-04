@@ -124,7 +124,7 @@ function infinityScroll(){
 								</div>
 								
 								<h5 class="card-title">
-									<a class="text-decoration-none link-dark stretched-link" href="#">
+									<a class="text-decoration-none link-dark stretched-link" href="#!">
 										${concert.concertName}
 									</a>
 								</h5>

@@ -243,6 +243,7 @@
 		) VALUES(
 		    #{salesCode}
 			, #{hallseat.hallSeatRCnt}+#{hallseat.hallSeatSCnt}+#{hallseat.hallSeatACnt}
+			
 			, (	(	SELECT CONCERT_PRICE_R * #{hallseat.hallSeatRCnt}
 		    		FROM CONCERT_PRICE
 		    		WHERE CONCERT_CODE = #{concertCode}	) +
@@ -252,6 +253,14 @@
 		    	(	SELECT CONCERT_PRICE_A * #{hallseat.hallSeatACnt}
 			    	FROM CONCERT_PRICE
 			    	WHERE CONCERT_CODE = #{concertCode}	)	)
+			
+			<!-- 쿠폰이 있다면 ↑위에서 연산한 값에 (100-할인율) / 100 시행해! -->
+		    <if test="coupon.couponCode != null and !coupon.couponCode.equals('')">
+		    	* (100-(SELECT COUPON_VALUE 
+    					FROM COUPON
+    					WHERE COUPON_CODE = #{coupon.couponCode})) / 100
+			</if>
+			
 			, #{userId}
 			, #{hallCode}
 			, #{concertCode}
@@ -291,6 +300,20 @@
 			SALES_STATUS = #{salesStatus} <!-- 'PAID' or 'CANCELED' -->
 		WHERE
 			SALES_CODE =  #{salesCode}
+	</update>
+	
+	<update id="useCoupon">
+    	UPDATE COUPON
+		SET
+			COUPON_STATUS = 'USED'
+		    , USER_ID = #{userId}
+		    , SALES_CODE = #{salesCode}
+		WHERE COUPON_CODE IN( 
+			'DUMMY'
+		<if test="coupon.couponCode != null and !coupon.couponCode.equals('')">
+			, #{coupon.couponCode}
+		</if>
+		)
 	</update>
 	
 	<update id="letsTicketing">

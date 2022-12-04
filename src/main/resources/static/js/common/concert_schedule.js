@@ -60,10 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			
 			showModal(document.querySelector('#concertDetailModalForReserve'));
 			concertDetailModalForReserve(info.event.id); // = concert.concertCode);
-			
-//			if (info.event.url) {
-//				window.open(info.event.url);
-//			}
 		}
 	});
 	calendar.render();

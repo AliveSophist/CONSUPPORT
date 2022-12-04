@@ -23,24 +23,50 @@ window.addEventListener('beforeunload', (event) => {
     event.returnValue = ''; 								// 대표적으로 Chrome에서는 returnValue 설정이 필요합니다.
 });
 
-
-
-//문서가 준비되면 제일 먼저 실행
-//$(document).ready(function() {
-//	$("#iamportPayment").click(function() {
-//		payment(); //버튼 클릭하면 호출 
-//	});
-//})
+$(document).keypress(function(e) {
+    if (e.keyCode == 13)
+        e.preventDefault();	//엔터 이벤트 막기
+});
 
 
 
-//let mer_uid_for_test;
 
-function tryPay(isTest) {
+
+function tryPay() {
 	
 	// 좌석 고르지도 않아놓고 누르지마.
 	if(document.querySelector('#salesAmount').value == 0)
 		return;	// 너 결제 못감 ㅅㄱ
+	
+	// 익명유저라면 이메일 입력 '해줘'
+	if(document.querySelector('#authorities').value.indexOf('ROLE_ANONYMOUS')>0) {
+		
+		//이거 Swal 비동기화라서 어쩔 수 없음1
+		if(document.querySelector('#anonymousEmail').value.length < 5){
+			
+			(async () => {
+				const { value: email } = await Swal.fire({ heightAuto: false , backdrop: "rgba(0,0,0,0.4)"	// swal 뜰 때 화면 위로 올라감 방지
+					, title: '이메일을 입력하세요'
+					, html: '<input type="text" style="display:none;">'
+					, inputLabel: '티켓 발송을 위한 이메일을 입력해 주세요.'
+					, input: 'email'
+					, inputPlaceholder: 'Enter your email address'
+				})
+				if (email) {
+					document.querySelector('#anonymousEmail').value = email;
+					
+					//이거  Swal 비동기화라서 어쩔 수 없음2
+					tryPay();
+				}
+			})()
+			
+			//이거  Swal 비동기화라서 어쩔 수 없음3
+			return;
+		}
+		
+	}
+	
+	
 	
 	console.log('hallSeatRCnt : ' + document.querySelector('#hallSeatRCnt').value);
 	
@@ -49,7 +75,6 @@ function tryPay(isTest) {
 		type: 'post',
 		data: new FormData( document.querySelector('#reserveSeatForm') ),
 		
-		//얘네 둘은 뭐하는 애들이지?? 얘네 없으면 FormData 안됨
 		processData:false,
 		contentType:false,
 		
@@ -60,6 +85,9 @@ function tryPay(isTest) {
 			// 생성 가능하다면 salesCode. = 'SALES_000001'
 			// 생성 불가능하면 null.
 			document.querySelector('#salesCode').value = result;
+			
+			var merchant_uid = (f_append_id + document.querySelector('#salesCode').value + b_append_id)
+			document.querySelector('#uidForDebugging').innerHTML = `merchant_uid : ${merchant_uid}`;
 		},
 		error: function() {
 			alert('실패');
@@ -67,11 +95,19 @@ function tryPay(isTest) {
 	});
 	
 	if(document.querySelector('#salesCode').value.length < 4){
-		alert('해당 좌석은 이미 구매되었거나 결제 진행중입니다.');
+		Swal.fire({ heightAuto: false , backdrop: "rgba(0,0,0,0.4)"	// swal 뜰 때 화면 위로 올라감 방지
+			, icon: 'warning'
+			, title: '해당 좌석은 이미 구매되었거나 결제 진행중입니다.'
+			//, text: ``
+		}).then((result) => {
+				refreshByForce = true;
+				history.go(0);
+		});
 		
-		refreshByForce = true;
-		history.go(0);
+		return;
 	}
+	
+	
 	
 	IMP.init('imp60175080');				//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 	IMP.request_pay({
@@ -102,16 +138,12 @@ function tryPay(isTest) {
 				success: function(result){
 					if(result == 'PAID')
 					{
-						if(isTest)
-							return;
-						else{
-							refreshByForce = true;
-							window.close();
-							
-							// myPage로 가게 할거임..
-							//refreshByForce = true;
-							//history.go(0);
-						}
+						refreshByForce = true;
+						window.close();
+						
+						// myPage로 가게 할거임..
+						//refreshByForce = true;
+						//history.go(0);
 						
 					}
 				},
@@ -126,6 +158,10 @@ function tryPay(isTest) {
 				url: '/cancelWhenPaying', //요청경로
 				type: 'post',
 				data: {	"salesCode" : document.querySelector('#salesCode').value },
+				
+				//동기 방식으로 사용하기
+				async: false,
+				
 				success: function(result) {
 					refreshByForce = true;
 					history.go(0);
@@ -136,19 +172,6 @@ function tryPay(isTest) {
 		}
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -188,6 +211,7 @@ function cancelPay() {
 // 이걸로하면 CORS 오류... 나더라...
 // https://evan-moon.github.io/2020/05/21/about-cors/
 // 솔까 뭔지 모름 ㅈㅈ
+
 function cancelPay() {
 	jQuery.ajax({
 		// 예: http://www.myservice.com/payments/cancel
@@ -222,20 +246,25 @@ function loadCoupon() {
 		async: false,
 		success: function(coupon) {
 			if(coupon.couponCode == null){
-				Swal.fire({
-					icon: 'warning'
+				Swal.fire({ heightAuto: false , backdrop: "rgba(0,0,0,0.4)"	// swal 뜰 때 화면 위로 올라감 방지
+					, icon: 'error'
 					, title: `유효하지 않은 쿠폰입니다`
-					//, text: `CLEARED LINES : ${numClearedLine}　SCORE : ${score}`
-					}).then((result) => {
-					
+					//, text: ``
+				}).then((result) => {
+					document.querySelector('#couponValue').value = 0;
+					updateView();
 				});
 				return;
 			}
 			else{
-				Swal.fire({
-					icon: 'success'
+				Swal.fire({ heightAuto: false , backdrop: "rgba(0,0,0,0.4)"	// swal 뜰 때 화면 위로 올라감 방지
+					, icon: 'success'
 					, title: `사용 가능한 쿠폰입니다`
-					, text: `할인율 : ${coupon.couponValue}%`});
+					, text: `할인율 : ${coupon.couponValue}%`
+				}).then((result) => {
+					document.querySelector('#couponValue').value = coupon.couponValue;
+					updateView();
+				});
 			}
 		},
 		error: function() {
@@ -244,26 +273,5 @@ function loadCoupon() {
 	});
 	//ajax end
 	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

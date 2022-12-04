@@ -1,6 +1,6 @@
  
  // 테스트시 SALES 코드 중첩이 발생하기 쉬우므로 덧붙이는 문자열 필요..
-let f_append_id = 'USDFVL_';
+let f_append_id = 'USKJ_';
 let b_append_id = '';
 
 
@@ -223,7 +223,7 @@ function artistDetailModalForReserve(userId){
 					if(artistImg.artistImgIsMain == 'N'){
 						
 			str +=	`<li>`
-			str +=		`<a href="#">`
+			str +=		`<a href="#!">`
 			str +=			`<img src="/img/artist/${artistImg.artistImgNameAttached}">`
 			str +=		`</a>`
 			str +=	`</li>`
@@ -249,7 +249,7 @@ function artistDetailModalForReserve(userId){
 
 
 function openReserveSeatForm(concertCode, hallCode){
-	const option='top=10,left=200,width=900,height=900,resizable=0,';
+	const option='top=10,left=200';
 	const url=`/reserveSeatForm?concertCode=${concertCode}&hallCode=${hallCode}`;
 	window.open(url, 'popup', option);
 }

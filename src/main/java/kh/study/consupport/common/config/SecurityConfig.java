@@ -68,8 +68,12 @@ public class SecurityConfig {
 				
 				String username = null;
 				
+				
+				
+				
+				
 				// 익명계정 접속기록이 쿠키에 남아 있다면 해당 아이디를 불러온다.
-				{
+				if(request.getCookies() != null) {
 					List<Cookie> cookies = Arrays.asList(request.getCookies());
 					if(cookies.size()>0) {
 						for(Cookie ck : cookies)

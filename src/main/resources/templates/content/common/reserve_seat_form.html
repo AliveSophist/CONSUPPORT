@@ -16,18 +16,17 @@
 
 	<th:block>
 		<link rel="stylesheet" href="/css/common/reserve_seat_form.css" />
+	
+		<!-- swal -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+		
+		<!-- jQuery  -->
+		<script	src="https://code.jquery.com/jquery-latest.min.js"></script>
+	    
+		<!-- iamport.payment.js --> 
+	    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 	</th:block>
-	
-	<!-- swal -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-	
-	<!-- jQuery  -->
-	<script	src="https://code.jquery.com/jquery-latest.min.js"></script>
-    
-	<!-- iamport.payment.js --> 
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
 
 
 	<ul class="showcase">
@@ -322,7 +321,10 @@
 	
 	<br>
 	
-	<form id="reserveSeatForm" name="reserveSeatForm">
+	<form id="reserveSeatForm" name="reserveSeatForm" onsubmit="return false">
+		<input type="hidden" 	id="authorities" th:value="${authorities}" readonly>
+		<input type="hidden" 	name="anonymousEmail" id="anonymousEmail" value="" readonly>
+		
 		<input type="hidden" 	name="hallSeatRCnt" id="hallSeatRCnt" value="0" readonly>
 		<input type="hidden" 	name="hallSeatSCnt" id="hallSeatSCnt" value="0" readonly>
 		<input type="hidden" 	name="hallSeatACnt" id="hallSeatACnt" value="0" readonly>
@@ -332,8 +334,8 @@
 		<input type="hidden"	name="ticketCodeList" id="ticketCodeList">
 		<input type="hidden"	name="salesCode" id="salesCode">
 		
-		<input type="number"	name="salesAmount" id="salesAmount" style="width:60px; text-align:right;" readonly> 매　　　
-		<input type="number" 	name="salesTotalPrice" id="salesTotalPrice" style="width:100px; text-align:right;" readonly> 원
+		<input type="number"	name="salesAmount" id="salesAmount" class="fontBox" style="width:80px; text-align:right; margin-right:7px;" readonly><span class="fontBox">매　　　</span>
+		<input type="number" 	name="salesTotalPrice" id="salesTotalPrice" class="fontBox" style="width:120px; text-align:right; margin-right:7px;" readonly><span class="fontBox">원</span>
 		
 		<br>
 		
@@ -342,40 +344,26 @@
 		<br>
 		<br>
 		
-		<input type="text" 	name="couponCode" id="couponCode" style="width:170px;" placeholder="여기에 쿠폰 코드 입력">　
-		<button type="button" onclick="loadCoupon();" style="width:60px;">조회</button>
+		<input type="text" 		name="couponCode" id="couponCode" class="fontBox" style="width:230px;" placeholder="여기에 쿠폰 코드 입력">　
 		
+		<button type="button" onclick="loadCoupon();" class="fontBox" style="width:60px;">조회</button>
 	</form>
 	
 	
-	<div id="isExistCoupon" style="margin-top: 10px; color:red">아직 등록된 쿠폰이 없습니다.</div>
-	
+	<br>
+	<div id="isExistCoupon"><span style="color:red">아직 등록된 쿠폰이 없습니다.</span></div>
 	
 	
 	<br>
 	<br>
-	
-	
-	<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-		<div>
-			<input type="email" name="anonymousEmail" id="anonymousEmail" placeholder="여기에 발송 Email 주소 입력" style="width:230px;">
-		</div>
-		<br>
-	</div>
-	
-	<button type="button" onclick="tryPay(false);" style="height: 50px; font-size: 1.2rem;">지금 바로 결제</button>
-
-<!-- 
-	<div>
-		<h2>IAMPORT 환불 테스트</h2> 
-		<button type="button" onclick="tryPay(true);">환불test용 결제</button>
-		<button type="button" onclick="cancelPay();">지금 바로 환불</button>
-	</div> -->
-	
+	<button type="button" onclick="tryPay();" style="height: 50px; font-size: 1.2rem;"><b>지금 바로 결제</b></button>
 	
 	<br>
-	<br>
 	
+	
+	
+	<!-- 종료된 요청입니다. 일때 확인용 salesCode. -->
+	<span id="uidForDebugging" style="display:scroll; position:fixed; bottom:3px; left:3px; color: #222131"></span>
 	
 	
 	
@@ -383,7 +371,8 @@
 		const seats = document.querySelectorAll(".row .seat");
 	
 		const ticketList = /*[[${ticketList}]]*/[];	// 대괄호 안넣으면 오류는 안나는데 빨간줄뜸 거지같은 타임리프 문법 수준...
-		window.resizeTo(750, 700+(ticketList.length*2))
+		window.resizeTo(750, 800+(ticketList.length*2));
+		
 		console.log(ticketList)
 ///////////////////////////////////////////////////// 넣자.
 		let concertPriceR = /*[[${concert.concertPrice.concertPriceR}]]*/[];
@@ -434,7 +423,16 @@
 	
 				if (!s.classList.contains('selected')) {
 					if(ticketCodeList.length == 4){
-						alert('1인 4좌석까지만 구매 가능');
+						Swal.fire({ heightAuto: false , backdrop: "rgba(0,0,0,0.4)"	// swal 뜰 때 화면 위로 올라감 방지
+							, icon: 'warning'
+							, title: '1인 4좌석까지만 구매 가능합니다'
+							//, text: ``
+						}).then((result) => {
+								refreshByForce = true;
+								history.go(0);
+						});
+						
+						
 						return;
 					}
 					
@@ -492,6 +490,10 @@
 			document.querySelector('#ticketCodeList').value = ticketCodeList;
 			document.querySelector('#salesAmount').value = salesAmount;
 			document.querySelector('#salesTotalPrice').value = salesTotalPrice;
+			
+			const couponValue = document.querySelector('#couponValue').value;
+			if(couponValue > 0)
+				document.querySelector('#salesTotalPrice').value = salesTotalPrice - (salesTotalPrice * couponValue/100);
 		}
 	</script>
 	

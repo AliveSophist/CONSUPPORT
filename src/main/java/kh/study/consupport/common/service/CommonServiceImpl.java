@@ -87,6 +87,7 @@ public class CommonServiceImpl implements CommonService{
 		// 문제없어? 그럼...!
 		sales.setSalesStatus("PAID");
 		sqlSession.update("commonMapper.updateSales", sales);
+		sqlSession.update("commonMapper.useCoupon", sales);		
 		sqlSession.update("commonMapper.letsTicketing", sales);
 		
 		return "PAID";

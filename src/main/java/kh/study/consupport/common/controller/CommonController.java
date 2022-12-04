@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -117,6 +118,10 @@ public class CommonController {
 		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
+		
+		
+		//mailService.sendMailWithFiles("dop03072@naver.com");
+		
 		return "/content/common/test";
 		//return "redirect:/concertList";
 	}
@@ -185,7 +190,10 @@ public class CommonController {
 //==================================================================================================================================================================================================================
 	
 	@GetMapping("reserveSeatForm")
-	public String loadReserveSeatForm(ConcertVO concert, Model model) {
+	public String loadReserveSeatForm(Authentication authentication, ConcertVO concert, Model model) {
+		
+		// 권한 넣어서 가라
+		model.addAttribute("authorities", ((UserDetails)authentication.getPrincipal()).getAuthorities().toString());
 		
 		// concertPrice 넣어서 가라
 		concert.setConcertPrice( commonService.selectConcertPrice(concert) );
@@ -200,7 +208,7 @@ public class CommonController {
 	
 	@ResponseBody
 	@PostMapping("getSalesCode")
-	public String insertSalesAndGetBuyCode(SalesVO sales, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {
+	public String insertSalesAndGetBuyCode(SalesVO sales, CouponVO coupon, HallSeatVO hallSeat, HttpServletRequest request, Authentication authentication) {
 
 		if(request.isUserInRole("ROLE_ANONYMOUS"))
 			sales.setUserId("ANONYMOUS");
@@ -208,20 +216,23 @@ public class CommonController {
 			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
 
 
+		
 		sales.setHallseat(hallSeat);
+		sales.setCoupon(  coupon.getCouponValue()>0 ? coupon : new CouponVO()  );
 		
 		return commonService.getSalesCode(sales);
 	}
 	
 	@ResponseBody
 	@PostMapping("reserveSeat")
-	public String reserveSeat(SalesVO sales, HttpServletRequest request, Authentication authentication) {
+	public String reserveSeat(SalesVO sales, CouponVO coupon, HttpServletRequest request, Authentication authentication) {
 		
 		if(request.isUserInRole("ROLE_ANONYMOUS"))
 			sales.setUserId("ANONYMOUS");
 		else
 			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
 		
+		sales.setCoupon(  coupon.getCouponValue()>0 ? coupon : new CouponVO()  );
 		
 		// it returns 'PAID' or 'CANCELED'
 		return commonService.tryTicketing(sales);

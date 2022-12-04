@@ -22,52 +22,52 @@
 					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
 
 
-						
-						<button class="accordion-button collapsed align-middle mb-2" type="button"
-								data-bs-toggle="collapse" 
-								th:data-bs-target="|#panelsStayOpen-collapseOne${salesInfoStat.count}|" 
-								aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
-								style="font-size: 1.5rem;"
-								>
+					
+					<button class="accordion-button collapsed align-middle mb-2" type="button"
+							data-bs-toggle="collapse" 
+							th:data-bs-target="|#panelsStayOpen-collapseOne${salesInfoStat.count}|" 
+							aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
+							style="font-size: 1.5rem;"
+							>
+							
+							<div class="row" style="width:100%; margin-left: 1.5rem;">
 								
-								<div class="row" style="width:100%; margin-left: 1.5rem;">
+								<div class="col-2">
+										<img th:src="|@{/img/concert/}${salesInfo.concert.concertImgList[0].concertImgNameAttached}|"
+											 th:onclick=""
+											 style="height: 160px; width: 130px">
+								</div>
+								
+								<div class="col-9 " style="margin-left: -20px; padding-top: 2rem;">	
+									<span style="font-weight: bold; font-size: 1.5rem">
+										[ [[${salesInfo.salesDate}]] ]<br>
+									</span>
 									
-									<div class="col-2">
-											<img th:src="|@{/img/concert/}${salesInfo.concert.concertImgList[0].concertImgNameAttached}|"
-												 th:onclick=""
-												 style="height: 160px; width: 130px">
-									</div>
+									<span style="font-weight: bold; font-size: 1.5rem">
+										[[${salesInfo.salesAmount}]]
+									</span>매의 티켓을
 									
-									<div class="col-9 " style="margin-left: -20px; padding-top: 2rem;">	
-										<span style="font-weight: bold; font-size: 1.5rem">
-											[ [[${salesInfo.salesDate}]] ]<br>
-										</span>
-										
-										<span style="font-weight: bold; font-size: 1.5rem">
-											[[${salesInfo.salesAmount}]]
-										</span>매의 티켓을
-										
-										<span style="font-weight: bold; font-size: 1.5rem">
-											[[${salesInfo.salesTotalPrice}]] 
-										</span>원에 구매하였습니다.<br>
-										
-										<span style="color: aqua;"><br>
-											( [[${salesInfo.isExpired}]] )
-										</span>
-									</div>
+									<span style="font-weight: bold; font-size: 1.5rem">
+										[[${salesInfo.salesTotalPrice}]] 
+									</span>원에 구매하였습니다.<br>
 									
-									
+									<span style="color: aqua;"><br>
+										( [[${salesInfo.isExpired}]] )
+									</span>
 								</div>
 								
 								
-								
-								<!-- <div class="row" style="margin-left: 2rem;">
-						
-						 		</div> -->
-								
-								
-								
-						</button>
+							</div>
+							
+							
+							
+							<!-- <div class="row" style="margin-left: 2rem;">
+					
+					 		</div> -->
+							
+							
+							
+					</button>
 						
 						
 						

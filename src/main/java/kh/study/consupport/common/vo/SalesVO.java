@@ -48,4 +48,6 @@ public class SalesVO {
 	private List<String> ticketCodeList;
 	
 	private HallSeatVO hallseat;
+	
+	private CouponVO coupon;
 }

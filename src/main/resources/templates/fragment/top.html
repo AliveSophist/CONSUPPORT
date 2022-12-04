@@ -547,16 +547,20 @@
 					}
 					
 					//가입 성공한 경우 자동으로 로그인 완료!
-					alert('반갑습니다! ' + result.userName + ' 님');
-
-					// 						if(result.memberRole.indexOf('ADMIN') > -1){
-					// 							alert('관리자 로그인 입니다..!');
-					// 							location.href = '/admin/regItem';
-					// 							return;
-					// 						}
-
-					alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
-					location.href = result.Referer;
+					Swal.fire({
+						icon: 'success'
+						, title: `${result.userName} 님 가입이 완료되었습니다!`
+						, text: `자동으로 이전 페이지로 돌아갑니다!`
+						}).then(() => {
+							
+							// 						if(result.userRole.indexOf('ADMIN') > -1){
+							// 							alert('관리자 로그인 입니다..!');
+							// 							location.href = '/admin/regItem';
+							// 							return;
+							// 						}
+							//						else
+							location.href = result.Referer;
+					});
 				},
 				error : function() {
 					alert('Ajax 실패');
@@ -585,16 +589,21 @@
 						return;
 					}
 
-					alert('반갑습니다! ' + result.userName + ' 님');
-
-					// 						if(result.memberRole.indexOf('ADMIN') > -1){
-					// 							alert('관리자 로그인 입니다..!');
-					// 							location.href = '/admin/regItem';
-					// 							return;
-					// 						}
-
-					alert('일반 회원이십니다.\n이전 페이지로 돌아갑니다..!');
-					location.href = result.Referer;
+					//로그인 완료!
+					Swal.fire({
+						icon: 'success'
+						, title: `반갑습니다! ${result.userName} 님`
+						, text: `자동으로 이전 페이지로 돌아갑니다!`
+						}).then(() => {
+							
+							// 						if(result.userRole.indexOf('ADMIN') > -1){
+							// 							alert('관리자 로그인 입니다..!');
+							// 							location.href = '/admin/regItem';
+							// 							return;
+							// 						}
+							//						else
+							location.href = result.Referer;
+					});
 				},
 				error : function() {
 					alert('Ajax 실패');

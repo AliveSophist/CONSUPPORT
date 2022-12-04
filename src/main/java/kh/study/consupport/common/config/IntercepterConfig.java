@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -57,11 +59,13 @@ public class IntercepterConfig implements WebMvcConfigurer{
 				boolean isExistCookie = false;
 				
 				// 익명계정 접속기록이 쿠키에 남아 있나? 확인하자.
-				List<Cookie> cookies = Arrays.asList(request.getCookies());
-				if(cookies.size()>0) {
-					for(Cookie ck : cookies)
-						if(ck.getName().equals("ANONYMOUS_UUID"))
-							isExistCookie = true;
+				if(request.getCookies() != null) {
+					List<Cookie> cookies = Arrays.asList(request.getCookies());
+					if(cookies.size()>0) {
+						for(Cookie ck : cookies)
+							if(ck.getName().equals("ANONYMOUS_UUID"))
+								isExistCookie = true;
+					}
 				}
 				
 				// 발급받은 ANONYMOUS_UUID 쿠키가 없다면 내가 특. 별. 히. 하! 나! 발급해주께!!
@@ -89,27 +93,6 @@ public class IntercepterConfig implements WebMvcConfigurer{
 			
 		};
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
