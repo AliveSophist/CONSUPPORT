@@ -1,6 +1,7 @@
 package kh.study.consupport.common.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -126,20 +127,21 @@ public class CommonController {
 		//return "redirect:/concertList";
 	}
 
+	@GetMapping("accessDenied")
+	public String accessDenied() {
+		return "/content/common/accessDenied";
+	}
 	
 //==================================================================================================================================================================================================================
 
 	
 
 
-	@GetMapping("accessDenied")
-	public String accessDenied() {
-		return "/content/common/accessDenied";
-	}
 
 	
 	// 메인화면 콘서트 목록 조회
 	@GetMapping("concertList")
+	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지..
 	public String selectConcertListOfCommon(Model model) {
 		//model.addAttribute("concertList", commonService.selectConcertListOfCommon(1));
 		model.addAttribute("specialList", commonService.selectSpecialConcertListOfCommon());
@@ -354,7 +356,7 @@ public class CommonController {
 
 	
 	@ResponseBody
-	@PostMapping("/join")
+	@PostMapping("join")
 	public Object join(@Validated UsersVO user, BindingResult bindingResult, HttpServletRequest request) {
 		// ㄴ 이걸 Object 로 할 수도 있네!?
 		
@@ -400,7 +402,7 @@ public class CommonController {
 		return new ModelAndView("redirect:/login");
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("login")
 	public String loadLoginFormOnYourPage(HttpServletRequest request) {
 		
 		System.out.println("로그인창 열기.");
@@ -431,7 +433,7 @@ public class CommonController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/loginResult")
+	@RequestMapping("loginResult")
 	public Map<String, String> loginResult(	HttpServletRequest request
 											, boolean isSuccess
 											, String failureCode
@@ -471,4 +473,109 @@ public class CommonController {
 		
 		return hashLoginInfo;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// URI Request. 참고용
+	
+	// 콘서포트서버에서 백업서버로 보내버리는 리퀘스트.
+	//			http://localhost:8082/
+	
+	// 백업서버에서 접속하는 리퀘스트 두개.
+	//			http://localhost:8088/enterTheWaitingQueue
+	//			http://localhost:8088/isAvailableEnter
+	
+	
+	// 테스트 대기열에 입장 시도. (입장 불가 시 로그인 불가.)
+
+	
+	// 테스트 대기열 생성 
+	@ResponseBody
+	@PostMapping ("readyForWaitingQueueTest")
+	public void setForWaitingQueueTest(HttpServletRequest request, Authentication authentication) {
+		System.out.println("################################################################");
+		System.out.println("###");
+		System.out.println("### 테스트용 큐에 더미 유저 채우는중... ^^");
+		System.out.println("###");
+		System.out.println("################################################################");
+		
+		// n개의 더미 계정 삽입..!
+		securityConfig.makeDummyWaitingQueue(250);
+	}
+	
+
+	// 테스트 대기열에 입장 (로그인 불가. +로그아웃)
+	@ResponseBody
+	@PostMapping ("enterTheWaitingQueue")
+	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지..
+	public void enterTheWaitingQueue(String keyQueue, HttpServletRequest request, Authentication authentication) {
+		System.out.println("################################################################");
+		System.out.println("###");
+		System.out.println("### 현재 큐 접속 인원 : " + securityConfig.getNowTestQueueSize());
+		System.out.println("###");
+		System.out.println("### 테스트용 큐에 접속합니다...");
+		System.out.println("###");
+		System.out.println("################################################################");
+		
+		// LET ME IN TESTING QUEUE!!
+		securityConfig.plzLetMeInTestQueue( keyQueue );
+	}
+	// 대기열에서 입장가능한지 확인..!
+	@ResponseBody
+	@PostMapping ("isAvailableEnter")
+	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지..
+	public Map<String, Object> isAvailableEnter(String keyQueue, HttpServletRequest request, Authentication authentication) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		
+		// 나 지금 들어갈 수 있냐?
+		boolean isAvailableEnter = securityConfig.isAvailableEnter(keyQueue);
+		result.put("isAvailableEnter", isAvailableEnter);
+		
+		
+		// 기다려야하네..?
+		if(!isAvailableEnter)
+		{
+			// 현재 대기열 번호 줘.
+			int numLeftQueue = securityConfig.getMyQueueNum(keyQueue);
+			result.put("numLeftQueue", numLeftQueue);
+		}
+		
+		// 0번 대기열이시면 입장하실 수 있습니다. 갓 생성한 따끈따끈한 마법의 코드를 발! 급!
+		else
+		{
+			securityConfig.randomTemporaryCertCode();
+			result.put("certCode", securityConfig.getTemporaryCertCode());
+		}
+		
+		
+		result.put("toString", result.toString());
+		
+		return result;
+	}
+	
+	
 }

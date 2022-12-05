@@ -251,6 +251,8 @@ function loadCoupon() {
 					, title: `유효하지 않은 쿠폰입니다`
 					//, text: ``
 				}).then((result) => {
+					document.querySelector('#isExistCoupon').innerHTML = '활성화된 쿠폰이 없습니다.';
+					
 					document.querySelector('#couponValue').value = 0;
 					updateView();
 				});
@@ -262,6 +264,8 @@ function loadCoupon() {
 					, title: `사용 가능한 쿠폰입니다`
 					, text: `할인율 : ${coupon.couponValue}%`
 				}).then((result) => {
+					document.querySelector('#isExistCoupon').innerHTML = '　';
+					
 					document.querySelector('#couponValue').value = coupon.couponValue;
 					updateView();
 				});

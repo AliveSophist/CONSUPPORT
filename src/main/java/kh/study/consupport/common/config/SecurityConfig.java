@@ -1,11 +1,16 @@
 package kh.study.consupport.common.config;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,6 +30,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
@@ -36,10 +43,15 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import kh.study.consupport.common.vo.UsersVO;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -51,6 +63,59 @@ public class SecurityConfig {
 		
 		// csrf 무시
 		security.csrf().disable();
+		
+		
+		
+		
+		
+
+		//누구보다 빠른 필터..!
+		class BeforeUPAFilter implements Filter {
+			
+			@Override
+			public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+				
+				
+				// 화이트리스트 request 한정 문 열어준다.
+				String[] whiteList = {"/enterTheWaitingQueue", "/isAvailableEnter"};
+				if( PatternMatchUtils.simpleMatch(whiteList, ((HttpServletRequest) request).getRequestURI()) ) {
+					
+					chain.doFilter(request, response);
+					return;
+				}
+				
+				
+				
+				// 접속대기열이 있더라도 마법의 코드가 있다면 문 열어준다.
+				String certCode = request.getParameter("certCode");
+				boolean isCertificated = false;
+				
+				if(certCode!=null) {
+					if(certCode.equals(getTemporaryCertCode())) {
+						
+						// 마법의 코드 있으면 문 열어준다.
+						isCertificated = true;
+
+						// 문 열어주면 마법의 코드는 바뀐다.
+						//randomTemporaryCertCode();
+						//System.out.println("바뀐 인증 코드 : " + getTemporaryCertCode());
+					}
+				}
+				
+				
+				// 접속대기열이 차 있다면? 인증되지 않았으면 저세상으로 팅궈버리기
+				if (/* getNowTestQueueSize() > 0 && */ (SecurityContextHolder.getContext().getAuthentication() == null) && !isCertificated) {
+					((HttpServletResponse) response).sendRedirect("http://localhost:8082/");
+					
+					return;
+				}
+				
+				
+		        chain.doFilter(request, response);
+			}
+		}
+		
+		security.addFilterBefore(new BeforeUPAFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 		
 		// 익명유저 허용
@@ -285,4 +350,100 @@ public class SecurityConfig {
 	    return daoAuthenticationProvider;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	// 테스트용 대기열 큐 구현..!
+	static class ForTest_WaitingQueue {
+		
+		public static List<String> dummyWaitingQueue = new ArrayList<>();
+		
+		public static String temporaryCertCode = "cert";//UUID.randomUUID().toString();
+	}
+
+	
+	
+	
+	
+	
+	// 테스트용 n명짜리 대기열 강제 생성.
+	public void makeDummyWaitingQueue(int dummySize) {
+		
+		//for문 돌리면서 촤라락 넣는다잇
+		for(int i=0; i<dummySize; i++)
+			ForTest_WaitingQueue.dummyWaitingQueue.add( UUID.randomUUID().toString().toUpperCase() );
+		
+	}
+	
+	
+	// 테스트용 대기열 지금 몇 명있나?
+	public int getNowTestQueueSize() 
+	{ return ForTest_WaitingQueue.dummyWaitingQueue.size(); }
+	
+	
+	// 렛 미 인 Test Queue! 날 테스트 큐에 넣어주세요!
+	public void plzLetMeInTestQueue(String keyQueue) 
+	{ ForTest_WaitingQueue.dummyWaitingQueue.add( keyQueue ); }
+	
+	
+	// 내 대기열 지금 몇번째?
+	public int getMyQueueNum(String keyQueue) {
+		
+		for(int i=0; i<ForTest_WaitingQueue.dummyWaitingQueue.size(); i++)
+			if( ForTest_WaitingQueue.dummyWaitingQueue.get(i).equals(keyQueue) )
+				return i;
+		
+		return 99999;
+	}
+	
+	
+	// 테스트용 대기열 이제 로그인 가능하냐?
+	public boolean isAvailableEnter(String keyQueue) {
+		
+		// 내가 지금 0번 대기열에 있니?
+		if(ForTest_WaitingQueue.dummyWaitingQueue.get(0).equals(keyQueue)) {
+			return true;
+		}
+		
+		// 테스트용 대기열 점진적 삭제.
+		ForTest_WaitingQueue.dummyWaitingQueue.remove(0);
+		return false;
+	}
+	
+	
+
+	// 인증코드 뒤섞어버리기
+	public void randomTemporaryCertCode() {
+		ForTest_WaitingQueue.temporaryCertCode = UUID.randomUUID().toString();
+		System.out.println("바뀐 인증 코드 : " + ForTest_WaitingQueue.temporaryCertCode);
+	}
+	// 0번 대기자 오셨다! 임시 인증코드 만들어 드려! 빨리!
+	public String getTemporaryCertCode() {
+		return ForTest_WaitingQueue.temporaryCertCode;
+	}
 }

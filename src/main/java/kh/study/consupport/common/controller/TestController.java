@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,32 +48,23 @@ public class TestController {
 
 	@Resource(name = "ownerService")
 	private OwnerService ownerService;
-	
+
 	@Resource(name = "paymentService")
 	private PaymentService paymentService;
-	
+
 	@Resource(name = "testService")
 	private TestService testService;
 
-	
-	
 	@Data
 	class PageDefaultValues {
 		// 로그인 및 비회원이 이용하는 서비스에 필요한 변수들..
 		boolean openLogin = false;
 	}
+
 	@ModelAttribute
-	public void putModelAttribute( PageDefaultValues pdv, Model model) {
+	public void putModelAttribute(PageDefaultValues pdv, Model model) {
 		model.addAttribute("openLogin", pdv.isOpenLogin());
 	}
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
+
 }
