@@ -1,5 +1,6 @@
 package kh.study.consupport.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -138,10 +139,38 @@ public class AdminController {
 		return commonService.selectConcertDetail(concertVO);
 	}
 
+//==================================================================================================================
+	
+	// 아티스트 매출관리 그래프 띄우는 페이지
+	@GetMapping("/incomeManager")
+	public String incomeManager() {
+		return "/content/admin/income_manager";
+	}
 	
 	
 	
-	
+	// 아티스트 매출관리 그래프 띄우기
+	@ResponseBody
+	@PostMapping("loadIncomeManager")
+	public Map<String, Object> loadIncomeManager() {
+		
+		// Map생성
+		Map<String, Object> chartMap = new HashMap<>();
+		
+		//그래프 띄우기 (concertCode)
+		chartMap.put("concertCodeList", adminService.selectIncomeInfo_concertCodeList());
+		
+		// 그래프 띄우기 (concertName)
+		chartMap.put("concertNameList", adminService.selectIncomeInfo_concertNameList());
+		
+		// 그래프 띄우기 (총 팔린 가격)
+		chartMap.put("totalSoldAmountList", adminService.selectIncomeInfo_totalSoldAmountList());
+		
+		// 그래프 띄우기 (총 팔린 시트 수)
+		chartMap.put("soldSeatCntList", adminService.selectIncomeInfo_soldSeatCntList());
+		
+		return chartMap;
+	}
 	
 	
 	

@@ -47,6 +47,50 @@ public interface AdminService {
 	// 스페셜콘서트 폐기
 	void deleteSpecialConcert(ConcertVO concertVO);
 	
+//==================================================================================================================
+	
+	// 그래프 띄우기 (concertCode)
+	List<String> selectIncomeInfo_concertCodeList();
+	
+	// 그래프 띄우기 (concertName)
+	List<String> selectIncomeInfo_concertNameList();
+	
+	// 그래프 띄우기 (총 팔린 가격)
+	List<Integer> selectIncomeInfo_totalSoldAmountList();
+	
+	// 그래프 띄우기 (총 팔린 시트 수)
+	List<Integer> selectIncomeInfo_soldSeatCntList();
+	
+//==================================================================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

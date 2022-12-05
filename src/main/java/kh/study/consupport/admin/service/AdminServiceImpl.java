@@ -78,6 +78,31 @@ public class AdminServiceImpl implements AdminService{
 		sqlSession.insert("adminMapper.deleteSpecialConcert", concertVO);
 	}
 	
+//==================================================================================================================
+	
+	// 그래프 띄우기 (concertCode)
+	@Override
+	public List<String> selectIncomeInfo_concertCodeList() {
+		return sqlSession.selectList("adminMapper.selectIncomeInfo_concertCodeList");
+	}
+
+	// 그래프 띄우기 (concertName)
+	@Override
+	public List<String> selectIncomeInfo_concertNameList() {
+		return sqlSession.selectList("adminMapper.selectIncomeInfo_concertNameList");
+	}
+
+	// 그래프 띄우기 (총 팔린 가격)
+	@Override
+	public List<Integer> selectIncomeInfo_totalSoldAmountList() {
+		return sqlSession.selectList("adminMapper.selectIncomeInfo_totalSoldAmountList");
+	}
+
+	// 그래프 띄우기 (총 팔린 시트 수)
+	@Override
+	public List<Integer> selectIncomeInfo_soldSeatCntList() {
+		return sqlSession.selectList("adminMapper.selectIncomeInfo_soldSeatCntList");
+	}
 	
 //==================================================================================================================
 	
@@ -171,6 +196,8 @@ public class AdminServiceImpl implements AdminService{
 		
 		sqlSession.insert("adminMapper.insertTickets", ticket);
 	}
+
+
 
 	
 	
