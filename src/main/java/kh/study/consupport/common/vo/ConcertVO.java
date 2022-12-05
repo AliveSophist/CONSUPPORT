@@ -52,4 +52,10 @@ public class ConcertVO {
 	//아티스트
 	private ArtistVO artist;
 	
+	// 예매날짜가 도래했냐 안했냐(commonMapper.concert)
+	private String isScheduled;
+	
+	// 매진이 됐냐 안됐냐
+	private String isSoldout;
+	
 }

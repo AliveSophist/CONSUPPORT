@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html	lang="en" xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
@@ -36,15 +37,35 @@
 					<ul>
 						<th:block th:each=" concert: ${specialList}">
 						
-							<li style="border-radius: 5%; width: 450px; height: 600px;">
+							<li class="specialCard" style="border-radius: 5%; width: 480px; height: 580px;" th:data-concert-code="|${concert.concertCode}|">
 								<img th:src="|@{/img/concert/}${concert.concertImgList[0].concertImgNameAttached}|"
-									 alt="Stacked Cards" style="border-radius: 5%; width: 100%; height: 100%;">
+									 alt="Stacked Cards" style="border-radius: 5%; width: 100%; height: 100%; cursor: pointer;">
 							</li>
 						
 						</th:block>
 					</ul>
 				</div>
 			</div>
+			
+			
+			<img 	class="mainArrowL"
+					src="/img/main_arrow_L.png" 
+					style="	position:absolute; 
+							top:420px; 
+							left:12%; 
+							cursor: pointer;
+							width: 150px; 
+							height: 150px;"
+							onclick="specialCard_MoveL();"/>
+			<img 	class="mainArrowR"
+					src="/img/main_arrow_R.png" 
+					style="	position:absolute; 
+							top:420px; 
+							right:12%; 
+							cursor: pointer;
+							width: 150px; 
+							height: 150px;"
+							onclick="specialCard_MoveR();"/>
 			
 			
 <!-- ========================================================================================================================================================== -->
@@ -59,17 +80,17 @@
 			
 <!-- ========================================================================================================================================================== -->
 				<div class="row justify-content-center text-center" style="margin: 0 auto;">
-							<h2 class="fw-bolder mb-3">
-								<a style="cursor: pointer;">MUZIC</a>
-								　　　　　
-								<a style="cursor: pointer;">musical</a>
-								　　　　　
-								<a style="cursor: pointer;">DRAMA</a>
-								　　　　　
-								<a style="cursor: pointer;">etc</a>
-							</h2>
-							<hr>
-							<h3 class="mb-3"></h3>
+					<h2 class="fw-bolder mb-3">
+						<a style="cursor: pointer;" href="/searchForm?genreCode=GENRE_000001">MUZIC</a>
+						　　　　　
+						<a style="cursor: pointer;" href="/searchForm?genreCode=GENRE_000002">musical</a>
+						　　　　　
+						<a style="cursor: pointer;">DRAMA</a>
+						　　　　　
+						<a style="cursor: pointer;">etc</a>
+					</h2>
+					<hr>
+					<h3 class="mb-3"></h3>
 				</div>
 				
 				
@@ -82,18 +103,6 @@
 					
 				</div>
 <hr>
-<!-- ========================================================================================================================================================== -->
-<!-- 카드 테스트 /* */    -->
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -129,87 +138,41 @@
 		<script src="/bootstrap/js/scripts.js"></script> -->
 		<!-- </div> -->
 		
-<!-- ========================================================================================================================================================== -->
 
-	<!-- 콘서트 상세 보기 모달 -->
-	<div class="modal fade" id="concertDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
-				<div class="modal-header" >
-					<h1 class="modal-title fs-5" id="exampleModalLabel">CONCERT</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-				
-				<div id="concertDetailAjax" class="modal-body">
-					<div id="cardForConcertDetail" class="card mb-3" style="max-width: 100%;">
-
-						<!-- 콘서트 상세 보기 영역 -->
-
-					</div>
-				</div>
-				
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-				
-				
-					<div class="modal-footer">
-						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					</div>
-			</div>
-		</div>
-	</div>
-
-
-<!-- ========================================================================================================================================================== -->
-
-
-	<!-- 아티스트 상세 보기 모달 -->
-	<div class="modal fade" id="artistDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header" >
-					<h1 class="modal-title fs-5" id="exampleModalLabel">ARTIST</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-				
-				<div id="artistDetailAjax" class="modal-body">
-					<div id="cardForArtistDetail" class="card mb-3" style="max-width: 100%;">
-
-						<!-- 아티스트 상세 보기 영역 -->
-
-					</div>
-				</div>
-				
-<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-				
-				
-					<div class="modal-footer">
-						<button id="modalFooterBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					</div>
-			</div>
-		</div>
-	</div>
-
-<!-- ========================================================================================================================================================== -->
+		<!-- 캘린더 페이지로 이동 -->
+		<img 	src="/img/calendar.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:210px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="location.href='/concertSchedule';"/>
 
 
 		<!-- 검색 페이지로 이동 -->
-		<a onclick="location.href='/searchForm';"
-           style="display:scroll; position:fixed; bottom:120px; right:30px; cursor: pointer;"
-           target="quests">
-		<img alt="BackToTop" src="/img/search.svg" style="width: 50px; height: 50px;"/>
-		</a>
+		<img 	src="/img/search.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:120px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="location.href='/searchForm';"/>
 		
 		
 		<!-- 화면 제일 위로 이동 -->
-		<a onclick="window.scrollTo(0,0);"
-           style="display:scroll; position:fixed; bottom:30px; right:30px; cursor: pointer;"
-           target="quests">
-		<img alt="BackToTop" src="/img/arrow-up-circle.svg" style="width: 50px; height: 50px;"/>
-		</a>
+		<img 	src="/img/arrow-up-circle.svg" 
+				style="	display:scroll;
+						position:fixed; 
+						bottom:30px; 
+						right:30px; 
+						cursor: pointer; 
+						width: 50px; 
+						height: 50px;"
+						onclick="window.scrollTo(0,0);"/>
 
 
 

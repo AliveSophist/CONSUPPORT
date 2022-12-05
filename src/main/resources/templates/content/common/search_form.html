@@ -21,14 +21,14 @@
 		</th:block>
 		
 		
-		
-		
 		<div class="row text-center">
 			<div class="col-2">　<!-- 건들지마 --></div>
 			
 			<div class="col-8">
 			<h3 class="mt-4 text-start">조건별로 원하는 공연을 검색해 보세요!</h3>
 			<hr>
+			
+			<div class="text-start">* 오늘날짜 이 후 만 검색 가능합니다.</div>
 			
 			<form action="/searchForm" method="post">
 				<table class="table align-middle table-bordered text-center test mt-3">
@@ -77,14 +77,14 @@
 					
 					
 						<td class="searchTitle">
-							날짜 선택
+							기간 검색
 						</td>
 						<td colspan="3" class="align-middle">
 							<div id="daterangepicker" class="row">
 								<div class="col-12 text-center">
 									<div class="input-group input-daterange" >
-										<input name="fromDate" type="text" class="form-control text-center" placeholder="시작 날짜" style="cursor: pointer;" readonly>
-										<input name="toDate" type="text" class="form-control text-center" placeholder="끝 날짜" style="cursor: pointer;" readonly>
+										<input name="fromDate" type="text" class="form-control text-center" placeholder="FROM" style="cursor: pointer;" readonly>
+										<input name="toDate" type="text" class="form-control text-center" placeholder="TO" style="cursor: pointer;" readonly>
 									</div>
 								</div>
 							</div>
@@ -92,17 +92,28 @@
 						<td class="searchTitle">상태</td>
 						<td colspan="2">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="itemStatus">
+								<input class="form-check-input" type="radio" name="nowStatus" th:checked="${paramMap['nowStatus'] == null or paramMap['nowStatus'] eq ''}">
 								<label class="form-check-label" for="">전체</label>
 							</div>
+							
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="itemStatus">
-								<label class="form-check-label" for="">판매중</label>
-							</div>
+								<input class="form-check-input" type="radio" name="nowStatus" value="SOLDOUT" th:checked="${paramMap['nowStatus'] eq 'SOLDOUT'}"> 
+								<label class="form-check-label" for="">매진</label>
+							</div><br>
+						
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="itemStatus"> 
-								<label class="form-check-label" for="">판매예정</label>
+								<input class="form-check-input" type="radio" name="nowStatus" value="ONSALE" th:checked="${paramMap['nowStatus'] eq 'ONSALE'}">
+								<label class="form-check-label" for="">티켓팅 중</label>
 							</div>
+							
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="nowStatus" value="SCHEDULED" th:checked="${paramMap['nowStatus'] eq 'SCHEDULED'}">
+								<label class="form-check-label" for="">티켓팅 예정</label>
+							</div>
+						
+							
+						
+							
 						</td>
 					</tr>
 				</table>
@@ -145,7 +156,30 @@
 							</th:block>
 						</td>
 
-						<td>판매중</td>
+						<td>
+
+
+
+							<th:block th:if="${concert.isScheduled eq 'Y'}">
+								<span>티켓팅 예정</span>
+							</th:block>
+							
+							<th:block th:if="${concert.isScheduled eq 'N'}">
+							
+								<th:block th:if="${concert.isSoldout eq 'Y'}">
+									<span>매진</span>
+								</th:block>
+								
+								<th:block th:if="${concert.isSoldout eq 'N'}">
+									<span>예매가능</span>
+								</th:block>
+								
+							</th:block>
+
+
+
+
+						</td>
 
 					</tr>
 
