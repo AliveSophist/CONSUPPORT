@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -176,12 +177,15 @@ public class MemberController {
 	}
 	
 	// 내 정보 수정
+	@ResponseBody
 	@PostMapping("/editInfo")
-	public String editInfo(UsersVO users) {
+	public int editInfo(@Validated UsersVO users) {
+		users.setUserPw		( securityConfig.passwordEncoder().encode(users.getUserPw()) );
+		//securityConfig.passwordEncoder().matches(null, null)
 		
 		memberService.updateEditInfo(users);
 		
-		return "redirect:/concertList";
+		return 1;
 	}
 	
 	
