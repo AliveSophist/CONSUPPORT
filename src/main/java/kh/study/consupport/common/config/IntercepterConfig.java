@@ -8,11 +8,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
@@ -32,6 +34,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class IntercepterConfig implements WebMvcConfigurer{
+
+	@Autowired
+	private SecurityConfig securityConfig;
+	
+	
+	
 
 	
 	@Override
@@ -55,6 +63,28 @@ public class IntercepterConfig implements WebMvcConfigurer{
 			
 			@Override
 			public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+				
+				String referer = request.getHeader("Referer");
+				
+				// 저세상에서 왔던거면 임시인증은 여기서 죽인다.
+				if(referer != null)
+					if( request.getHeader("Referer").contains("localhost:8082") ) {
+					
+						// 저세상에서 왔어도 마법의 코드 들고왔으면 봐줄게.
+						if( request.getParameter("certCode") != null ) {
+							
+							// 이번만 봐준다.
+							
+						}
+						else {
+							// 접속중이던 해당 계정을 강제 로그아웃.
+							securityConfig.sessionRegistry().removeSessionInformation(  RequestContextHolder.currentRequestAttributes().getSessionId()  );
+							
+							return;
+						}
+					}
+						
+				
 				
 				boolean isExistCookie = false;
 				

@@ -141,7 +141,7 @@ public class CommonController {
 	
 	// 메인화면 콘서트 목록 조회
 	@GetMapping("concertList")
-	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지..
+	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지. 본섭 & 백섭 간의 이동이 가능해진다.
 	public String selectConcertListOfCommon(Model model) {
 		//model.addAttribute("concertList", commonService.selectConcertListOfCommon(1));
 		model.addAttribute("specialList", commonService.selectSpecialConcertListOfCommon());
@@ -503,7 +503,7 @@ public class CommonController {
 	// 콘서포트서버에서 백업서버로 보내버리는 리퀘스트.
 	//			http://localhost:8082/
 	
-	// 백업서버에서 접속하는 리퀘스트 두개.
+	// 백업서버에서 본서버에 통신하는 리퀘스트 두개.
 	//			http://localhost:8088/enterTheWaitingQueue
 	//			http://localhost:8088/isAvailableEnter
 	
@@ -512,9 +512,8 @@ public class CommonController {
 
 	
 	// 테스트 대기열 생성 
-	@ResponseBody
-	@PostMapping ("readyForWaitingQueueTest")
-	public void setForWaitingQueueTest(HttpServletRequest request, Authentication authentication) {
+	@GetMapping ("readyForWaitingQueueTest")
+	public String setForWaitingQueueTest() {
 		System.out.println("################################################################");
 		System.out.println("###");
 		System.out.println("### 테스트용 큐에 더미 유저 채우는중... ^^");
@@ -522,15 +521,32 @@ public class CommonController {
 		System.out.println("################################################################");
 		
 		// n개의 더미 계정 삽입..!
-		securityConfig.makeDummyWaitingQueue(250);
+		securityConfig.makeDummyWaitingQueue( 100 );
+		
+		return "/content/common/waiting_queue_test";
+	}
+	
+	
+	// 테스트 정지
+	@GetMapping ("stopQueueTest")
+	public String stopQueueTest() {
+		System.out.println("################################################################");
+		System.out.println("###");
+		System.out.println("### 테스트를. 정지합니다.");
+		System.out.println("###");
+		System.out.println("################################################################");
+		
+		securityConfig.breakDummyWaitingQueue();
+		
+		return "redirect:/concertList";
 	}
 	
 
 	// 테스트 대기열에 입장 (로그인 불가. +로그아웃)
 	@ResponseBody
 	@PostMapping ("enterTheWaitingQueue")
-	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지..
-	public void enterTheWaitingQueue(String keyQueue, HttpServletRequest request, Authentication authentication) {
+	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지. 본섭 & 백섭 간의 이동이 가능해진다.
+	public void enterTheWaitingQueue(String keyQueue) {
 		System.out.println("################################################################");
 		System.out.println("###");
 		System.out.println("### 현재 큐 접속 인원 : " + securityConfig.getNowTestQueueSize());
@@ -542,11 +558,13 @@ public class CommonController {
 		// LET ME IN TESTING QUEUE!!
 		securityConfig.plzLetMeInTestQueue( keyQueue );
 	}
+	
+	
 	// 대기열에서 입장가능한지 확인..!
 	@ResponseBody
 	@PostMapping ("isAvailableEnter")
-	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지..
-	public Map<String, Object> isAvailableEnter(String keyQueue, HttpServletRequest request, Authentication authentication) {
+	@CrossOrigin(origins = "http://localhost:8082")	// CORS 오류방지. 본섭 & 백섭 간의 이동이 가능해진다.
+	public Map<String, Object> isAvailableEnter(String keyQueue) {
 		
 		Map<String, Object> result = new HashMap<>();
 		

@@ -65,53 +65,57 @@ public class SecurityConfig {
 		security.csrf().disable();
 		
 		
-		
-		
-		
-
-		//누구보다 빠른 필터..!
+		//시큐리티 보다 빠른 필터..!
 		class BeforeUPAFilter implements Filter {
 			
 			@Override
 			public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 				
-				
 				// 화이트리스트 request 한정 문 열어준다.
-				String[] whiteList = {"/enterTheWaitingQueue", "/isAvailableEnter"};
+				String[] whiteList = {"/readyForWaitingQueueTest", "/stopQueueTest", "/enterTheWaitingQueue", "/isAvailableEnter"};
 				if( PatternMatchUtils.simpleMatch(whiteList, ((HttpServletRequest) request).getRequestURI()) ) {
-					
 					chain.doFilter(request, response);
 					return;
 				}
 				
 				
-				
-				// 접속대기열이 있더라도 마법의 코드가 있다면 문 열어준다.
-				String certCode = request.getParameter("certCode");
-				boolean isCertificated = false;
-				
-				if(certCode!=null) {
-					if(certCode.equals(getTemporaryCertCode())) {
-						
-						// 마법의 코드 있으면 문 열어준다.
-						isCertificated = true;
-
-						// 문 열어주면 마법의 코드는 바뀐다.
-						//randomTemporaryCertCode();
-						//System.out.println("바뀐 인증 코드 : " + getTemporaryCertCode());
-					}
-				}
-				
-				
-				// 접속대기열이 차 있다면? 인증되지 않았으면 저세상으로 팅궈버리기
-				if (/* getNowTestQueueSize() > 0 && */ (SecurityContextHolder.getContext().getAuthentication() == null) && !isCertificated) {
-					((HttpServletResponse) response).sendRedirect("http://localhost:8082/");
+				//=========================================== 대기열 관문 ===========================================//
+				//
+				//		이 관문을 통과하는 방법
+				//
+				//		1. 남아있는 대기열이 없거나.
+				//		2. 이미 인증받은 상태거나 혹은 마법의 코드를 가졌거나.
+				//
+				//		다시말해서. 대기열이 있고, 인증도 없고, 마법의 코드도 없으면 저세상으로 팅궈버린다.
+				//
+				// 접속 대기열 有
+				if (getNowTestQueueSize() > 0) {
 					
-					return;
+					// 접속대기열이 있더라도 마법의 코드가 있다면 문 열어줘라.
+					String certCode = request.getParameter("certCode");
+					boolean isCertificated = false;
+					
+					if(certCode!=null) {
+						if(certCode.equals(getTemporaryCertCode())) {
+							
+							// 마법의 코드 있으면 문 열어준다.
+							isCertificated = true;
+						}
+					}
+					
+					if(SecurityContextHolder.getContext().getAuthentication()==null && !isCertificated) {
+						((HttpServletResponse) response).sendRedirect("http://localhost:8082/");
+						
+						return;
+					}
+					
 				}
+				//=========================================== 대기열 관문 ===========================================//
 				
 				
+				// 그 외. 안심하고 이동해라.
 		        chain.doFilter(request, response);
+		        
 			}
 		}
 		
@@ -267,7 +271,7 @@ public class SecurityConfig {
 						System.out.println("### 삭제 아이디 : " + ((UserDetails)authentication.getPrincipal()).getUsername());
 						System.out.println("### 접속 총인원 : " + sessionRegistry().getAllPrincipals().size());
 						
-						// 접속중이던 해당 계정을 로그아웃.
+						// 접속중이던 해당 계정을 강제 로그아웃.
 						sessionRegistry().removeSessionInformation(  RequestContextHolder.currentRequestAttributes().getSessionId()  );
 						
 
@@ -321,7 +325,7 @@ public class SecurityConfig {
 			    	throw new UsernameNotFoundException("!USERNAME_NOT_FOUND!");
 				}
 				
-				// 접속중이던 익명유저 계정을 로그아웃.
+				// 접속중이던 익명유저 계정을 강제 로그아웃.
 				sessionRegistry().removeSessionInformation(  RequestContextHolder.currentRequestAttributes().getSessionId()  );
 				
 				System.out.println( username + " 님 로그인");
@@ -400,6 +404,14 @@ public class SecurityConfig {
 		
 	}
 	
+
+	// 리셋해라. 마.
+	public void breakDummyWaitingQueue() {
+		
+		ForTest_WaitingQueue.dummyWaitingQueue = new ArrayList<>();
+		
+	}
+	
 	
 	// 테스트용 대기열 지금 몇 명있나?
 	public int getNowTestQueueSize() 
@@ -427,6 +439,7 @@ public class SecurityConfig {
 		
 		// 내가 지금 0번 대기열에 있니?
 		if(ForTest_WaitingQueue.dummyWaitingQueue.get(0).equals(keyQueue)) {
+			ForTest_WaitingQueue.dummyWaitingQueue.remove(0);
 			return true;
 		}
 		
