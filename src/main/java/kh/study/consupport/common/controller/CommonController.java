@@ -119,9 +119,8 @@ public class CommonController {
 		System.out.println("접속 총인원 : " + securityConfig.sessionRegistry().getAllPrincipals().size());	
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-		
-		
-		//mailService.sendMailWithFiles("dop03072@naver.com");
+		// 이멜 테스트
+		//mailService.sendMailWhenPaid("dop03072@naver.com", null /* SalesVO sales */, null /* ConcertVO concert */);
 		
 		return "/content/common/test";
 		//return "redirect:/concertList";
@@ -227,10 +226,18 @@ public class CommonController {
 	
 	@ResponseBody
 	@PostMapping("reserveSeat")
-	public String reserveSeat(SalesVO sales, CouponVO coupon, HttpServletRequest request, Authentication authentication) {
+	public String reserveSeat(SalesVO sales, CouponVO coupon, String anonymousEmail, HttpServletRequest request, Authentication authentication) {
 		
-		if(request.isUserInRole("ROLE_ANONYMOUS"))
+		if(request.isUserInRole("ROLE_ANONYMOUS")) {
 			sales.setUserId("ANONYMOUS");
+			
+			ConcertVO concert = new ConcertVO();
+			concert.setConcertCode(sales.getConcertCode());
+			concert = commonService.selectConcertDetail(concert);
+			
+			// 익명유저일 경우 이메일을 보낸다.
+			mailService.sendMailWhenPaid(anonymousEmail, sales, concert);
+		}
 		else
 			sales.setUserId(((UserDetails)authentication.getPrincipal()).getUsername());
 		
@@ -521,7 +528,7 @@ public class CommonController {
 		System.out.println("################################################################");
 		
 		// n개의 더미 계정 삽입..!
-		securityConfig.makeDummyWaitingQueue( 100 );
+		securityConfig.makeDummyWaitingQueue( 50 );
 		
 		return "/content/common/waiting_queue_test";
 	}

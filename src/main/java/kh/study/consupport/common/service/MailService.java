@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,6 +15,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.study.consupport.common.vo.ConcertVO;
+import kh.study.consupport.common.vo.SalesDetailVO;
 import kh.study.consupport.common.vo.SalesVO;
 
 @Service
@@ -21,7 +24,9 @@ public class MailService {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
-
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
 	
 	
 	public void sendMail(String toUser) {	// Example
@@ -51,11 +56,11 @@ public class MailService {
 		javaMailSender.send(simpleMessage);
 	}
 
-	public void sendMailWhenPaid(	String toUser,
-									SalesVO sales,
-									String concertName,
-									String ticketCode,
-									String seatCode) {
+	public void sendMailWhenPaid(String toUser, SalesVO sales, ConcertVO concert) {
+		
+		sales = sqlSession.selectOne("commonMapper.selectSalesInfoForEmail", sales);
+		
+		
 		MailHandler mailHandler;
 		try {
 			mailHandler = new MailHandler(javaMailSender);
@@ -63,15 +68,81 @@ public class MailService {
 			mailHandler.setTo(toUser);
 			
 			// 제목
-			mailHandler.setSubject("[NFU]학사경고 안내");
+			mailHandler.setSubject("[CONSUPPORT] 티켓 구매 정보");
 	
 			// html 로 작성된 내용.
-			mailHandler.setText("<p>" + "안녕하세요. ㅡㅡ ㅡㅡ 내용 수정할거야 ㅡㅡ ㅡㅡ 님" + "<p>"
-								+ "<b>NumberFive University 학사지원팀입니다.<b>" + "<p>" + " 학사경고 처리되었음을 알려드리고자 메일을 송부합니다."
-								+ "<p style='color:blue; font-size:24px; font-weight:700;'>" + "학사경고내역 : <p>"
-								+ "자세한 사항은 첨부파일을 확인하여 주시고, 학과 사무실에 문의하여 주십시오." + "<p>" + " 감사합니다." + "<p>"
-								+ "<img src='https://imgur.com/jrXOBny.png'>"
-								, true);
+			String content = "";
+			content +="<p style=\"font-size: 10pt; font-family: sans-serif; padding: 0px 0px 0px 10pt;\"><br><br></p><div style=\"background-image: url(&quot;https://imgur.com/eBJwwBd.jpg&quot;); width: 800px; background-repeat: no-repeat; background-size: contain; padding-right: 400px;\">\r\n"
+					+ "\r\n"
+					+ "<p style=\"text-align: center;\"><br></p><p style=\"text-align: center;\"><br></p><p style=\"text-align: center;\"><a href=\"http://localhost:8088/concertList\" target=\"_blank\"><img src=\"https://imgur.com/TAjDIo7.jpg\"></a></p><p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><b><span style=\"font-size: 18pt; font-family: Verdana; color: rgb(0, 0, 0);\">이용해 주셔서 감사합니다!</span></b></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-family: &quot;Courier New&quot;; color: rgb(0, 0, 0);\"><span style=\"font-family: Verdana;\">* </span><span style=\"font-family: Verdana;\">티켓 정보를 확인하</span><span style=\"font-family: Verdana;\">시고&nbsp;</span></span><span style=\"font-family: &quot;Courier New&quot;;\"><span style=\"font-family: Verdana;\">이상이 있으시면 고객센터로 문의</span><span style=\"font-family: Verdana;\">주시</span><span style=\"font-family: Verdana;\">기</span><span style=\"font-family: Verdana;\">&nbsp;바랍니다.</span></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-size: 14pt; font-family: &quot;Courier New&quot;; color: rgb(246, 246, 246);\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">공연명 :</span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\"> "+concert.getConcertName()+"</span></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><b><br></b></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-size: 14pt; font-family: &quot;Courier New&quot;; color: rgb(246, 246, 246);\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">공연일시 : </span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">";
+			
+			content += concert.getConcertDate().indexOf("12:")>0 ? 
+					concert.getConcertDate().substring(0, concert.getConcertDate().indexOf(" ")) + " 오후" : concert.getConcertDate().substring(0, concert.getConcertDate().indexOf(" ")) + " 오전";
+			
+			content +="</span></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><b><br></b></p>\r\n"
+					+ "<p style=\"text-align: center;\"><span style=\"font-size: 14pt; color: rgb(246, 246, 246); font-family: &quot;Courier New&quot;;\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">공연장 : </span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">"+concert.getHallName()+"</span></span></p>\r\n"
+					+ "<p style=\"text-align: center;\"><span style=\"font-size: 24pt;\"><span style=\"color: rgb(246, 246, 246); font-family: &quot;Courier New&quot;; font-size: 14pt;\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">좌석정보 : </span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">";
+			
+			for(SalesDetailVO salesDetail : sales.getSalesDetailList()) {
+				content += (salesDetail.getSeatCode()+" ");
+			}
+			
+			content +="</span></span></span></p>\r\n"
+					+ "<p style=\"text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"text-align: center;\"><b style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: start;\"><b></b></b></p>\r\n"
+					+ "<p style=\"margin: 0px; padding: 0px; text-align: center;\"><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\">즐거운 관람 되시기를</span><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\">&nbsp;바랍니다.</span></p><p style=\"margin: 0px; padding: 0px; text-align: center;\"><br></p><p style=\"margin: 0px; padding: 0px; text-align: center;\"><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\"><br></span></p><p style=\"margin: 0px; padding: 0px; text-align: center;\"><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\"><br></span></p><p style=\"margin: 0px; padding: 0px; text-align: center;\"><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\"><br></span></p>\r\n"
+					+ "<p style=\"margin: 0px; padding: 0px; text-align: center;\"><br></p><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">\r\n"
+					+ "\r\n"
+					+ "</span></div><p><br></p>";
+					
+					
+			
+					/*
+					"<div style=\"background-image:url('https://imgur.com/eBJwwBd.jpg'); background-repeat: no-repeat; background-size: contain; padding-right:300px;\">\r\n"
+					+ "\r\n"
+					
+					+ "<p style=\"text-align: center;\"><a href='http://localhost:8088/concertList'><img src='https://imgur.com/TAjDIo7.jpg'/> </a></p>\r\n"
+					
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><b><span style=\"font-size: 18pt; font-family: Verdana; color: rgb(0, 0, 0);\">이용해 주셔서 감사합니다!</span></b></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-family: &quot;Courier New&quot;; color: rgb(0, 0, 0);\"><span style=\"font-family: Verdana;\">* </span><span style=\"font-family: Verdana;\">티켓 정보를 확인하</span><span style=\"font-family: Verdana;\">시고&nbsp;</span></span><span style=\"font-family: &quot;Courier New&quot;;\"><span style=\"font-family: Verdana;\">이상이 있으시면 고객센터로 문의</span><span style=\"font-family: Verdana;\">주시</span><span style=\"font-family: Verdana;\">기</span><span style=\"font-family: Verdana;\">&nbsp;바랍니다.</span></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-family: &quot;Courier New&quot;; color: rgb(246, 246, 246);\"><br></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-size: 14pt; font-family: &quot;Courier New&quot;; color: rgb(246, 246, 246);\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">공연명 :</span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\"> " + concert.getConcertName() + "</span></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><b><br></b></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><span style=\"font-size: 14pt; font-family: &quot;Courier New&quot;; color: rgb(246, 246, 246);\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">공연일시 : </span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">";
+			
+			content += concert.getConcertDate().indexOf("12:")>0 ? 
+					concert.getConcertDate().substring(0, concert.getConcertDate().indexOf(" ")) + " 오후" : concert.getConcertDate().substring(0, concert.getConcertDate().indexOf(" ")) + " 오전";
+			
+			content += "</span></span></p>\r\n"
+					+ "<p style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: center;\"><b><br></b></p>\r\n"
+					+ "<p style=\"text-align: center;\"><span style=\"font-size: 14pt; color: rgb(246, 246, 246); font-family: &quot;Courier New&quot;;\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">공연장 : </span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">" + concert.getHallName() + "</span></span></p>\r\n"
+					+ "<p style=\"text-align: center;\"><span style=\"font-size: 24pt;\"><span style=\"color: rgb(246, 246, 246); font-family: &quot;Courier New&quot;; font-size: 14pt;\"><b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">좌석정보 : </span></b><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">";
+			
+			for(SalesDetailVO salesDetail : sales.getSalesDetailList()) {
+				content += (salesDetail.getSeatCode()+" ");
+			}
+			
+			content += "</span></span></span></p>\r\n"
+					+ "<p style=\"text-align: center;\"><br></p>\r\n"
+					+ "<p style=\"text-align: center;\"><b style=\"color: rgb(0, 0, 0); font-family: Gulim, 굴림, sans-serif; font-size: 14px; text-align: start;\"><b></b></b></p>\r\n"
+					+ "<p style=\"margin: 0px; padding: 0px; text-align: center;\"><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\">즐거운 관람 되시기를</span><span style=\"font-size: 13.3333px; font-family: Verdana; color: rgb(0, 0, 0);\">&nbsp;바랍니다.</span></p>\r\n"
+					+ "<p style=\"margin: 0px; padding: 0px; text-align: center;\"><br></p><span style=\"color: rgb(0, 0, 0); font-family: Verdana;\">\r\n"
+					+ "\r\n"
+					+ "</span></div><p><br></p>";*/
+					
+					
+			
+			mailHandler.setText( content, true);
 	
 			// 파일 포함..?
 			// "<img src='/images/cid:nf Logo'>"; <<<<< html 문자열에 cid: 를 붙여줘야한다나봐?

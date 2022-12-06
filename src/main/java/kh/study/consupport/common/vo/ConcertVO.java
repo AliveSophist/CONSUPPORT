@@ -41,6 +41,7 @@ public class ConcertVO {
 	
 	
 	private String genreName;
+	private String hallName;
 	private String concertDate;
 	
 	//가격 설정
