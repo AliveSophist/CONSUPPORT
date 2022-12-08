@@ -105,10 +105,6 @@
 					
 			</div>		
 		</div>
-	</div>
-	
-
-
 	<script type="text/javascript"
 		src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript">
@@ -126,14 +122,18 @@
 					$('#blah').attr('src', e.target.result);
 					$('#blah').css("height", "auto");
 					$('#blah').css("opacity", "1.0");
+					$('#blah').css("background-size", "50% 50%");
 				}
 
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
 	</script>
+	</div>
+	
 
-</div>
+
+
 
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 

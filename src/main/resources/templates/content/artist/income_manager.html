@@ -13,18 +13,25 @@
 			<div class="col-2"><!-- 건드리지마 --></div>
 			
 			
-			
+				<!-- 내 공연 매출 정보 그래프로 보기(bar) -->
+				<div class="col-4">
+					<div class="text-start" >
+						<h3 style="margin-top:30px;">공연 매출 정보</h3>
+					</div>
+						<hr>
+						<div id="barChart" style="max-width: 100%; margin: 35px auto;"></div>
+				</div>
 			
 			
 			
 					
-				<!-- 차트 -->
-				<div class="col-8">
+				<!-- 내 공연 팔린좌석 그래프로 보기(pie) -->
+				<div class="col-4">
 					<div class="text-start" >
-						<h3 style="margin-top:30px;">콘서트 매출 정보</h3>
+						<h3 style="margin-top:30px;">판매된 좌석 비율</h3>
 					</div>
 						<hr>
-					<div id="chart" style="max-width: 100%; margin: 35px auto;"></div>
+					<div id="pieChart" style="max-width: 100%; margin: 35px auto;"></div>
 				</div>
 				
 				
@@ -67,7 +74,7 @@
 		<!--차트 생성을 위한 태그 추가 -->	
 		<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 		<!-- html과 js연결 -->
-		<script type="text/javascript" src="/js/admin/income_manager.js"></script>
+		<script type="text/javascript" src="/js/artist/income_manager.js"></script>
 	</div>
 	
 <!--------------------------------------------------------------------------------------------------------------------------------------------------------->

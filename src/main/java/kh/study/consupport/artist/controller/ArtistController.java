@@ -2,6 +2,7 @@ package kh.study.consupport.artist.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -219,7 +220,61 @@ public class ArtistController {
 		return "content/artist/edit_artist_info_form";
 	}
 	
+//===========================================================================================================================================================================================================================
 	
+	// 아티스트 매출관리 그래프 띄우는 페이지
+	@GetMapping("/incomeManager")
+	public String incomeManager() {
+		return "/content/artist/income_manager";
+	}
+	
+	// 내 공연 팔린좌석 그래프로 보기
+	@ResponseBody
+	@PostMapping("/loadIncomeManager")
+	public Map<String, Object> selectSoldRSAcnt(ArtistVO artist, Authentication authentication){
+		
+		User user = (User)authentication.getPrincipal();
+		artist.setUserId(user.getUsername());
+		
+		// 맵 생성
+		Map<String, Object> chartMap = new HashMap<>();
+		
+		// 내 공연 매출 정보 그래프로 보기(bar)
+		chartMap.put("soldSeatAmountList", artistService.selectSoldRSA_amount(artist));
+		
+		// 내 공연 팔린좌석 그래프로 보기(pie)
+		chartMap.put("soldSeatCntList", artistService.selectSoldRSA_cnt(artist));
+		
+		return chartMap;
+	}
+	
+	
+	
+	
+//	// 아티스트 매출관리 그래프 띄우기
+//	@ResponseBody
+//	@PostMapping("loadIncomeManager")
+//	public Map<String, Object> loadIncomeManager() {
+//		
+//		// Map생성
+//		Map<String, Object> chartMap = new HashMap<>();
+//		
+//		//그래프 띄우기 (concertCode)
+//		chartMap.put("concertCodeList", adminService.selectIncomeInfo_concertCodeList());
+//		
+//		// 그래프 띄우기 (concertName)
+//		chartMap.put("concertNameList", adminService.selectIncomeInfo_concertNameList());
+//		
+//		// 그래프 띄우기 (총 팔린 가격)
+//		chartMap.put("totalSoldAmountList", adminService.selectIncomeInfo_totalSoldAmountList());
+//		
+//		// 그래프 띄우기 (총 팔린 시트 수)
+//		chartMap.put("soldSeatCntList", adminService.selectIncomeInfo_soldSeatCntList());
+//		
+//		return chartMap;
+//	}
+
+//===========================================================================================================================================================================================================================
 	
 	
 	

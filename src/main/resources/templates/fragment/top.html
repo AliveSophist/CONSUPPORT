@@ -119,7 +119,7 @@
 	</th:block>
 
 
-	<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="width: 100%; height: 5.7rem; padding: 35px 0px;">
 		<div class="container-fluid">
@@ -197,6 +197,7 @@
 									
 									<th:block sec:authorize="hasAnyRole('ROLE_ARTIST')">
 										<a class="dropdown-item" href="/artist/regConcertForm">공연 등록</a>
+										<a class="dropdown-item" href="/artist/incomeManager">공연 매출 관리</a>
 									</th:block>
 									
 									<th:block sec:authorize="hasAnyRole('ROLE_MEMBER', 'ROLE_ARTIST')">
@@ -205,8 +206,8 @@
 										
 									<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
 										<a class="dropdown-item" href="/admin/artistManager">아티스트 관리</a>
-										<a class="dropdown-item" href="/admin/concertManager">콘서트 관리</a>
-										<a class="dropdown-item" href="/admin/incomeManager">콘서트 매출 관리</a>
+										<a class="dropdown-item" href="/admin/concertManager">공연 관리</a>
+										
 									</th:block><hr style="margin: 3px 0;">
 										
 										

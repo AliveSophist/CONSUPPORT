@@ -202,5 +202,135 @@
 		WHERE HALL_DATE_CODE = #{hallDateCode}
 	</update>
 	
+<!--======================================================================================================================================================================================== -->
+
+	<!-- 내 공연 팔린좌석 그래프로 보기 -->
+	<select id="selectSoldRSA_cnt" resultType="HashMap">
+		SELECT
+		    R.CONCERT_CODE
+		    , (SELECT CONCERT_NAME FROM CONCERT WHERE CONCERT_CODE = R.CONCERT_CODE) AS CONCERT_NAME
+		    , SOLD_SEAT_R_CNT
+		    , SOLD_SEAT_S_CNT
+		    , SOLD_SEAT_A_CNT
+		FROM
+		    (SELECT 
+		        CONCERT_CODE
+		        , COUNT(USER_ID) AS SOLD_SEAT_R_CNT
+		    FROM TICKET
+		    WHERE SEAT_CODE LIKE 'R_%'
+		    AND CONCERT_CODE IN
+		        (SELECT CONCERT_CODE FROM CONCERT WHERE USER_ID = #{userId})
+		    GROUP BY CONCERT_CODE) R
+		    
+		    , (SELECT 
+		        CONCERT_CODE
+		        , COUNT(USER_ID) AS SOLD_SEAT_S_CNT
+		    FROM TICKET
+		    WHERE SEAT_CODE LIKE 'S_%'
+		    AND CONCERT_CODE IN
+		        (SELECT CONCERT_CODE FROM CONCERT WHERE USER_ID = #{userId})
+		    GROUP BY CONCERT_CODE) S
+		    
+		    , (SELECT 
+		        CONCERT_CODE
+		        , COUNT(USER_ID) AS SOLD_SEAT_A_CNT
+		    FROM TICKET
+		    WHERE SEAT_CODE LIKE 'A_%'
+		    AND CONCERT_CODE IN
+		        (SELECT CONCERT_CODE FROM CONCERT WHERE USER_ID = #{userId})
+		    GROUP BY CONCERT_CODE) A
+		    
+		WHERE R.CONCERT_CODE = S.CONCERT_CODE
+		AND R.CONCERT_CODE = A.CONCERT_CODE
+	</select>
+
+	<!-- 내 공연 매출 정보 그래프로 보기 -->
+	<select id="selectSoldRSA_amount" resultType="HashMap">
+		SELECT
+		    R.CONCERT_CODE
+		    , (SELECT CONCERT_NAME FROM CONCERT WHERE CONCERT_CODE = R.CONCERT_CODE) AS CONCERT_NAME
+		    , SOLD_SEAT_R_AMOUNT
+		    , SOLD_SEAT_S_AMOUNT
+		    , SOLD_SEAT_A_AMOUNT
+		FROM
+		    (SELECT 
+		        CONCERT_CODE
+		        , COUNT(USER_ID) * (SELECT CONCERT_PRICE_R FROM CONCERT_PRICE WHERE CONCERT_CODE = TICKET.CONCERT_CODE) AS SOLD_SEAT_R_AMOUNT
+		    FROM TICKET
+		    WHERE SEAT_CODE LIKE 'R_%'
+		    AND CONCERT_CODE IN
+		        (SELECT CONCERT_CODE FROM CONCERT WHERE USER_ID = 'art')
+		    GROUP BY CONCERT_CODE) R
+		    
+		    , (SELECT 
+		        CONCERT_CODE
+		        , COUNT(USER_ID) * (SELECT CONCERT_PRICE_S FROM CONCERT_PRICE WHERE CONCERT_CODE = TICKET.CONCERT_CODE) AS SOLD_SEAT_S_AMOUNT
+		    FROM TICKET
+		    WHERE SEAT_CODE LIKE 'S_%'
+		    AND CONCERT_CODE IN
+		        (SELECT CONCERT_CODE FROM CONCERT WHERE USER_ID = 'art')
+		    GROUP BY CONCERT_CODE) S
+		    
+		    , (SELECT 
+		        CONCERT_CODE
+		        , COUNT(USER_ID) * (SELECT CONCERT_PRICE_A FROM CONCERT_PRICE WHERE CONCERT_CODE = TICKET.CONCERT_CODE) AS SOLD_SEAT_A_AMOUNT
+		    FROM TICKET
+		    WHERE SEAT_CODE LIKE 'A_%'
+		    AND CONCERT_CODE IN
+		        (SELECT CONCERT_CODE FROM CONCERT WHERE USER_ID = 'art')
+		    GROUP BY CONCERT_CODE) A
+		    
+		WHERE R.CONCERT_CODE = S.CONCERT_CODE
+		AND R.CONCERT_CODE = A.CONCERT_CODE
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

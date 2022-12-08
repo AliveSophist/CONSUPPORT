@@ -24,12 +24,55 @@ public interface ArtistService {
 	// 아티스트 정보 수정
 	void updateArtist(ArtistVO artistVO);
 	
-
-	
 	//장르 리스트
 	List<GenreVO> genreList();
 	
 	//공연 등록
 	void regConcert(ConcertVO concert);
+	
+//========================================================================================================================================================================================
+	
+	
+	// 내 공연 매출 정보 그래프로 보기
+	List<Map<String, Object>> selectSoldRSA_amount(ArtistVO artist);
+	
+	// 내 공연 팔린좌석 그래프로 보기
+	List<Map<String, Object>> selectSoldRSA_cnt(ArtistVO artist);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

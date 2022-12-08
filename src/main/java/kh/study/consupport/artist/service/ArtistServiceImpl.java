@@ -1,6 +1,7 @@
 package kh.study.consupport.artist.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,20 @@ public class ArtistServiceImpl implements ArtistService{
 		sqlSession.update("artistMapper.updateArtist", artistVO);
 	}
 
+//==================================================================================================================
+	
+
+	// 내 공연 매출 정보 그래프로 보기
+	@Override
+	public List<Map<String, Object>> selectSoldRSA_amount(ArtistVO artist) {
+		return sqlSession.selectList("artistMapper.selectSoldRSA_amount", artist);
+	}
+	
+	// 내 공연 팔린좌석 그래프로 보기
+	@Override
+	public List<Map<String, Object>> selectSoldRSA_cnt(ArtistVO artist) {
+		return sqlSession.selectList("artistMapper.selectSoldRSA_cnt", artist);
+	}
 
 
 
