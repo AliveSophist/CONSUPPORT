@@ -11,13 +11,13 @@
 		
 			<br>
 			
-			<h1>권한 없어서 팅김 ㅠㅠ</h1>
+			<h1>권한이 없으므로 접근 불가능합니다..</h1>
 			
 			<br>
 			
-			<p th:text="|아디 : ${#authentication.name}|"></p>
+			<p th:text="|아 이 디 : ${#authentication.name}|"></p>
 			
-			<p th:text="|권한 : ${#authentication.authorities}|"></p>
+			<p th:text="|현재권한 : ${#authentication.authorities}|"></p>
 			
 			
 			<br>
@@ -37,7 +37,7 @@
 			
 			<br/>
 			<!--객체의 권한-->
-			<b>Authenticated admin role:</b>
+			<b>Authenticated role:</b>
 			<div sec:authorize="isAuthenticated()" sec:authentication="principal.authorities"></div>
 			
 			

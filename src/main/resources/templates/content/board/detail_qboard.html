@@ -8,12 +8,13 @@
 
 <th:block>
 <style>
-table > thead > tr, table > thead > tr > td{
-	border: 1px solid ;
-}	
-table > tbody > tr, table > tbody > tr > td{
-	border: 1px solid ;
-}	
+
+	table > thead > tr, table > thead > tr > td{
+		border: 1px solid ;
+	}	
+	table > tbody > tr, table > tbody > tr > td{
+		border: 1px solid ;
+	}	
 
 </style>
 </th:block>
@@ -23,15 +24,16 @@ table > tbody > tr, table > tbody > tr > td{
 	<div class="col-8" align="center">
 	
 		<div style="margin: 30px 0px;">
-		
-			<table border="1" class="table table-hover" style="margin-bottom: 20px;">
+		<h2 class="text-start mt-3">문의 게시판</h2>
+		<hr>
+			<table border="1" class="table" style="margin-bottom: 20px;">
 				<colgroup>
 						<col width="10%">
 						<col width="40%">
 						<col width="25%">
 						<col width="25%">
 					</colgroup>
-				<thead class="table-danger">
+				<thead class="table-active">
 					<tr class="text-center">
 						<td>문의번호</td> 
 						<td>제목</td> 
@@ -52,16 +54,15 @@ table > tbody > tr, table > tbody > tr > td{
 					</tr>
 				</tbody>
 			</table>
-	
-			<div class="d-flex" style="float: right; margin: 0px 5px;">
+			<div class="text-end">
 				<th:block th:if="${qboard.userId == #authentication.name}">
-					<input type="button" class="btn btn-primary mb-5" value="수정" style="margin: 5px;"
+					<input type="button" class="btn btn-primary" value="수정" style="margin: 5px;"
 					th:onclick="|location.href='@{/board/qboardUpdate(num = ${qboard.qboardNum})}'|"> 
 				</th:block>
 				
 				<th:block th:if="${qboard.userId == #authentication.name or
 									#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
-					<input type="button" class="btn btn-primary mb-5" value="삭제" style="margin: 5px;"
+					<input type="button" class="btn btn-primary" value="삭제" style="margin: 5px;"
 					th:onclick="|location.href='@{/board/qboardDelete(num = ${qboard.qboardNum})}'|">
 				</th:block>
 			</div>
@@ -72,15 +73,19 @@ table > tbody > tr, table > tbody > tr > td{
 			
 		<div style="margin: 20px 0px;" th:if="${qboard.userId == #authentication.name or
 									#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
-			
+									
+									
+			<h2 class="text-start mt-3">관리자 응답</h2>
+			<hr>
+									
 			<table border="1" class="table table-hover col-6">
 				<colgroup>
 						<col width="15%">
 						<col width="15%">
 						<col width="70%">
 				</colgroup>
-				<thead class="table-success">
-					<tr class="text-center">
+				<thead class="table-active">
+					<tr class="text-center align-middle">
 						<td>작성자</td> 
 						<td>작성일</td> 
 						<td>응답</td> 

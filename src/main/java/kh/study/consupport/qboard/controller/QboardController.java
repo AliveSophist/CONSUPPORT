@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.consupport.admin.service.AdminService;
 import kh.study.consupport.artist.service.ArtistService;
@@ -77,14 +78,15 @@ public class QboardController {
 	}
 	
 	//문의사항 등록
+	@ResponseBody
 	@PostMapping("/regQboard")
-	public String regQboard(@Validated QboardVO qboard) {
+	public int regQboard(@Validated QboardVO qboard) {
 		
 		if(qboard.getQsecret() == null)
 			qboard.setQsecret("F");
 		
 		qboardService.insertQboard(qboard);
-		return "content/board/regQboard_result";
+		return 1;
 	}
 
 	//글 상세보기

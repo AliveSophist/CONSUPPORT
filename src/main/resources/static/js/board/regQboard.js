@@ -42,8 +42,11 @@ function regQboard() {
 		data : regQboardForm.serialize(),
 		success : function(result) {
 			
-			alert('문의가 등록 되었습니다.');
-	location.href = '/board/qboardList';
+			if(result > 0) {
+				
+				alert('문의가 등록 되었습니다.');
+				location.href = '/board/qboardList';
+			}
 	
 		},
 		error : function() {

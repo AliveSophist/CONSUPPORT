@@ -83,12 +83,17 @@ public class IntercepterConfig implements WebMvcConfigurer{
 							return;
 						}
 					}
-						
 				
+				
+				
+				// 익명우저 한정 쿠키발급 기능!
+				// 이미 로그인한 유저에겐 필요없는 기능이다.
+				if( !request.isUserInRole("ROLE_ANONYMOUS") )
+					return;
 				
 				boolean isExistCookie = false;
 				
-				// 익명계정 접속기록이 쿠키에 남아 있나? 확인하자.
+				// 익명계정 접속기록이 현재 쿠키에 남아 있나? 확인하자.
 				if(request.getCookies() != null) {
 					List<Cookie> cookies = Arrays.asList(request.getCookies());
 					if(cookies.size()>0) {
