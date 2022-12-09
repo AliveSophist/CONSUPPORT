@@ -452,9 +452,6 @@ public class CommonController {
 		//로그인 정보 없을 경우, 오류코드 들고 강제 탈출!
 		if(!isSuccess) {
 			hashLoginInfo.put("alertMsg", failureCode);
-			System.out.println("뀨앙 팅김");
-			System.out.println("뀨앙 팅김");
-			
 			return hashLoginInfo;
 		}
 		

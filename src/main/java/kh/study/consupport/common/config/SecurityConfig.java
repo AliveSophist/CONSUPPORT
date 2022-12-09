@@ -344,14 +344,14 @@ public class SecurityConfig {
 	// UsernameNotFoundException 막아놓아서 못 불러오는 유미터진 시큐리티를 BadCredentialsException
 	@Bean
 	public AuthenticationProvider daoAuthenticationProvider() {
-	    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-	    daoAuthenticationProvider.setUserDetailsService( userDetailsService() );
-	    daoAuthenticationProvider.setPasswordEncoder( passwordEncoder() );
-	    
-	    // ★ 아이디 틀렸을때 BadCredentialsException 아니라 UsernameNotFoundException 뱉게하는 마법의 문장 ★
-	    daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-	    
-	    return daoAuthenticationProvider;
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		daoAuthenticationProvider.setUserDetailsService( userDetailsService() );
+		daoAuthenticationProvider.setPasswordEncoder( passwordEncoder() );
+		
+		// ★ 아이디 틀렸을때 BadCredentialsException 아니라 UsernameNotFoundException 뱉게하는 마법의 문장 ★
+		daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
+		
+		return daoAuthenticationProvider;
 	}
 
 	
