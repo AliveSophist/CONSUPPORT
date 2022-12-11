@@ -153,8 +153,31 @@ public class AdminController {
 	
 	
 	
+
 	
+	// 오너 매니저 불러오기
+	@GetMapping("/ownerManager")
+	public String ownerManager(Model model) {
+		model.addAttribute("ownerList", adminService.selectOwnerList());
+		return "content/admin/owner_manager";
+	}
 	
+	// 오너 권한 부여 철회
+	@ResponseBody
+	@PostMapping("/updateUserRoleAboutOwner")
+	public boolean updateUserRoleToOwner(UsersVO user) {
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		System.out.println("권한변경실행!");
+		
+		
+		return adminService.updateUserRoleAboutOwner(user);
+	}
 	
 	
 	

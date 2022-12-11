@@ -193,7 +193,7 @@ function artistDetailModalForReserve(userId){
 			
 			let str = '';
 			
-			str +=	`<div id="cardForArtistDetailForReserve" class="card mb-3" style="max-width: 100%; ">`;
+			str +=	`<div id="cardForArtistDetailForReserve" class="card mb-3" style="max-width: 100%; background-color: rgba(0,0,0,0.35);">`;
 			str +=		`<div class="row g-0" style="padding: 0px 20px;">`	;
 			str +=			`<div class="col-md-4" style="margin-top:15px">`;
 			

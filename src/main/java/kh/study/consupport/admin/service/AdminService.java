@@ -47,8 +47,12 @@ public interface AdminService {
 	// 스페셜콘서트 폐기
 	void deleteSpecialConcert(ConcertVO concertVO);
 	
+	//==================================================================================================================
 	
+	// 오너 목록 조회
+	List<UsersVO> selectOwnerList();
 	
-	
+	// 오너 권한
+	boolean updateUserRoleAboutOwner(UsersVO user);
 	
 }

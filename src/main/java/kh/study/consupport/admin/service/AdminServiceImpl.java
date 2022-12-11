@@ -174,6 +174,24 @@ public class AdminServiceImpl implements AdminService{
 
 	
 	
+	
+	
+	
+	@Override
+	public List<UsersVO> selectOwnerList() {
+		return sqlSession.selectList("adminMapper.selectOwnerList");
+	}
+
+	@Override
+	public boolean updateUserRoleAboutOwner(UsersVO user) {
+		int result = sqlSession.update("adminMapper.updateUserRoleAboutOwner", user);
+		
+		if(result > 0)
+			return true;
+		else
+			return false;
+	}
+	
 
 	
 	

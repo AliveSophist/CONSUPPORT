@@ -1,8 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-	var calendarEl = document.getElementById('calendar');
 
-	var calendar = new FullCalendar.Calendar(calendarEl, {
+	var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
 		locale: 'ko',
 		headerToolbar: {
 			left: 'prev,next today',
@@ -24,12 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					var events = [];
 
-
-
-					//console.log(result.concertList);
-
 					for (const concert of result.concertList) {
-
 
 						console.log(concert.concertName);
 						console.log(yyyy_mm_ddToString(concert.concertDate));
@@ -41,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							title: concert.concertName,
 							start: yyyy_mm_ddToString(concert.concertDate),
 							end: yyyy_mm_ddToString(concert.concertDate),
+							//color: '#000000',
 						})
 
 					}
@@ -62,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			concertDetailModalForReserve(info.event.id); // = concert.concertCode);
 		}
 	});
+	
 	calendar.render();
 });
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz./thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  layout:decorate="~{layout/base_layout}"
+	  >
+
+
+<!----------------------------------------------------------- ---------------------------------------------------------------------------------------------->
+
+<div layout:fragment="content" class="col text-start">
+
+
+	<div class="container-fluid" style="padding: 0% 20%;">
+
+		<div class="row myFormRow">
+		
+			<div class="col-12 mb-2">
+				<h3>오너 권한 부여/철회</h3>
+			</div>
+		
+			<div class="col-6 mb-4">
+				<label for="" class="form-label">권한 부여</label>
+				
+				<form id="grant">
+					<input type="hidden" name="userStatus" value="OWNER">
+					
+					<div class="input-group" style="width:100%;">
+						<input type="text" class="form-control" name="userId">
+						<button type="button" class="form-control btn btn-dark" style="max-width:120px;" onclick="updateUserRole('grant','부여');">부여</button>
+					</div>
+				</form>
+			</div>
+			
+			<div class="col-6 mb-4">
+				<label for="" class="form-label">권한 철회</label>
+				
+				<form id="revoke">
+					<input type="hidden" name="userStatus" value="MEMBER">
+					
+					<div class="input-group" style="width:100%;">
+						<input type="text" class="form-control" name="userId">
+						<button type="button" class="form-control btn btn-dark" style="max-width:120px;" onclick="updateUserRole('revoke','철회');">철회</button>
+					</div>
+				</form>
+			</div>
+			
+		
+
+
+
+
+
+			<div class="col-12 mb-2">
+				<h3>오너 목록</h3>
+			</div>
+
+			<div class="col-12">
+						
+				<table	class="table text-center table-hover align-middle"
+						style="margin: 0 0; width: 100%; background:rgba(0,0,0,0.2);">
+				
+				
+					<thead>
+						<tr>
+							<th class="col-1" scope="col">No.</th>
+							<th class="col-3" scope="col">ID</th>
+							<th class="col-1" scope="col">성함</th>
+							<th class="col-2" scope="col">연락처</th>
+							<th class="col-3" scope="col">주소지</th>
+							<th class="col-2" scope="col">보유 공연장</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="owner : ${ownerList}">
+							<th scope="row" th:text="${ownerStat.count}"></th>
+							<td class="col-2" scope="col">[[${owner.userId}]]</td>
+							<td class="col-1" scope="col">[[${owner.userName}]]</td>
+							<td class="col-2" scope="col">[[${owner.userTell}]]</td>
+							<td class="col-3" scope="col">[[${owner.userAddr}]]<br>[[${owner.userAddrDetail}]]</td>
+							<td class="col-3" scope="col">[[${owner.userMileage}]] 개</td>
+						</tr>
+					</tbody>
+					
+					
+				</table>
+				
+			</div>
+			
+			
+		</div>
+
+
+
+
+
+
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="/js/admin/owner_manager.js"></script>
+
+</div>
+	
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------->
+	
+</html>
