@@ -1,4 +1,51 @@
 
+function submitForm(){
+	
+	Swal.fire({
+		title: '작성을 완료하시겠습니까',
+		showCancelButton: true,
+		cancelButtonText: 'Back',
+		confirmButtonText: 'Done',
+	}).then((result) => {	// then start
+		if (result.isConfirmed){
+			
+			
+			$('#regConcert').find('input[type!="hidden"]').each(function(){
+				
+			    if(!$(this).val()) {
+			    	
+			    	Swal.fire({
+						icon: 'error'
+						, title: `비어있는 항목이 있습니다`
+					});
+			    	
+			    	return;
+			    }
+			    else {
+			    	
+			    	Swal.fire({
+						icon: 'success'
+						, title: `등록 완료!`
+						
+						, timer: 1500
+						, didOpen: () => { timerInterval = setInterval(() => { /* DO NOTHING :) */ }, 100); }
+						, willClose: () => { clearInterval(timerInterval); }
+						
+					}).then(() => {
+						
+						regConcert();
+
+					});
+	
+			    }
+			    
+			});
+			
+	
+		}
+	});		// then end
+}
+
 function regConcert() {
 
 	var formTag = document.querySelector('#regConcert');
@@ -18,14 +65,12 @@ function regConcert() {
 		cache: false,
 		/*============== FormData 쓰려면 필요함 ==============*/
 
-		success: function(result) {
-
-
-
-			if (result > 0)
-				alert('공연이 등록 되었습니다.');
-			else
-				alert('양식이 잘못되었습니다.');
+		success: function() {
+			
+//			if (result > 0)
+//				alert('공연이 등록 되었습니다.');
+//			else
+//				alert('양식이 잘못되었습니다.');
 
 			//href
 			location.href = '/';

@@ -29,13 +29,19 @@
 		<div class="transparentDivR col-4 mt-3">
 
 			<div style="margin: 15px auto 0;">
-				<h2>아티스트 등록</h2>
+				<th:block sec:authorize="hasAnyRole('ROLE_MEMBER')">
+					<h2>아티스트 신청</h2>
+				</th:block>
+				<th:block sec:authorize="hasAnyRole('ROLE_ARTIST')">
+					<h2>아티스트 정보 수정</h2>
+				</th:block>
+				
 				<hr class="myHr">
 			</div>
 			
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-				<form action="/member/regArtist" method="post" enctype="multipart/form-data">
+				<form id="regArtistForm" action="/member/regArtist" method="post" enctype="multipart/form-data">
 		
 <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->						
 			
@@ -81,11 +87,19 @@
 				
 				<div class="row myFormRow">
 					<div class="col-12" >
-						<button type="submit" class="form-control btn btn-primary">
-							아티스트 신청
-						</button>
 					
-					
+						<th:block sec:authorize="hasAnyRole('ROLE_MEMBER')">
+							<button type="button" class="form-control btn btn-primary" onclick="submitForm('#regArtistForm', '신청')">
+								신 청
+							</button>
+						</th:block>
+							
+						<th:block sec:authorize="hasAnyRole('ROLE_ARTIST')">
+							<button type="button" class="form-control btn btn-primary" onclick="submitForm('#regArtistForm', '수정')">
+								수정 완료
+							</button>
+						</th:block>
+							
 					</div>
 				</div>
 	
@@ -107,9 +121,62 @@
 	</div>
 	
 	
-	<script type="text/javascript"
-		src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript">
+	
+		function submitForm(formId, str){
+			var regForm = document.querySelector(formId);
+			
+			Swal.fire({
+				title: '작성을 완료하시겠습니까',
+				showCancelButton: true,
+				cancelButtonText: 'Back',
+				confirmButtonText: 'Done',
+			}).then((result) => {	// then start
+				if (result.isConfirmed){
+					
+					
+					$(formId).find('input[type!="hidden"]').each(function(){
+						
+					    if(!$(this).val()) {
+					    	
+					    	Swal.fire({
+								icon: 'error'
+								, title: `비어있는 항목이 있습니다`
+							});
+					    	
+					    	return;
+					    }
+					    else {
+					    	
+							Swal.fire({
+								icon: 'success'
+								, title: `${str} 완료!`
+								
+								, timer: 1500
+								, didOpen: () => { timerInterval = setInterval(() => { /* DO NOTHING :) */ }, 100); }
+								, willClose: () => { clearInterval(timerInterval); }
+								
+							}).then(() => {
+								
+								regForm.submit();
+
+							});
+					
+					    }
+					    
+					});
+					
+			
+				}
+			});		// then end
+		}
+	
+		
+		
+		
+		
+		
 		$(function() {
 			$("#imgInp").on('change', function() {
 				readURL(this);

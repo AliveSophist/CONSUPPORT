@@ -174,12 +174,16 @@
 									
 									<a class="dropdown-item" href="/member/pwCheckForm">내 정보 수정</a>
 									
+									<th:block sec:authorize="hasAnyRole('ROLE_ARTIST')">
+										<a class="dropdown-item" href="/member/regArtistForm">아티스트 정보 수정</a>
+									</th:block>
+									
 									<hr style="margin: 3px 0;">
 									
 									
 									
 									<th:block sec:authorize="hasAnyRole('ROLE_MEMBER')">
-										<a class="dropdown-item" href="/member/regArtistForm">아티스트 등록</a> 
+										<a class="dropdown-item" href="/member/regArtistForm">아티스트 신청</a> 
 									</th:block>
 									
 									<th:block sec:authorize="hasAnyRole('ROLE_OWNER')">
@@ -198,6 +202,7 @@
 									<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
 										<a class="dropdown-item" href="/admin/artistManager">아티스트 관리</a>
 										<a class="dropdown-item" href="/admin/concertManager">콘서트 관리</a>
+										<a class="dropdown-item" href="/admin/ownerManager">오너 권한 관리</a>
 									</th:block><hr style="margin: 3px 0;">
 										
 										
@@ -535,15 +540,24 @@
 						icon: 'success'
 						, title: `${result.userName} 님 가입이 완료되었습니다!`
 						, text: `자동으로 이전 페이지로 돌아갑니다!`
-						}).then(() => {
-							
-							// 						if(result.userRole.indexOf('ADMIN') > -1){
-							// 							alert('관리자 로그인 입니다..!');
-							// 							location.href = '/admin/regItem';
-							// 							return;
-							// 						}
-							//						else
-							location.href = result.Referer;
+						, timer: 1500
+						
+						, didOpen: () => {
+							timerInterval = setInterval(() => { /* DO NOTHING :) */ }, 100)
+						}
+						, willClose: () => {
+							clearInterval(timerInterval)
+						}
+						
+					}).then(() => {
+						
+						// 						if(result.userRole.indexOf('ADMIN') > -1){
+						// 							alert('관리자 로그인 입니다..!');
+						// 							location.href = '/admin/regItem';
+						// 							return;
+						// 						}
+						//						else
+						location.href = result.Referer;
 					});
 				},
 				error : function() {
@@ -578,6 +592,15 @@
 						icon: 'success'
 						, title: `반갑습니다! ${result.userName} 님`
 						, text: `자동으로 이전 페이지로 돌아갑니다!`
+						, timer: 1500
+						
+						, didOpen: () => {
+							timerInterval = setInterval(() => { /* DO NOTHING :) */ }, 100)
+						}
+						, willClose: () => {
+							clearInterval(timerInterval)
+						}
+						
 						}).then(() => {
 							
 							// 						if(result.userRole.indexOf('ADMIN') > -1){

@@ -1,4 +1,39 @@
 
+function submitForm(formId){
+	
+	Swal.fire({
+		title: '작성을 완료하시겠습니까',
+		showCancelButton: true,
+		cancelButtonText: 'Back',
+		confirmButtonText: 'Done',
+	}).then((result) => {	// then start
+		if (result.isConfirmed){
+			
+			
+			$(formId).find('input[type!="hidden"]').each(function(){
+				
+			    if(!$(this).val()) {
+			    	
+			    	Swal.fire({
+						icon: 'error'
+						, title: `비어있는 항목이 있습니다`
+					});
+			    	
+			    	return;
+			    }
+			    else {
+			    	
+					regHall();
+			
+			    }
+			    
+			});
+			
+	
+		}
+	});		// then end
+}
+
 function regHall(){
 	
 	var formTag = document.querySelector('#regHallForm');

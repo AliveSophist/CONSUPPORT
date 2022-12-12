@@ -62,7 +62,7 @@
 
 <!--========================================================================================================================================================================================-->
 
-	<!-- 아티스트 심사 등록 -->
+	<!-- 아티스트 심사 등록
 	<insert id="insertArtist">
 		INSERT INTO ARTIST (
 			USER_ID
@@ -73,7 +73,38 @@
 			, #{artistName}
 			, #{artistDetail}
 		)
+	</insert> -->
+	<insert id="insertArtist">
+		MERGE
+		    INTO ARTIST
+		USING DUAL
+		    ON (
+		    	USER_ID = #{userId}
+		    )
+		WHEN MATCHED THEN
+			UPDATE SET
+				ARTIST_NAME = #{artistName}
+				, ARTIST_DETAIL = #{artistDetail}
+		WHEN NOT MATCHED THEN
+		    INSERT (
+				USER_ID
+				, ARTIST_NAME
+				, ARTIST_DETAIL
+			) VALUES (
+				#{userId}
+				, #{artistName}
+				, #{artistDetail}
+		    )
 	</insert>
+	
+	
+	<!-- 아티스트 이미지 등록 시 트랜잭션 필요... -->
+	<delete id="deleteArtistOldImgs">
+		DELETE ARTIST_IMG
+		WHERE USER_ID = #{userId}
+	</delete>
+	
+	
 	
 	<!-- 아티스트 심사 이미지 등록 -->
 	<insert id="insertArtistImgs">

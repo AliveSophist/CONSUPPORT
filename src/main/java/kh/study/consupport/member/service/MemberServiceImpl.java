@@ -23,6 +23,9 @@ public class MemberServiceImpl implements MemberService{
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void insertArtist(ArtistVO artistVO) {
+		
+		sqlSession.delete("memberMapper.deleteArtistOldImgs", artistVO);
+		
 		sqlSession.insert("memberMapper.insertArtist", artistVO);
 		sqlSession.insert("memberMapper.insertArtistImgs", artistVO);
 	}
