@@ -199,8 +199,10 @@ function loadHallInfo() {
 
 function changeBtnHallInfoValue(){
 	
-	console.log( $('#selectHallCode option:checked').text() );
-	console.log( $('#selectHallDateCode option:checked').text().substring(0, $('#selectHallDateCode option:checked').text().indexOf(' ')) );
+	//alert( $('#selectHallDateCode option:checked').text().substring(0, $('#selectHallDateCode option:checked').text().indexOf(' ')) );
+	//console.log( $('#selectHallDateCode option:checked').text().substring(0, $('#selectHallDateCode option:checked').text().indexOf(' ')) );
+	
+	
 	
 	str = $('#selectHallCode option:checked').text() + ' (' + $('#selectHallDateCode option:checked').text() + ')'
 

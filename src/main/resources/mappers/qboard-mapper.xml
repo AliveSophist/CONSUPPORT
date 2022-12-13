@@ -108,6 +108,10 @@
 		DELETE QBOARD
 		WHERE  QBOARD_NUM = #{qboardNum}
 	</delete>
+	<delete id="deleteAboard">
+		DELETE ABOARD
+		WHERE  QBOARD_NUM = #{qboardNum}
+	</delete>
 
 	<insert id="insertAboard">
 		INSERT INTO ABOARD

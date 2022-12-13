@@ -124,7 +124,7 @@
 					<div class="col-12 input-group">
 						<select class="form-select"
 							name="genreCode" aria-label="Default select example">
-							<option selected>장르를 지정해 주세요</option>
+							<option value="" selected>장르를 지정해 주세요</option>
 							<th:block th:each="gen:${genreList}">
 								<option th:value="${gen.genreCode}">[[${gen.genreName}]]</option>
 							</th:block>
@@ -180,7 +180,7 @@
 					<div class="col-12 input-group">
 						<select name="concertRated" class="form-select"
 							aria-label="Default select example">
-							<option selected>연령 제한을 지정해 주세요</option>
+							<option value="" selected>연령 제한을 지정해 주세요</option>
 							<option value="All">전연령 관람 가능</option>
 							<option value="15+">15세 이상 관람 가능</option>
 							<option value="19+">청소년 관람 불가</option>
@@ -241,7 +241,7 @@
 									<select name="hallDateCode" class="form-select"
 										id="selectHallRentDate">
 										<!-- RentDate 목록을 표시할 틀. -->
-										<option selected>콘서트 시간을 지정해 주세요</option>
+										<option value="" selected>콘서트 시간을 지정해 주세요</option>
 										<!-- Ajax로 내용 갱신해주기 -->
 									</select>
 	
