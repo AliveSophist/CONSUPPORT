@@ -8,57 +8,87 @@
 
 <div layout:fragment="content">
 
-<div class="col-8">
+<th:block>
+<style>
 
-<form action="/board/qboardUpdate" method="post">
-	<input type="hidden" name="qboardNum" th:value="${qboard.qboardNum}">
-	<div class="input-group" style="margin: 15px auto 0;">
-		<span class="input-group-text">글번호</span> 
-		<span class="input-group-text" th:text="${qboard.qboardNum}"></span>
-	</div>
-	
-	<div class="input-group" style="margin: 15px auto 0;">
-		<span class="input-group-text">제목</span> 	
-		<input type="text" class="form-control" 
-		name="qboardTitle" th:value="${qboard.qboardTitle}">
-	</div>
-	
-	<div class="input-group" style="margin: 15px auto 0;">
-		<span class="input-group-text">작성자</span> 	
-		<input type="text" class="form-control" 
-		name="userId" th:value="${qboard.userId}">
-	</div>
-	
-	<div class="input-group" style="margin: 15px auto 0;">
-		<span class="input-group-text">내용</span> 	
-		<textarea rows="6" class="form-control" cols="140" name="qboardContent">[[${qboard.qboardContent}]]
-		</textarea>
-	</div>
-	
-	<div class="input-group" style="margin: 15px auto 0;">
-		<span class="input-group-text">등록일</span> 
-		<span class="input-group-text" th:text="${qboard.qboardCreateDate}"></span>
-	</div>
-	
-	
-	
-<div class="d-flex" style="float: right;">
-		<div class="form-check me-sm-2">
+	table > thead > tr, table > thead > tr > td{
+		border: 1px solid ;
+	}	
+	table > tbody > tr, table > tbody > tr > td{
+		border: 1px solid ;
+	}	
+	th, td {
+		vertical-align: middle;
+	}
+
+</style>
+</th:block>
+
+	<div align="center">
+		<div class="col-8" align="center">
+			<form action="/board/qboardUpdate" method="post">
+				
+				<input type="hidden" name="qboardNum" th:value="${qboard.qboardNum}">
+				
+				<div style="margin: 30px 0px;">
+				<h2 class="text-start mt-3">문의 수정</h2>
+				<hr>
+					<table border="1" class="table" style="margin-bottom: 20px;">
+						<colgroup>
+								<col width="10%">
+								<col width="40%">
+								<col width="25%">
+								<col width="25%">
+							</colgroup>
+						<thead class="table-active">
+							<tr class="text-center">
+								<td>문의번호</td> 
+								<td>제목</td> 
+								<td>작성자</td> 
+								<td>작성일</td> 
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center">
+								<td th:text="${qboard.qboardNum}"></td> 
+								<td>
+									<input type="text" class="form-control" 
+									name="qboardTitle" th:value="${qboard.qboardTitle}">
+								</td> 
+								<td th:text="${qboard.userId}"></td> 
+								<td th:text="${qboard.qboardCreateDate}"></td> 
+							</tr>
+							<tr>
+								<td class="align-middle text-center"  colspan="1">문의내용</td> 
+								<td colspan="3" rowspan="3">
+									<textarea class="form-control"
+									name="qboardContent">[[${qboard.qboardContent}]]</textarea>
+								</td> 
+							</tr>
+						</tbody>
+					</table>
+				</div>
+		
+			<div class="d-flex" style="float: right;">
+				<div class="form-check me-sm-2">
+					
+					<input class="form-check-input" type="checkbox"
+						th:checked="${qboard.qsecret eq 'T'}"
+					    name="qsecret" id="qsecret" value="T">
+					
+				    <label class="form-check-label" for="flexCheckChecked">
+				      비밀글
+				    </label>
+			  	 </div>	 
+				<input class="btn btn-primary" style="margin: 10px;" type="submit" value="수정하기">
+			</div>
 			
-			<input class="form-check-input" type="checkbox"
-				th:checked="${qboard.qsecret eq 'T'}"
-			    name="qsecret" id="qsecret" value="T">
 			
-		    <label class="form-check-label" for="flexCheckChecked">
-		      비밀글
-		    </label>
-	  	 </div>	 
-		<input class="btn btn-primary" style="margin: 10px;" type="submit" value="수정하기">
-</div>
+			</form>
+			
+		</div>
 
-</form>
-
-</div>
+	</div>
 
 
 

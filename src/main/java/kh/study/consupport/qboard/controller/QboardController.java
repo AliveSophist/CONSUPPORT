@@ -127,6 +127,10 @@ public class QboardController {
 	//글 수정
 	@PostMapping("/qboardUpdate")
 	public String boardUpdate(QboardVO qboard) {
+		
+		if(qboard.getQsecret() == null)
+			qboard.setQsecret("F");
+		
 		qboardService.updateQboard(qboard);
 		return "redirect:/board/detailQboard?num=" + qboard.getQboardNum();
 	}

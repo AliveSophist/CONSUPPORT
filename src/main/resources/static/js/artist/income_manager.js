@@ -58,6 +58,7 @@ function drawPieChart(chartMap) {
 
 // 공연 매출 정보 차트
 function drawBarChart(chartMap){
+	
 	var options = {
 		series: [{ // (chartMap.concertNameList)
 			name: '총 팔린 가격',
@@ -124,19 +125,19 @@ function drawBarChart(chartMap){
 
 
 
-	for(tooltipTag of document.querySelectorAll('.apexcharts-tooltip')){
-		tooltipTag.classList.remove('apexcharts-theme-light')
-		tooltipTag.classList.add('apexcharts-theme-dark')
-	}
-
-	// x축 폰트 컬러 화이트로
-	$('.apexcharts-xaxis-label').attr("font-size","1rem");
-
-	// y축 폰트 컬러 화이트로
-	$('.apexcharts-yaxis-label').attr("font-size","1rem");
-
-	// 안쓰는 툴바 숨김
-	$('.apexcharts-toolbar').css("display","none");
+//	for(tooltipTag of document.querySelectorAll('.apexcharts-tooltip')){
+//		tooltipTag.classList.remove('apexcharts-theme-light')
+//		tooltipTag.classList.add('apexcharts-theme-dark')
+//	}
+//
+//	// x축 폰트 컬러 화이트로
+//	$('.apexcharts-xaxis-label').attr("font-size","1rem");
+//
+//	// y축 폰트 컬러 화이트로
+//	$('.apexcharts-yaxis-label').attr("font-size","1rem");
+//
+//	// 안쓰는 툴바 숨김
+//	$('.apexcharts-toolbar').css("display","none");
 
 }
 
