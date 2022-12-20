@@ -3,8 +3,6 @@
 
 <!-- 시연영상 -->
 [![Video Label](http://img.youtube.com/vi/-mNsigu7O-k/0.jpg)](https://youtu.be/-mNsigu7O-k)
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/-mNsigu7O-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 
 ## 목차
 1. [프로젝트 개요](#프로젝트-개요)
