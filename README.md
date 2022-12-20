@@ -1,18 +1,22 @@
 # PROJECT
 해당 프로젝트는 **'울산kh정보교육원'** 의<br>**API, 크롤러 활용 빅데이터 시각화  웹 서비스 개발자 양성과정**<br>에서 진행한 **1조**의 프로젝트 <img src="https://imgur.com/n57uwgU.png" width="150px">입니다.
 
+<!-- 시연영상 -->
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/-mNsigu7O-k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## 목차
 1. [프로젝트 개요](#프로젝트-개요)
 2. [팀 구성 및 개발 일정](#팀-구성-및-개발-일정)
 3. [프로젝트 개발 환경](#프로젝트-개발-환경)
 4. [**프로세스 설계**](#프로세스-설계)
-6. [**ERD**](#ERD)
-7. [**기능**](#기능)
-	* sdlkjk
-		* sdlkjk
-	* 낭ㄹ
-	* 나팬
-
+5. [**ERD**](#ERD)
+6. [**기능**](#기능)
+	* 기능1
+		* 기능1-1
+	* 기능2
+		* 기능2-1
+		* 
 ## 프로젝트 개요
 <img src="https://imgur.com/SCNSpf5.png">
 
