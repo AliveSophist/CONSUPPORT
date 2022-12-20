@@ -1,7 +1,7 @@
 # CONSUPPORT
 
 
-<!-- ㅁㄴㅇㅁㄴㄹㄴㅁㅇㄹ -->
+<!-- 설계도 -->
 
 <p>
     <img src="https://imgur.com/cEZTcJk.png" width="700px">
