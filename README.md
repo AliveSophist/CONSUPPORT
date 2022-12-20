@@ -1,20 +1,22 @@
 # PROJECT
-해당 프로젝트는 **'울산kh정보교육원'** 의<br>
-**API, 크롤러 활용 빅데이터 시각화  웹 서비스 개발자 양성과정**<br>
-에서 진행한 **1조**의 프로젝트 <img src="https://imgur.com/n57uwgU.png" width="150px">입니다.
+해당 프로젝트는 **'울산kh정보교육원'** 의<br>**API, 크롤러 활용 빅데이터 시각화  웹 서비스 개발자 양성과정**<br>에서 진행한 **1조**의 프로젝트 <img src="https://imgur.com/n57uwgU.png" width="150px">입니다.
 
 ## 목차
 1. 프로젝트 개요
 2. 팀 구성 및 개발 일정
-3. 프로젝트 개발 환경
-4. 프로세스 설계
-5. ERD
-6. 기능
+3. [프로젝트 개발 환경](#-프로젝트-개발-환경)
+4. **프로세스 설계**
+6. **ERD**
+7. **기능**
 
 ## 프로젝트 개요
 <img src="https://imgur.com/SCNSpf5.png">
 
+## 팀 구성 및 개발 일정
+<img src="https://imgur.com/t8hHamC.png">
 
+## 프로젝트 개발 환경
+<img src="https://imgur.com/PnVHGaB.png">
 
 
 
