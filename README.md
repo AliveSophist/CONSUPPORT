@@ -1,5 +1,5 @@
 # PROJECT
-해당 프로젝트는 **'울산kh정보교육원'** 의<br>**API, 크롤러 활용 빅데이터 시각화  웹 서비스 개발자 양성과정**<br>에서 진행한 **1조**의 프로젝트 <img src="https://imgur.com/n57uwgU.png" width="150px">입니다.
+본 프로젝트는 **'울산kh정보교육원'** 의<br>**API, 크롤러 활용 빅데이터 시각화  웹 서비스 개발자 양성과정**<br>에서 진행한 **1조**의 프로젝트 <img src="https://imgur.com/n57uwgU.png" width="150px">입니다.
 
 <!-- 시연영상 -->
 [![Video Label](http://img.youtube.com/vi/-mNsigu7O-k/0.jpg)](https://youtu.be/-mNsigu7O-k)<br>
