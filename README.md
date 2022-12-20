@@ -8,9 +8,9 @@
 4. [**프로세스 설계**](#프로세스-설계)
 6. [**ERD**](#ERD)
 7. [**기능**](#기능)
-* sdlkjk
-* 낭ㄹ
-* 나팬
+	* sdlkjk
+	* 낭ㄹ
+	* 나팬
 
 ## 프로젝트 개요
 <img src="https://imgur.com/SCNSpf5.png">
