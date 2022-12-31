@@ -3,7 +3,7 @@
 
 <!-- 시연영상 -->
 [![Video Label](http://img.youtube.com/vi/-mNsigu7O-k/0.jpg)](https://youtu.be/-mNsigu7O-k)<br>
-▲클릭하면 시연 동영상 Youtube페이지로 이동합니다.
+▲클릭하시면 시연 동영상 Youtube페이지로 이동합니다.
 
 ## 목차
 1. [프로젝트 개요](#프로젝트-개요)
