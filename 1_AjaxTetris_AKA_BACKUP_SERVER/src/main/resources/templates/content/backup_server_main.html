@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html	lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultrap.net.nz./thymeleaf/layout"
+		layout:decorate="layout/base_layout"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<th:block layout:fragment="content">
+
+
+	<th:block th:object="${userVO}">
+		<input type="hidden" th:field="*{userId}">
+	</th:block>
+
+
+	<!-- Modal -->
+	<div	class="modal fade"
+			id="staticBackdrop" 
+			data-bs-backdrop="static"
+			data-bs-keyboard="false" 
+			tabindex="-1"
+			aria-labelledby="staticBackdropLabel" 
+			aria-hidden="true">
+			
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				
+				
+				<div class="modal-body">
+				
+					<div class="row text-center" style="width:100%;">
+						<div class="col-12">
+							<img src='/images/loading.gif'>
+						</div>
+						
+						<div class="col-12 mt-1" style="font-size: 1.5rem;">
+							현재 대기열 : <span id="numLeftQueue"></span>
+						</div>
+						
+						<div class="col-12 mt-1" style="font-size: 0.8rem;">
+							대기열이 지루하신가요? 게임도하고 쿠폰도 받아가세요!
+						</div>
+					</div>
+				
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark" onclick="reallyGoTetris()">쿠폰 얻으러 가기</button>
+				</div>
+				
+				
+			</div>
+		</div>
+				
+	</div>
+
+
+	<script type="text/javascript" src="/js/content/backup_server_main.js"></script>
+
+
+</th:block>
+</html>

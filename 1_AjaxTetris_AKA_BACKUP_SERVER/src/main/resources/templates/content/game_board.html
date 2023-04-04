@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="layout/base_layout">
+
+
+<th:block layout:fragment="content">
+
+	<th:block>
+		<style>
+		.input-group {
+			margin-top: 30px;
+			position: relative;
+		}
+		
+		.input-group {
+			position: relative;
+		}
+		
+		.input-group-addon {
+			border: none;
+		}
+		
+		.linkname {
+			display: none;
+		}
+		
+		#copyButton {
+			cursor: pointer;
+			background: #f1bb3a;
+		}
+		
+		#copyTarget {
+			border-left: none;
+		}
+		
+		.copied {
+			opacity: 1;
+			position: absolute;
+			left: 55px;
+		}
+		
+		@media ( min-width : 768px) {
+			.copied {
+				left: 135px;
+			}
+			.linkname {
+				display: block;
+				background: #3b3e45;
+				color: #fff;
+			}
+		}
+		
+		body{
+			-ms-overflow-style: none;
+		}
+		::-webkit-scrollbar {
+			display: none;
+		}
+		</style>
+	</th:block>
+
+
+
+	<div class="row content-fluid" style="height:85vh; width:100%;">
+		<div class="text-center align-self-center">
+		
+			<canvas id="MyCanvas" width=630px; height=600px; style="background-color: rgba(192,192,192, 0.3); border: 2px groove gray; margin-left: 1.1%;">
+				Canvas is not supported. <!-- 캔바스 불러오지 못할경우 -->
+			</canvas>
+			
+		</div>
+	</div>
+
+
+
+	<th:block th:object="${userVO}">
+		<input type="hidden" th:field="*{piece_kind_next}">
+	</th:block>
+
+	<input type="hidden" id="couponCode" value="">
+	<input type="hidden" id="couponValue" value="">
+
+	<script src="/js/content/game_board.js"></script>
+
+</th:block>
+</html>

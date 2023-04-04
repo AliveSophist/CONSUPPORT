@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="couponMapper">
+
+	<select id="checkDuplicated" resultType="INTEGER">
+		SELECT
+			COUNT(COUPON_CODE)
+		FROM
+			COUPON
+		WHERE
+			COUPON_CODE = #{couponCode}
+	</select>
+
+	<insert id="insertCoupon">
+		INSERT INTO COUPON(
+			COUPON_CODE
+			, COUPON_VALUE
+		) VALUES(
+			#{couponCode}
+			, #{couponValue}
+		)
+	</insert>
+
+
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
